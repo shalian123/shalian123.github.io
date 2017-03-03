@@ -86,16 +86,19 @@
 
 
 
-<meta name="description" content="本博客的搭建主要参考了：1.如何搭建一个独立博客——简明Github Pages与Hexo教程  http://m.blog.csdn.net/article/details?id=293697852.最简便的方法搭建Hexo+Github博客,基于Next主题  http://blog.csdn.net/tx874828503/article/details/515778153.怎样引导新手使用">
+<meta name="description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo教程">
-<meta property="og:url" content="http://shalian123.github.io/2017/02/21/Hexo教程/index.html">
+<meta property="og:title" content="搭建NFS及注意点">
+<meta property="og:url" content="http://shalian123.github.io/2017/03/03/搭建NFS/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="本博客的搭建主要参考了：1.如何搭建一个独立博客——简明Github Pages与Hexo教程  http://m.blog.csdn.net/article/details?id=293697852.最简便的方法搭建Hexo+Github博客,基于Next主题  http://blog.csdn.net/tx874828503/article/details/515778153.怎样引导新手使用">
-<meta property="og:updated_time" content="2017-02-21T13:47:26.420Z">
+<meta property="og:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png">
+<meta property="og:updated_time" content="2017-03-03T08:56:50.706Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo教程">
-<meta name="twitter:description" content="本博客的搭建主要参考了：1.如何搭建一个独立博客——简明Github Pages与Hexo教程  http://m.blog.csdn.net/article/details?id=293697852.最简便的方法搭建Hexo+Github博客,基于Next主题  http://blog.csdn.net/tx874828503/article/details/515778153.怎样引导新手使用">
+<meta name="twitter:title" content="搭建NFS及注意点">
+<meta name="twitter:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
 
 
 
@@ -113,7 +116,7 @@
   };
 </script>
 
-  <title> Hexo教程 | Wind </title>
+  <title> 搭建NFS及注意点 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -263,7 +266,7 @@
             
             
               
-                Hexo教程
+                搭建NFS及注意点
               
             
           </h1>
@@ -275,38 +278,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-21T21:28:11+08:00" content="2017-02-21">
-              2017-02-21
+            <time itemprop="dateCreated" datetime="2017-03-03T15:39:14+08:00" content="2017-03-03">
+              2017-03-03
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hexo教程/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo教程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/21/Hexo教程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/21/Hexo教程/" itemprop="commentsCount"></span>
+                <a href="/2017/03/03/搭建NFS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/03/搭建NFS/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -329,7 +313,39 @@
       
 
       
-        <p>本博客的搭建主要参考了：<br>1.如何搭建一个独立博客——简明Github Pages与Hexo教程<br>  <a href="http://m.blog.csdn.net/article/details?id=29369785" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=29369785</a><br>2.最简便的方法搭建Hexo+Github博客,基于Next主题<br>  <a href="http://blog.csdn.net/tx874828503/article/details/51577815" target="_blank" rel="external">http://blog.csdn.net/tx874828503/article/details/51577815</a><br>3.怎样引导新手使用 Markdown<br>  <a href="https://www.zhihu.com/question/20409634" target="_blank" rel="external">https://www.zhihu.com/question/20409634</a></p>
+        <p>NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NFS 服务，我们可以实现在线调试文件系统或应用程序，而不用像传统的方式生成文件系统镜像，然后烧写到板子的 eMMC 里，在启动开发板。通过 NFS 服务可以提高我们的调试效率。</p>
+<hr>
+<p>如果是 Android 或者 Qt 的文件系统就太大了，启动速度慢，这么做也就没有什么意义了。但是最小 linux 文件相对其它操作系统小很多，所以使用网络文件系统，可以方便的用户调试。</p>
+<hr>
+<h3 id="一、服务器端的搭建"><a href="#一、服务器端的搭建" class="headerlink" title="一、服务器端的搭建"></a>一、服务器端的搭建</h3><p>实现 NFS，我们需要一个主机作为 NFS 服务器，可以选择我们的虚拟机 Ubuntu 作为主机。首先我们需要在虚拟机的 Ubuntu 上安装Ubuntu NFS 服务，这是一个软件包，我们可以使用 apt 命令下载。</p>
+<blockquote>
+<p> apt-get install nfs-kernel-server<br> 安装 Ubuntu NFS 服务</p>
+</blockquote>
+<p>接下来需要配置/etc/exports</p>
+<blockquote>
+<p>vi /etc/exports</p>
+</blockquote>
+<p>在/etc/export 文件的最后一行添加：<br>/home/minilinux/system/ *(rw,sync,no_root_squash)，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png" alt=""><br>接下来重启 portmap 服务</p>
+<blockquote>
+<p>/etc/init.d/portmap restart</p>
+</blockquote>
+<p>然后重启 nfs 服务</p>
+<blockquote>
+<p>/etc/init.d/nfs-kernel-server restart</p>
+</blockquote>
+<p>至此，NFS服务器端搭建完成。</p>
+<h3 id="二、将板中的最小系统挂载到NFS"><a href="#二、将板中的最小系统挂载到NFS" class="headerlink" title="二、将板中的最小系统挂载到NFS"></a>二、将板中的最小系统挂载到NFS</h3><p>1.先把 linux 最小文件系统放到虚拟机 Ubuntu 的挂载目录下（此处我采用的是/home/minilinux/system） 目录下。（<strong>注意：此处的文件系统必须为板子里烧录的最小系统。</strong>）<br>2.实现 nfs 文件系统我们需要修改 linux 最小文件系统的 etc/init.d/ifconfig-eth0 文件，<br>vi命令打开并修改为如下图结果：<br><img src="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png" alt=""><br>改完保存并退出！</p>
+<h4 id="3-配置内核"><a href="#3-配置内核" class="headerlink" title="3.配置内核"></a>3.配置内核</h4><p>此处我们需要用到内核源码，打开内核源码，输入 cp config_for_linux .config 命令生成支持 linux 最小文件系统的内核配<br>置文件。（<strong>注意此处 .config前有一个空格</strong>）。然后输入 make menuconfig 命令进入 linux 配置界面。具体配置网上很多，此处只挑重点说：<br>在Boot options 配置界面里，我们需要在 Default kernel command 里面输入：</p>
+<blockquote>
+<p>root=/dev/nfs rw nfsroot=192.168.1.103:/home/minilinux/system<br>ip=192.168.1.230:192.168.1.103:192.168.1.1:255.255.255.0:iTOP:eth0:off<br>rootfstype=ext4 init=/linuxrc console=ttySAC2,115200</p>
+</blockquote>
+<p><strong><br>第一句表示挂载的nfs服务器 ip是192.168.1.103，挂载的目录是/home/minilinux/system， （注意：/home/minilinux/是前面我们搭建 nfs 服务器设置的）。<br>第二句里第一个 ip192.168.1.230 是我们开发板的 ip 地址，第二个 ip192.168.1.103 是 nfd 服务器的 ip，第三个ip192.168.1.1 是开发板的网关，255.255.255.0 是子网掩码，iTOP 是开发主机的名字（一般无关紧要，可以随便填写），eth0 是网卡设备的名称。
+</strong></p>
+<h4 id="4-待配置完内核后，重新编译内核"><a href="#4-待配置完内核后，重新编译内核" class="headerlink" title="4.待配置完内核后，重新编译内核"></a>4.待配置完内核后，重新编译内核</h4><blockquote>
+<p>make zImage</p>
+</blockquote>
+<p>5.将新生成的内核烧写到开发板，然后重启开发板，就可以使用 NFS 文件系统了。</p>
+<h3 id="三、注意点"><a href="#三、注意点" class="headerlink" title="三、注意点"></a>三、注意点</h3><p>1.这里编译zImage时，要注意用的是前面我们做的最小linux系统（板子里烧录的是我们对应编译生成的系统镜像，这两者得对应）,通过NFS挂载它。<br>2.在测试行x86 的服务器与板子上的客户端是否连通时，要将虚拟机的网络配置改为桥接模式。（之前我没有路由器，因此将它设置成了自定义模式中的VMnet8（NAT）,在调试网络通信socket及tftp文件传输和NFS时都应将它改为桥接模式。）<br>3.在NFS调试时，因为路由器网络设置成了动态ip，所以有时ubuntu重启会导致它的ip变了，此时会导致板子启动不了（一直卡在启动内核那），这时我们有两种解决方法：一、将ubuntu设置成静态ip   二、将配置内核里的ip改了，重新编译zImage，然后重新烧写到板中。</p>
 
       
     </div>
@@ -354,13 +370,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/02/25/linux-fifo/" rel="next" title="测试linux-fifo">
+                <i class="fa fa-chevron-left"></i> 测试linux-fifo
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/21/为啥会搭建博客/" rel="prev" title="为什么要搭建博客">
-                为什么要搭建博客 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -375,10 +391,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/21/Hexo教程/"
-     data-title="Hexo教程"
+        <div class="ds-share flat" data-thread-key="2017/03/03/搭建NFS/"
+     data-title="搭建NFS及注意点"
      data-content=""
-     data-url="http://shalian123.github.io/2017/02/21/Hexo教程/">
+     data-url="http://shalian123.github.io/2017/03/03/搭建NFS/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -408,8 +424,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/21/Hexo教程/"
-           data-title="Hexo教程" data-url="http://shalian123.github.io/2017/02/21/Hexo教程/">
+      <div class="ds-thread" data-thread-key="2017/03/03/搭建NFS/"
+           data-title="搭建NFS及注意点" data-url="http://shalian123.github.io/2017/03/03/搭建NFS/">
       </div>
     
   </div>
@@ -551,7 +567,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、服务器端的搭建"><span class="nav-number">1.</span> <span class="nav-text">一、服务器端的搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、将板中的最小系统挂载到NFS"><span class="nav-number">2.</span> <span class="nav-text">二、将板中的最小系统挂载到NFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-配置内核"><span class="nav-number">2.1.</span> <span class="nav-text">3.配置内核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-待配置完内核后，重新编译内核"><span class="nav-number">2.2.</span> <span class="nav-text">4.待配置完内核后，重新编译内核</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、注意点"><span class="nav-number">3.</span> <span class="nav-text">三、注意点</span></a></li></ol></div>
             
           </div>
         </section>
