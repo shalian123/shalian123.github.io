@@ -86,19 +86,28 @@
 
 
 
-<meta name="description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
+<meta name="description" content="今天，偶然在网上看到一篇帖子，主要讲解了ARM的发展及趋势，回想起我从本科开始接触单片机，从一开始的裸机，到烧录linux，安卓等系统，板子也接触了好几款了，但一直没有好好整理，借此机会，参考网友的观点及结合自己的一些看法，作此整理。
+ARM简介
+
+ARM只卖知识产权，不卖(物理的，实质的)产品。
+全世界100多家公司购买了ARM授权，包括三星,Freescale、NXP Semiconducto">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搭建NFS及注意点">
-<meta property="og:url" content="http://shalian123.github.io/2017/03/03/搭建NFS/index.html">
+<meta property="og:title" content="ARM简介">
+<meta property="og:url" content="http://shalian123.github.io/2017/03/13/ARM简介/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png">
-<meta property="og:updated_time" content="2017-03-13T07:24:40.032Z">
+<meta property="og:description" content="今天，偶然在网上看到一篇帖子，主要讲解了ARM的发展及趋势，回想起我从本科开始接触单片机，从一开始的裸机，到烧录linux，安卓等系统，板子也接触了好几款了，但一直没有好好整理，借此机会，参考网友的观点及结合自己的一些看法，作此整理。
+ARM简介
+
+ARM只卖知识产权，不卖(物理的，实质的)产品。
+全世界100多家公司购买了ARM授权，包括三星,Freescale、NXP Semiconducto">
+<meta property="og:updated_time" content="2017-03-13T08:36:02.480Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搭建NFS及注意点">
-<meta name="twitter:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
+<meta name="twitter:title" content="ARM简介">
+<meta name="twitter:description" content="今天，偶然在网上看到一篇帖子，主要讲解了ARM的发展及趋势，回想起我从本科开始接触单片机，从一开始的裸机，到烧录linux，安卓等系统，板子也接触了好几款了，但一直没有好好整理，借此机会，参考网友的观点及结合自己的一些看法，作此整理。
+ARM简介
+
+ARM只卖知识产权，不卖(物理的，实质的)产品。
+全世界100多家公司购买了ARM授权，包括三星,Freescale、NXP Semiconducto">
 
 
 
@@ -116,7 +125,7 @@
   };
 </script>
 
-  <title> 搭建NFS及注意点 | Wind </title>
+  <title> ARM简介 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +275,7 @@
             
             
               
-                搭建NFS及注意点
+                ARM简介
               
             
           </h1>
@@ -278,8 +287,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-03T15:39:14+08:00" content="2017-03-03">
-              2017-03-03
+            <time itemprop="dateCreated" datetime="2017-03-13T15:37:52+08:00" content="2017-03-13">
+              2017-03-13
             </time>
           </span>
 
@@ -292,8 +301,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式</span>
                   </a>
                 </span>
 
@@ -308,8 +317,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/03/03/搭建NFS/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/03/搭建NFS/" itemprop="commentsCount"></span>
+                <a href="/2017/03/13/ARM简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/13/ARM简介/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,39 +341,34 @@
       
 
       
-        <p>NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NFS 服务，我们可以实现在线调试文件系统或应用程序，而不用像传统的方式生成文件系统镜像，然后烧写到板子的 eMMC 里，在启动开发板。通过 NFS 服务可以提高我们的调试效率。</p>
-<hr>
-<p>如果是 Android 或者 Qt 的文件系统就太大了，启动速度慢，这么做也就没有什么意义了。但是最小 linux 文件相对其它操作系统小很多，所以使用网络文件系统，可以方便的用户调试。</p>
-<hr>
-<h3 id="一、服务器端的搭建"><a href="#一、服务器端的搭建" class="headerlink" title="一、服务器端的搭建"></a>一、服务器端的搭建</h3><p>实现 NFS，我们需要一个主机作为 NFS 服务器，可以选择我们的虚拟机 Ubuntu 作为主机。首先我们需要在虚拟机的 Ubuntu 上安装Ubuntu NFS 服务，这是一个软件包，我们可以使用 apt 命令下载。</p>
-<blockquote>
-<p> apt-get install nfs-kernel-server<br> 安装 Ubuntu NFS 服务</p>
-</blockquote>
-<p>接下来需要配置/etc/exports</p>
-<blockquote>
-<p>vi /etc/exports</p>
-</blockquote>
-<p>在/etc/export 文件的最后一行添加：<br>/home/minilinux/system/ *(rw,sync,no_root_squash)，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png" alt=""><br>接下来重启 portmap 服务</p>
-<blockquote>
-<p>/etc/init.d/portmap restart</p>
-</blockquote>
-<p>然后重启 nfs 服务</p>
-<blockquote>
-<p>/etc/init.d/nfs-kernel-server restart</p>
-</blockquote>
-<p>至此，NFS服务器端搭建完成。</p>
-<h3 id="二、将板中的最小系统挂载到NFS"><a href="#二、将板中的最小系统挂载到NFS" class="headerlink" title="二、将板中的最小系统挂载到NFS"></a>二、将板中的最小系统挂载到NFS</h3><p>1.先把 linux 最小文件系统放到虚拟机 Ubuntu 的挂载目录下（此处我采用的是/home/minilinux/system） 目录下。（<strong>注意：此处的文件系统必须为板子里烧录的最小系统。</strong>）<br>2.实现 nfs 文件系统我们需要修改 linux 最小文件系统的 etc/init.d/ifconfig-eth0 文件，<br>vi命令打开并修改为如下图结果：<br><img src="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png" alt=""><br>改完保存并退出！</p>
-<h4 id="3-配置内核"><a href="#3-配置内核" class="headerlink" title="3.配置内核"></a>3.配置内核</h4><p>此处我们需要用到内核源码，打开内核源码，输入 cp config_for_linux .config 命令生成支持 linux 最小文件系统的内核配<br>置文件。（<strong>注意此处 .config前有一个空格</strong>）。然后输入 make menuconfig 命令进入 linux 配置界面。具体配置网上很多，此处只挑重点说：<br>在Boot options 配置界面里，我们需要在 Default kernel command 里面输入：</p>
-<blockquote>
-<p>root=/dev/nfs rw nfsroot=192.168.1.103:/home/minilinux/system<br>ip=192.168.1.230:192.168.1.103:192.168.1.1:255.255.255.0:iTOP:eth0:off<br>rootfstype=ext4 init=/linuxrc console=ttySAC2,115200</p>
-</blockquote>
-<p><strong><br>第一句表示挂载的nfs服务器 ip是192.168.1.103，挂载的目录是/home/minilinux/system， （注意：/home/minilinux/是前面我们搭建 nfs 服务器设置的）。<br>第二句里第一个 ip192.168.1.230 是我们开发板的 ip 地址，第二个 ip192.168.1.103 是 nfd 服务器的 ip，第三个ip192.168.1.1 是开发板的网关，255.255.255.0 是子网掩码，iTOP 是开发主机的名字（一般无关紧要，可以随便填写），eth0 是网卡设备的名称。
-</strong></p>
-<h4 id="4-待配置完内核后，重新编译内核"><a href="#4-待配置完内核后，重新编译内核" class="headerlink" title="4.待配置完内核后，重新编译内核"></a>4.待配置完内核后，重新编译内核</h4><blockquote>
-<p>make zImage</p>
-</blockquote>
-<p>5.将新生成的内核烧写到开发板，然后重启开发板，就可以使用 NFS 文件系统了。</p>
-<h3 id="三、注意点"><a href="#三、注意点" class="headerlink" title="三、注意点"></a>三、注意点</h3><p>1.这里编译zImage时，要注意用的是前面我们做的最小linux系统（板子里烧录的是我们对应编译生成的系统镜像，这两者得对应）,通过NFS挂载它。<br>2.在测试行x86 的服务器与板子上的客户端是否连通时，要将虚拟机的网络配置改为桥接模式。（之前我没有路由器，因此将它设置成了自定义模式中的VMnet8（NAT）,在调试网络通信socket及tftp文件传输和NFS时都应将它改为桥接模式。）<br>3.在NFS调试时，因为路由器网络设置成了动态ip，所以有时ubuntu重启会导致它的ip变了，此时会导致板子启动不了（一直卡在启动内核那），这时我们有两种解决方法：一、将ubuntu设置成静态ip   二、将配置内核里的ip改了，重新编译zImage，然后重新烧写到板中。</p>
+        <p>今天，偶然在网上看到一篇帖子，主要讲解了ARM的发展及趋势，回想起我从本科开始接触单片机，从一开始的裸机，到烧录linux，安卓等系统，板子也接触了好几款了，但一直没有好好整理，借此机会，参考网友的观点及结合自己的一些看法，作此整理。</p>
+<p><strong>ARM简介</strong></p>
+<ol>
+<li>ARM只卖知识产权，不卖(物理的，实质的)产品。</li>
+<li>全世界100多家公司购买了ARM授权，包括三星,Freescale、NXP Semiconductors、STMicroelectronics、Texas Instruments ,Toshiba,Analog Device，atmel，microsemi…具体参看ARM官网</li>
+<li>ARM processor family:ARM7,ARM9,ARM11,Cortex-A,Cortex-R,Cortex-M,SecurCore</li>
+<li>为了清楚地表达每个ARM应用实例所使用的指令集，ARM公司定义了6种主要的ARM指令集体系结构版本，以版本号V1～V6表示.<br>ARM架构(或内核)：ARMv1，ARMv2…到ARMv8,比如ARM9,10架构为ARMv5，ARM11为ARMv6，Cortex系列为ARMv7<br><strong>(Cortex系列又包括Cortex-A,Cortex-R,Cortex-M三系列，架构也分别为ARMv7-A,ARMv7-R,ARMv7-M).最小的64位arm架构为ARMv8。。。（细分的ARMv4T，v5E等就不说了）</strong><pre><code> 处理器      内核、
+ARM7       ARMv4
+ARM9,10    ARMv5
+ARM11      ARMv6
+CortexA8   ARMv7   
+64bit      ARMv8
+</code></pre></li>
+<li>ARM7是冯 诺依曼体系结构，ARM9。ARM11等是哈佛体系结构(数据和指令分开存储，分开访问速度更快)。</li>
+<li>其他分类<br>经典 ARM 处理器<br>ARM11™ 系列 - 基于 ARMv6 架构的高性能处理器<br>ARM9™ 系列 - 基于 ARMv5 架构的常用处理器<br>ARM7™ 系列- 面向普通应用的经典处理器<br>ARM 专家处理器<br>SecurCore™ - 面向高安全性应用的处理器。<br>FPGA Cores - 面向 FPGA 的处理器<br>ARM Cortex 应用程序处理器<br>ARM Cortex 嵌入式处理器</li>
+<li><p>授权数：<br>经典 ARM 处理器 许可证数<br>ARM11 系列         82<br>ARM9 系列           271<br>Cortex 处理器 许可证数<br>Cortex-A          86<br>Cortex-R          22<br>Cortex-M          123</p>
+</li>
+<li><p>经典 ARM 处理器：ARM7，ARM9，ARM11.<br><strong>ARM 11 之後分成三类：<br>Cortex - A/R/M<br>Cortex - A 系列面向尖端的基于虚拟内存的操作系统和用户应用；<br>Cortex - R 系列针对实时系统；<br>Cortex - M 系列对微控制器</strong></p>
+</li>
+<li><p>ARM7,9，11区别（网友）：<br>ARM7是冯诺依慢结构 ，<br>ARM9、ARM11是哈佛结构，所以性能要高一点。<br>ARM9和ARM11大多带内存管理器，跑操作系统好一点，ARM7适合裸奔。<br>不跑操作系统，价格低一点的：ARM7、cortex-M3等等。<br>性价比高，可跑也可不跑操作系统的：ARM9、cortex-Rx等等。<br>性能高的，通常要跑操作系统的：ARM10、ARM11、Cortex-A8等等。<br>成熟的：ARM7\ARM9\ARM11。<br>发展趋势：Cortex-A、Cortex-R、Cortex-M。<br>其实弄ARM大多还是在嵌入式领域，不过现在很多上网本也开始ARM了**</p>
+</li>
+<li><p>cortex-m3和ARM11区别：<br>cortex-m3的架构(ARMv7)比ARM11(ARMv6)的版本高，但是cortex—m系列的芯片的应用主要在低端(就相当于一个单片机，不跑OS)，从性能上来说ARM11要比cortex-m3要好不少.</p>
+</li>
+<li><p>51单片机寄存器比较少，指令只有111条；而arm芯片寄存器较多，指令集也多，要掌握它需要耐心和时间，所以，为了简化嵌入式软件的编程工作量，生产公司把寄存器的操作搞定，封装成函数，这就是固件函数库。<br>比如意法半导体(ST.COM)的《STM32F10xxx固件函数库.pdf》。</p>
+</li>
+<li><p><strong>总结</strong><br>谈到这，许多人会问两个问题：<br>1.单片机和ARM到底有什么区别？<br>2.有无操作系统有什么区别？<br><strong>答</strong>：下面我先来谈谈第一个问题，单片机在一定的程度上只能算是微控制器（MCU）,而ARM(此处指高级的ARM,注：低级的cortex-m系列也是MCU)可以称为微处理器。本质上多了MMU(内存管理)，和chche(高速缓存)。<br><strong>答</strong>：第二个问题，我想只要将两者都尝试一下就不难发现：<br>单片机是通过软件直接控制硬件，因此用户想在一个新的硬件平台实现相同的功能，即软件程序会变动，软件开发者必须先了解这个新的硬件平台，才能进行软件编程。因此不难发现它有两个致命缺陷：软件开发者必须懂得硬件，降低了开发效率；软件移植性差。<br>而嵌入式通过文件系统间接控制硬件，当硬件平台变了，依旧与操作系统兼容，软件程序几乎不许改变，而且软件开发人员不需了解硬件，只需学会在操作系统中功能的调用，极大地提高了效率。相比单片机（无系统），嵌入式引入操作系统，有以下优点：<br>软件移植性好<br>软件人员不需了解硬件，提高开发效率<br>操作系统提供了许多开源软件，库等<br><strong>可以实现多任务</strong><br>操作系统在自带一些网络协议，提供了大量网络资源，便于实现远程控制</p>
+</li>
+</ol>
 
       
     </div>
@@ -389,17 +393,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/25/linux-fifo/" rel="next" title="测试linux-fifo">
-                <i class="fa fa-chevron-left"></i> 测试linux-fifo
+              <a href="/2017/03/06/搭建web服务器并控制外设/" rel="next" title="搭建web服务器并控制外设">
+                <i class="fa fa-chevron-left"></i> 搭建web服务器并控制外设
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/06/搭建web服务器并控制外设/" rel="prev" title="搭建web服务器并控制外设">
-                搭建web服务器并控制外设 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -414,10 +414,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/03/03/搭建NFS/"
-     data-title="搭建NFS及注意点"
+        <div class="ds-share flat" data-thread-key="2017/03/13/ARM简介/"
+     data-title="ARM简介"
      data-content=""
-     data-url="http://shalian123.github.io/2017/03/03/搭建NFS/">
+     data-url="http://shalian123.github.io/2017/03/13/ARM简介/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -447,8 +447,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/03/搭建NFS/"
-           data-title="搭建NFS及注意点" data-url="http://shalian123.github.io/2017/03/03/搭建NFS/">
+      <div class="ds-thread" data-thread-key="2017/03/13/ARM简介/"
+           data-title="ARM简介" data-url="http://shalian123.github.io/2017/03/13/ARM简介/">
       </div>
     
   </div>
@@ -590,7 +590,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、服务器端的搭建"><span class="nav-number">1.</span> <span class="nav-text">一、服务器端的搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、将板中的最小系统挂载到NFS"><span class="nav-number">2.</span> <span class="nav-text">二、将板中的最小系统挂载到NFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-配置内核"><span class="nav-number">2.1.</span> <span class="nav-text">3.配置内核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-待配置完内核后，重新编译内核"><span class="nav-number">2.2.</span> <span class="nav-text">4.待配置完内核后，重新编译内核</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、注意点"><span class="nav-number">3.</span> <span class="nav-text">三、注意点</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
