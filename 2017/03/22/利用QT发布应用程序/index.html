@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据库,qt," />
 
 
 
@@ -86,19 +86,22 @@
 
 
 
-<meta name="description" content="Qt/Qte/Qtopia三者的区别Qt泛指 Qt software的所有版本的图像界面库,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个跨平台的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。
-(Nokia">
+<meta name="description" content="由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。
+1.设置程序图标， 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法： （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具">
 <meta property="og:type" content="article">
-<meta property="og:title" content="QT/Qte/Qtopia三者的区别">
-<meta property="og:url" content="http://shalian123.github.io/2017/03/16/QT-Qte-Qtopia三者的区别/index.html">
+<meta property="og:title" content="利用QT发布应用程序">
+<meta property="og:url" content="http://shalian123.github.io/2017/03/22/利用QT发布应用程序/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="Qt/Qte/Qtopia三者的区别Qt泛指 Qt software的所有版本的图像界面库,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个跨平台的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。
-(Nokia">
-<meta property="og:updated_time" content="2017-03-16T04:16:37.702Z">
+<meta property="og:description" content="由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。
+1.设置程序图标， 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法： （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%60%7B%28U1J%29WWY%60%5D%5BJCT%7D@06~YF.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%5BX@QE%60%7D1DX%7B%60W%5D~O7R73SKQ.png">
+<meta property="og:updated_time" content="2017-03-22T15:15:44.425Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QT/Qte/Qtopia三者的区别">
-<meta name="twitter:description" content="Qt/Qte/Qtopia三者的区别Qt泛指 Qt software的所有版本的图像界面库,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个跨平台的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。
-(Nokia">
+<meta name="twitter:title" content="利用QT发布应用程序">
+<meta name="twitter:description" content="由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。
+1.设置程序图标， 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法： （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/%60%7B%28U1J%29WWY%60%5D%5BJCT%7D@06~YF.png">
 
 
 
@@ -116,7 +119,7 @@
   };
 </script>
 
-  <title> QT/Qte/Qtopia三者的区别 | Wind </title>
+  <title> 利用QT发布应用程序 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +269,7 @@
             
             
               
-                QT/Qte/Qtopia三者的区别
+                利用QT发布应用程序
               
             
           </h1>
@@ -278,38 +281,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-16T11:44:33+08:00" content="2017-03-16">
-              2017-03-16
+            <time itemprop="dateCreated" datetime="2017-03-22T22:15:05+08:00" content="2017-03-22">
+              2017-03-22
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/03/16/QT-Qte-Qtopia三者的区别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="commentsCount"></span>
+                <a href="/2017/03/22/利用QT发布应用程序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/22/利用QT发布应用程序/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,16 +316,10 @@
       
 
       
-        <h3 id="Qt-Qte-Qtopia三者的区别"><a href="#Qt-Qte-Qtopia三者的区别" class="headerlink" title="Qt/Qte/Qtopia三者的区别"></a>Qt/Qte/Qtopia三者的区别</h3><h5 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h5><p><strong>泛指 Qt software的所有版本的图像界面库</strong>,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个<strong>跨平台</strong>的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。</p>
-<p>(Nokia 在2008年收购 Trolltech 后，将 Qt 更名为 Qt Software，随后改为 Qt Development Frameworks。而后 Nokia 开发了 IDE 工具 <strong>Qt Creator</strong>，于是Qt FrameWork + Qt Creator = Qt SDK。)</p>
-<h5 id="Qte：Qt-Embeded-for-linux"><a href="#Qte：Qt-Embeded-for-linux" class="headerlink" title="Qte：Qt/Embeded for linux"></a>Qte：Qt/Embeded for linux</h5><p><strong>它是用于嵌入式 Linux 系统的 Qt 版本</strong>，<strong>也是一套界面库</strong>,Qt/Embeded 也简称 Qte 或 Qt/E，Qte 去掉了 X Lib 的依赖而直接工作在 Framebuffer 上，而且Qte在此基础上实现了自己的窗口管理系统QWS（Qt Windows System),这是Qte与Qt/X11最大的区别。因此Qte可以在嵌入式Linux系统中没有X11库的环境下构建独立的图形用户界面，而且不会占用太多的嵌入式系统资源。</p>
-<p>Qte为方便嵌入式Qt应用的开发，还提供qvfb工具和makeqpf工具。qvfb工具可以实现Qte的应用能在PC上进行调试和测试，避开X11库的干扰。makeqpf工具则是用来制作qpf字体文件，用来在嵌入式界面中显示特殊渲染字体。</p>
-<h5 id="Qtopia"><a href="#Qtopia" class="headerlink" title="Qtopia"></a>Qtopia</h5><p>Qtopia 是一个<strong>基于 Qte 的类似桌面系统的应用环境</strong>,同时又为开发者为嵌入式设备编写程序提供了一套面向对象的API，包含有 PDA 版本和 Phone 版本。<strong>请注意是基于Qte 的应用环境</strong>,Qtopia 是用 Qte 这个库开发出来的应用程序，<strong>实际上Qtopia就相当于是嵌入式设备上的桌面环境</strong>，也就是类似于PC上的KDE，提供有自己的窗口管理、控制等GUI接口，简化了其上Qte应用的开发。就算不使用Qtopia也可以使用Qte创建自己的图形界面。</p>
-<p>Qtopia早期是一个sf.net上的开源项目，构建于Qte之上（<em>在QT4版本前要安装Qtopia需要先装Qt/E，4之后的Qtopia 已经带有QT/E库了</em>）。从Qt4.1开始，<strong>Qt/Embedded改名为Qtopia Core</strong>，又<strong>从Qt4.4.1开始，Qtopia Core又改名为Qt for Embedded Linux，就是现在的Qte（eveywhere）</strong>。</p>
-<p>Qtopia Platform<br>Qtopia平台由Qt/E, libqpe, libqtopia1, qtopiapim这些库和Qtopia server/launcher组成。应用开发者通过使用这些库提供的API来为Qtopia设备开发应用程序。Qtopia server/launcher作为主程序负责窗口系统的控制、进程间的通讯、启动所有的应用及其它的任务。</p>
-<p>Qtopia/Qte的版本<br>Qtopia1.7.0 / Qte 2.3.7<br>Qtopia2.1.1 / Qte 2.3.10<br>Qtopia2.1.2 / Qte 2.3.11<br>Qtopia2.2.0 / Qte 2.3.12 (包含在qtopia2.2源码包中，2005年，最后一个免费的版本)<br>qtopia 2的应用基于qte 2.3.x的，qtopia 4的应用基于qtopia core(相当于原来的qte) 4.x。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>所以总的来说，QT也就三种：面向桌面的x11、面向嵌入式的Qt/E、以及面向嵌入式带各种应用程序的Qtopia桌面系统！！！</p>
-<p>注：本博客参考了一些网友的看法，最终加上了自己的理解与总结等。参考链接如下：<br><a href="http://m.blog.csdn.net/article/details?id=50577358" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=50577358</a></p>
+        <p>由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。</p>
+<h4 id="1-设置程序图标，"><a href="#1-设置程序图标，" class="headerlink" title="1.设置程序图标，"></a>1.设置程序图标，</h4><p> 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法：<br> （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具或者到一些在线转换网站上制作。</p>
+<h4 id="2-编译release版本"><a href="#2-编译release版本" class="headerlink" title="2.编译release版本"></a>2.编译release版本</h4><h4 id="3-发布时一般有两种方式，静态编译和动态编译。"><a href="#3-发布时一般有两种方式，静态编译和动态编译。" class="headerlink" title="3.发布时一般有两种方式，静态编译和动态编译。"></a>3.发布时一般有两种方式，静态编译和动态编译。</h4><p>  静态编译虽然没有附加很多的.dll文件，但是库文件很大，更新版本不方便，每次升级都要重新分发所有内容。<br>  动态编译需要添加许多文件，在这里我一开始按照书上的方法做了，但是后来发现到别人pc上还是会提醒无法建立数据库(如果自己去复制dll，很可能丢三落四，导致exe在别的电脑里无法正常运行)。因此在这里我重点介绍另外一种简单的发布方法。</p>
+<h4 id="推荐使用官方的windeployqt。"><a href="#推荐使用官方的windeployqt。" class="headerlink" title="推荐使用官方的windeployqt。"></a>推荐使用官方的windeployqt。</h4><p>  (1)编译完成后，进入项目生成的release文件夹里，将exe复制到一个单独的文件夹（比如桌面上新建的qt），用于发布。<br>  (2)进入qt文件夹，按住shift，右击鼠标，打开命令窗口，然后使用 windeployqt 工具命令：比如windeployqt qt.exe<br>  (3)然后可以在 桌面:\qt 文件夹里看到 windeployqt 工具自动复制的插件文件夹和 dll文件、qm文件。这时候得到的就完整的 exe 程序发布集合，依赖关系都解决好了。<br>  附上我的程序界面：<br>  1.数据库登陆界面<br>  <img src="http://ols4zt49w.bkt.clouddn.com/%60%7B%28U1J%29WWY%60%5D%5BJCT%7D@06~YF.png" alt=""><br>  2.数据库界面<br>  <img src="http://ols4zt49w.bkt.clouddn.com/%5BX@QE%60%7D1DX%7B%60W%5D~O7R73SKQ.png" alt=""><br>总结：桌面图形窗口应用设计可以有很多种方法，qt主要应用在嵌入式行业，它的一大优势是支持跨平台，不仅支持pc（windows），linux，android等，也支持mac os x等平台，相信qt的应用及发展还是不错的，有兴趣的人可以一起交流学习。<br>（在程序发布解决过程中参考了<a href="http://m.blog.csdn.net/article/details?id=56848407）" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=56848407）</a><br>最后，附上我编写并发布的软件下载地址，有兴趣的可以下载查看：(<a href="http://ols4zt49w.bkt.clouddn.com/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip" target="_blank" rel="external">http://ols4zt49w.bkt.clouddn.com/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip</a>)</p>
 
       
     </div>
@@ -361,22 +339,26 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag">#数据库</a>
+          
+            <a href="/tags/qt/" rel="tag">#qt</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/13/ARM简介/" rel="next" title="ARM简介">
-                <i class="fa fa-chevron-left"></i> ARM简介
+              <a href="/2017/03/21/数据结构注意点-指针与结构体/" rel="next" title="数据结构注意点(指针与结构体)">
+                <i class="fa fa-chevron-left"></i> 数据结构注意点(指针与结构体)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/21/数据结构注意点-指针与结构体/" rel="prev" title="数据结构注意点(指针与结构体)">
-                数据结构注意点(指针与结构体) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -391,10 +373,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/03/16/QT-Qte-Qtopia三者的区别/"
-     data-title="QT/Qte/Qtopia三者的区别"
+        <div class="ds-share flat" data-thread-key="2017/03/22/利用QT发布应用程序/"
+     data-title="利用QT发布应用程序"
      data-content=""
-     data-url="http://shalian123.github.io/2017/03/16/QT-Qte-Qtopia三者的区别/">
+     data-url="http://shalian123.github.io/2017/03/22/利用QT发布应用程序/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -424,8 +406,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/16/QT-Qte-Qtopia三者的区别/"
-           data-title="QT/Qte/Qtopia三者的区别" data-url="http://shalian123.github.io/2017/03/16/QT-Qte-Qtopia三者的区别/">
+      <div class="ds-thread" data-thread-key="2017/03/22/利用QT发布应用程序/"
+           data-title="利用QT发布应用程序" data-url="http://shalian123.github.io/2017/03/22/利用QT发布应用程序/">
       </div>
     
   </div>
@@ -574,7 +556,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Qt-Qte-Qtopia三者的区别"><span class="nav-number">1.</span> <span class="nav-text">Qt/Qte/Qtopia三者的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Qt"><span class="nav-number">1.0.1.</span> <span class="nav-text">Qt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Qte：Qt-Embeded-for-linux"><span class="nav-number">1.0.2.</span> <span class="nav-text">Qte：Qt/Embeded for linux</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Qtopia"><span class="nav-number">1.0.3.</span> <span class="nav-text">Qtopia</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">1.0.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-设置程序图标，"><span class="nav-number">1.</span> <span class="nav-text">1.设置程序图标，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-编译release版本"><span class="nav-number">2.</span> <span class="nav-text">2.编译release版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-发布时一般有两种方式，静态编译和动态编译。"><span class="nav-number">3.</span> <span class="nav-text">3.发布时一般有两种方式，静态编译和动态编译。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推荐使用官方的windeployqt。"><span class="nav-number">4.</span> <span class="nav-text">推荐使用官方的windeployqt。</span></a></li></ol></div>
             
           </div>
         </section>
