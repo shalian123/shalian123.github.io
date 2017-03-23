@@ -265,6 +265,129 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="url">
+                  数据结构-堆和栈,静态和动态
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-23T21:58:20+08:00" content="2017-03-23">
+              2017-03-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/23/数据结构-堆和栈-静态和动态/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="动态变量和静态变量的区别："><a href="#动态变量和静态变量的区别：" class="headerlink" title="动态变量和静态变量的区别："></a>动态变量和静态变量的区别：</h4><p>1、存储位置<br>动态变量：存储在内存出栈数据区<br>静态变量：存储在全局数据区（静态数据区）</p>
+<p>2、生命期<br>动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效<br>静态变量：程序结束时才释放</p>
+<p>3、作用域<br>动态变量：同样的要根据你定义的位置才能确定，和第二点的一样<br>静态变量：当前文件中有效<br>具体可以见下例：<br><img src="http://ols4zt49w.bkt.clouddn.com/LKRNFXD8X%5DRPKJ6L%29%5DL%60%5D5G.png" alt=""><br>一般标志位可定义成静态变量，每次给值后就不会变化了，除非再给它赋新值；不像动态变量每次重赋初值。</p>
+<h4 id="堆和栈的区分："><a href="#堆和栈的区分：" class="headerlink" title="堆和栈的区分："></a>堆和栈的区分：</h4><p>分配方式：<strong>堆都是动态分配的</strong>，没有静态分配的堆。<br>栈有2种分配方式：静态分配和动态分配。静态分配是编译器完成的，比如局部变量的分配。动态分配由alloca() ，alloca的函数返回的时候, 它分配的内存会自动释放，但是栈的动态分配和堆是不同的，<strong>堆需要手动释放</strong>。<br><strong><em>堆是通过new，malloc, calloc, realloc等来分配的内存，需要手动析构，栈由系统管理，无需人为处理。</em></strong></p>
+<h5 id="全局变量和静态变量存放在全局区（静态区）"><a href="#全局变量和静态变量存放在全局区（静态区）" class="headerlink" title="全局变量和静态变量存放在全局区（静态区）"></a>全局变量和静态变量存放在全局区（静态区）</h5><h5 id="new和malloc申请的在堆区"><a href="#new和malloc申请的在堆区" class="headerlink" title="new和malloc申请的在堆区"></a>new和malloc申请的在堆区</h5><h5 id="函数局部变量和函数的参数在栈区"><a href="#函数局部变量和函数的参数在栈区" class="headerlink" title="函数局部变量和函数的参数在栈区"></a>函数局部变量和函数的参数在栈区</h5>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/22/利用QT发布应用程序/" itemprop="url">
                   利用QT发布应用程序
                 </a>
@@ -1801,7 +1924,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1809,7 +1932,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1818,7 +1941,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
