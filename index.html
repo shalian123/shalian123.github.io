@@ -677,9 +677,9 @@ printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
 getchar();
 }
 </code></pre><p>输出结果：<br>x=100, y=200<br>x=110, y=210<br><strong>注意：调用fun1时，所传递的参数p被复制到调用堆栈中，fun1函数所操作是堆栈中的变量而不是原来的那个变量（main中的p）；另一方面，调用fun2时，传入的p的地址，fun2通过地址，修改了main中的变量p。这是结构体指针与结构体变量用作函数参数最大的区别</strong></p>
-<h4 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h4><p><strong>指针常量：</strong><br>int a；<br>int <em> const p = &amp;a    //指针常量，</em>p可以修改<em>p = 8（OK）； p 不可以修改 p++（ERROR）<em>*即指针所指地址不能变，但地址中存的值可以变</em></em></p>
-<p><strong>常量指针</strong><br>int a，b；<br>const int <em>p = &amp;a；//常量指针    </em>p不可修改 <em>p = 8；（ERROR）； p 可以修改 p = &amp;b （OK）<em>*即地址可改，值不能改</em></em></p>
-<p><strong>还有一种</strong><br>const int <em> const p = &amp;a；    // </em>p 和 p均不可改变了</p>
+<h4 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h4><p><strong>指针常量：</strong><br>int a；<br>int <strong>*</strong> const p = &amp;a    //指针常量，<strong>*</strong>p可以修改 <strong>*p = 8（OK）； p 不可以修改 p++（ERROR），即指针所指地址不能变，但地址中存的值可以变</strong></p>
+<p><strong>常量指针</strong><br>int a，b；<br>const int <strong>*</strong>p = &amp;a；//常量指针    <strong>*</strong>p不可修改， <strong>*</strong>p = 8；（ERROR）； p 可以修改 p = &amp;b （OK）<strong>即地址可改，值不能改</strong></p>
+<p><strong>还有一种</strong><br>const int <strong>* </strong>const p = &amp;a；    // *p 和 p均不可改变了</p>
 
           
         
