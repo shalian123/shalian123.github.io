@@ -265,6 +265,135 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/01/霍夫变换检测直线和圆/" itemprop="url">
+                  霍夫变换检测直线和圆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-01T19:46:55+08:00" content="2017-04-01">
+              2017-04-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/01/霍夫变换检测直线和圆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/霍夫变换检测直线和圆/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>霍夫变换的基本原理是点-线的对偶性(duality)（即在参数空间中相交于同一个点的所有直线在图像空间里都有共线的点与之对应）。图像变换前在图像空间，变换后在参数空间。<br>在实现此功能前，我们需要理清思路，具体需要四步走：<br>1.图像灰度化，二值化，即边缘检测结果。（注意：二值化的好坏对检测结果有很大影响，常用的有prewitt，canny等算子）<br>2.霍夫变换。<br>3.检测直线和圆并标记出来。<br>4.调参数。</p>
+<h4 id="图像灰度化，二值化"><a href="#图像灰度化，二值化" class="headerlink" title="图像灰度化，二值化"></a>图像灰度化，二值化</h4><p>图像灰度化这个过程很简单，我这里不会给太多的描述，但是二值化的好坏对检测结果有很大影响。二值化的时候有很多算子，我在这里用了两种，分别是prewitt算子和canny算子。在调参数之前我们首先得讨论二值化（即算子的选择）对检测结果得影响，因此我在同一组参数下，对采用不同算子二值化后进行了边缘检测和霍夫变换检测，比较结果如下：<br>原图如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E5%B0%8F%E7%BB%84-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E5%83%8F-2.jpg" alt=""><br><strong>canny算子</strong><br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">thresh=[0.01,0.10];  %canny算子方法中的双阈值算法检测。参数可调</div><div class="line">sigma=2;%定义高斯参数   </div><div class="line">f=edge(double(rotI),&apos;canny&apos;,thresh,sigma);   </div><div class="line">figure,imshow(f,[]);   </div><div class="line">title(&apos;canny Edge Detect Result&apos;);  %%canny算子边缘检测</div></pre></td></tr></table></figure></p>
+<p>检测结果如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%871.png" alt=""><br><strong>prewitt算子</strong><br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BW=edge(rotI,&apos;prewitt&apos;);</div><div class="line">figure,imshow(BW);</div><div class="line">title(&apos;prewitt算子边缘检测后图像&apos;);%二值图像</div></pre></td></tr></table></figure></p>
+<p>检测结果如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%872.png" alt=""><br>显然，通过上面结果的对比，我们可以发现canny算子间断点相对少很多。明显效果比prewitt算子好点。<br><strong>经过查资料得以再次验证上述结论</strong><br>常用的检测算子有：<br>(1)微分算子：Sobel算子， Robert算子，prewitt算子<br>(2)拉普拉斯高斯算子<br>(3)canny算子<br><strong><em>比较结果</em></strong><br>Roberts算子检测方法对具有陡峭的低噪声的图像处理效果较好，但是利用roberts算子提取边缘的结果是边缘比较粗，因此边缘的定位不是很准确。<br>Sobel算子检测方法对灰度渐变和噪声较多的图像处理效果较好，sobel算子对边缘定位不是很准确，图像的边缘不止一个像素。<br>Prewitt算子检测方法对灰度渐变和噪声较多的图像处理效果较好。但边缘较宽，而且间断点多。<br>Laplacian算子法对噪声比较敏感，所以很少用该算子检测边缘，而是用来判断边缘像素视为与图像的明区还是暗区。<br>Canny方法不容易受噪声干扰，能够检测到真正的弱边缘。优点在于，使用两种不同的阈值分别检测强边缘和弱边缘，并且当弱边缘和强边缘相连时，才将弱边缘包含在输出图像中。<br>附：具体比较可以参考<a href="https://wenku.baidu.com/view/987b48f525c52cc58bd6bea6.html" target="_blank" rel="external">https://wenku.baidu.com/view/987b48f525c52cc58bd6bea6.html</a></p>
+<h4 id="霍夫变换"><a href="#霍夫变换" class="headerlink" title="霍夫变换"></a>霍夫变换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">%%在canny算子边缘检测后，hough变换，可以换成其他算子</div><div class="line">[H,T,R]=hough(f);% 这里是直线 %cos(theta)*x+sin(theta)*y=rho,H霍夫变换矩阵，角度theta指rho与X轴之间的夹角，rho为到直线几何垂直距离</div><div class="line">figure,imshow(H,[],&apos;XData&apos;,T,&apos;YData&apos;,R,&apos;InitialMagnification&apos;,&apos;fit&apos;);</div><div class="line">title(&apos;霍夫变换图&apos;);</div><div class="line">xlabel(&apos;\theta&apos;),ylabel(&apos;\rho&apos;);%坐标</div><div class="line">axis on , axis normal, hold on;</div><div class="line">colormap(hot);%颜色突显</div><div class="line">P=houghpeaks(H,5,&apos;threshold&apos;,ceil(0.3*max(H(:))));%参数可调，5--指定要识别的峰值的最大数量</div><div class="line">x=T(P(:,2));y=R(P(:,1));</div><div class="line">plot(x,y,&apos;s&apos;,&apos;color&apos;,&apos;white&apos;);</div></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%873.jpg" alt=""></p>
+<h4 id="利用极坐标中的霍夫变换检测直线和圆"><a href="#利用极坐标中的霍夫变换检测直线和圆" class="headerlink" title="利用极坐标中的霍夫变换检测直线和圆"></a>利用极坐标中的霍夫变换检测直线和圆</h4><p><strong>直线检测</strong>，每个像素坐标点经过变换都变成都直线特质有贡献的统一度量，一个简单的例子如下：一条直线在图像中是一系列离散点的集合，通过一个直线的离散极坐标公式，可以表达出直线的离散点几何等式如下：<br>X <strong>*</strong>cos(theta) + y * sin(theta)  = r 其中角度theta指r与X轴之间的夹角，r为到直线几何垂直距离。任何在直线上点，x, y都可以表达，其中 r， theta是常量。该公式图形表示如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%874.png" alt=""><br>然而在实现的图像处理领域，图像的像素坐标P(x, y)是已知的，而r, theta则是我们要寻找的变量。如果我们能绘制每个(r, theta)值根据像素点坐标P(x, y)值的话，那么就从图像笛卡尔坐标系统转换到极坐标霍夫空间系统，这种从点到曲线的变换称为直线的霍夫变换。</p>
+<p><strong>检测圆</strong><br>利用公式x=a+rcos(theta),   y=b+rsin(theta)求出a和b的值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">function [para] = findcircle(f,stepR,stepAngle,minR,maxR,p)</div><div class="line">%[HOUGH_SPACE,HOUGH_CIRCLE,PARA] = HOUGH_CIRCLE(BW,STEP_R,STEP_ANGLE,R_MAX,P)</div><div class="line">%------------------------------算法概述-----------------------------</div><div class="line">% 该算法通过a = x-r*cos(angle)，b = y-r*sin(angle)将圆图像中的边缘点</div><div class="line">% 映射到参数空间(a,b,r)中，由于是数字图像且采取极坐标，angle和r都取</div><div class="line">% 一定的范围和步长，这样通过两重循环（angle循环和r循环）即可将原图像</div><div class="line">% 空间的点映射到参数空间中，再在参数空间（即一个由许多小立方体组成的</div><div class="line">% 大立方体)中寻找圆心，然后求出半径坐标。</div><div class="line">%----------------------------------------------------------------------</div><div class="line"></div><div class="line">%------------------------------输入参数-----------------------------</div><div class="line">% BW或f:二值图像；</div><div class="line">% stepR:检测的圆半径步长</div><div class="line">% stepAngle:角度步长，单位为弧度</div><div class="line">% minR:最小圆半径</div><div class="line">% maxR:最大圆半径</div><div class="line">% p:以p*hough_space的最大值为阈值，p取0，1之间的数</div><div class="line">%-------------------------------------------------------------------</div><div class="line"></div><div class="line">%------------------------------输出参数-----------------------------</div><div class="line">% hough_space:参数空间，h(a,b,r)表示圆心在(a,b)半径为r的圆上的点数</div><div class="line">%hough_circl:二值图像，检测到的圆</div><div class="line">% para:检测到的圆的圆心、半径</div><div class="line">%-------------------------------------------------------------------</div><div class="line"></div><div class="line">[m,n] = size(BW);% f:canny二值图像   BW:prewitt算子二值图像；</div><div class="line">cntR = round((maxR-minR)/stepR)+1;% stepR:检测的圆半径步长， minR:最小圆半径， maxR:最大圆半径</div><div class="line">cntAngle = round(2*pi/stepAngle);% stepAngle:角度步长，单位为弧度</div><div class="line">hough_space = zeros(m,n,cntR);% hough_space:参数空间，h(a,b,r)表示圆心在(a,b)半径为r的圆上的点数</div><div class="line">[rows,cols] = find(BW);</div><div class="line">cntPoints = size(rows,1);</div><div class="line"> </div><div class="line">% Hough变换将图像空间(x,y)对应到参数空间(a,b,r)</div><div class="line">% a = x-r*cos(angle), b = y-r*sin(angle)</div><div class="line">for i=1:cntPoints</div><div class="line">    for r=1:cntR</div><div class="line">        for k=1:cntAngle</div><div class="line">            a = round(rows(i)-(minR+(r-1)*stepR)*cos(k*stepAngle));</div><div class="line">            b = round(cols(i)-(minR+(r-1)*stepR)*sin(k*stepAngle));</div><div class="line">            if(a&gt;0 &amp;&amp; a&lt;=m &amp;&amp; b&gt;0 &amp;&amp; b&lt;=n)</div><div class="line">                hough_space(a,b,r) = hough_space(a,b,r)+1;</div><div class="line">            end</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div><div class="line"> </div><div class="line">% 寻找满足阈值的圆的参数</div><div class="line">max_para = max(max(max(hough_space)));</div><div class="line">index = find(hough_space&gt;=max_para*p); % p:以p*hough_space的最大值为阈值，p取0，1之间的数</div><div class="line">length = size(index,1);</div><div class="line">hough_circle=zeros(m,n);</div><div class="line">for i=1:cntPoints</div><div class="line">    for k=1:length</div><div class="line">        par3 = floor(index(k)/(m*n))+1;</div><div class="line">        par2 = floor((index(k)-(par3-1)*(m*n))/m)+1;</div><div class="line">        par1 = index(k)-(par3-1)*(m*n)-(par2-1)*m;</div><div class="line">        if((rows(i)-par1)^2+(cols(i)-par2)^2&lt;(minR+(par3-1)*stepR)^2+5 &amp;&amp; (rows(i)-par1)^2+(cols(i)-par2)^2&gt;(minR+(par3-1)*stepR)^2-5)</div><div class="line">            hough_circle(rows(i),cols(i)) = 1;% hough_circl:二值图像，检测到的圆</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div><div class="line"> </div><div class="line">for k=1:length</div><div class="line">    par3 = floor(index(k)/(m*n))+1;     </div><div class="line">    par2 = floor((index(k)-(par3-1)*(m*n))/m)+1;    % 圆心y坐标</div><div class="line">    par1 = index(k)-(par3-1)*(m*n)-(par2-1)*m;      % 圆心x坐标</div><div class="line">    par3 = minR+(par3-1)*stepR;                    % 圆的半径</div><div class="line">   % fprintf(1,&apos;Center %d %d radius %d\n&apos;,par1,par2,par3);</div><div class="line">    para(k,:) = [par1,par2,par3];  % para:检测到的圆的圆心、半径</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>主函数里：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">%find lines and plot them</div><div class="line">lines=houghlines(f,T,R,P,&apos;FillGap&apos;,5,&apos;MinLength&apos;,20);%参数可调，将20调大，即一些间距比较小的直线将不会被标记出来</div><div class="line">figure,imshow(f),hold on</div><div class="line">title(&apos;霍夫变换图像检测&apos;);</div><div class="line">max_len=0;</div><div class="line">for k = 1:length(lines)</div><div class="line">    xy=[lines(k).point1;lines(k).point2];</div><div class="line">    plot(xy(:,1),xy(:,2),&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;green&apos;);</div><div class="line">    plot(xy(1,1),xy(1,2),&apos;x&apos;,&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;yellow&apos;);</div><div class="line">    plot(xy(2,1),xy(2,2),&apos;x&apos;,&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;red&apos;);</div><div class="line">len=norm(lines(k).point1-lines(k).point2);</div><div class="line">if(len&gt;max_len)</div><div class="line">max_len=len;</div><div class="line">xy_long=xy;</div><div class="line">end</div><div class="line">end</div><div class="line">%plot(xy_long(:,1),xy_long(:,2),&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;cyan&apos;);%斜率最大的可用单独颜色标记</div><div class="line"></div><div class="line">%%%下面是圆</div><div class="line">parm = findcircle(f,2,0.05,15,100,0.75);%参数可调</div><div class="line">% 绘制所有找到的圆</div><div class="line">for i = 1:size(parm,1)</div><div class="line">    x0 = parm(i,1); y0 = parm(i,2);  r0 = parm(i,3);</div><div class="line">    xi=[-r0:0 0:r0];</div><div class="line">    yi=round((r0^2-xi.^2).^0.5);</div><div class="line">    plot(yi+y0,xi+x0,&apos;Color&apos;,&apos;g&apos;,&apos;LineWidth&apos;,3); % 下半圆</div><div class="line">    plot(-yi+y0,xi+x0,&apos;Color&apos;,&apos;g&apos;,&apos;LineWidth&apos;,3); % 上半圆</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h4 id="调参数"><a href="#调参数" class="headerlink" title="调参数"></a>调参数</h4><p>在本代码中有一些参数需要根据实际图像来调节，我列出了一些可以调节的地方，具体需要先将代码读懂，有问题可以在下面评价。<br>最终检测结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E5%9B%BE%E5%83%8F%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86.jpg" alt=""><br>直线和圆的个数大小都可以调节参数达到预期的效果。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="url">
                   数据结构-堆和栈,静态和动态
                 </a>
@@ -1763,129 +1892,13 @@ exit(EXIT_SUCCESS);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/21/Hexo教程/" itemprop="url">
-                  Hexo教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-21T21:28:11+08:00" content="2017-02-21">
-              2017-02-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hexo教程/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo教程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/21/Hexo教程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/21/Hexo教程/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本博客的搭建主要参考了：<br>1.如何搭建一个独立博客——简明Github Pages与Hexo教程<br>  <a href="http://m.blog.csdn.net/article/details?id=29369785" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=29369785</a><br>2.最简便的方法搭建Hexo+Github博客,基于Next主题<br>  <a href="http://blog.csdn.net/tx874828503/article/details/51577815" target="_blank" rel="external">http://blog.csdn.net/tx874828503/article/details/51577815</a><br>3.怎样引导新手使用 Markdown<br>  <a href="https://www.zhihu.com/question/20409634" target="_blank" rel="external">https://www.zhihu.com/question/20409634</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1924,7 +1937,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1932,7 +1945,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1941,7 +1954,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
