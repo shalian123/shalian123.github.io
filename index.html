@@ -265,6 +265,132 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/10/linux并发服务器/" itemprop="url">
+                  linux并发服务器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-10T11:53:19+08:00" content="2017-04-10">
+              2017-04-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/嵌入式-linux/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式/linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/10/linux并发服务器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/linux并发服务器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我们知道Linux的UDP是面向无连接的，但是TCP是面向连接，所以UDP服务器可以并发处理，但是TCP由于是面向连接，一次通信只能和一个客户端相连，所以要想实现并发处理，可以使用fork()创建子进程来实现，编程模式如下：</p>
+<p>服务端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdlib.h&gt; </div><div class="line">#include &lt;stdio.h&gt; </div><div class="line">#include &lt;errno.h&gt; </div><div class="line">#include &lt;string.h&gt; </div><div class="line">#include &lt;netdb.h&gt; </div><div class="line">#include &lt;sys/types.h&gt; </div><div class="line">#include &lt;netinet/in.h&gt; </div><div class="line">#include &lt;sys/socket.h&gt; </div><div class="line">#define MY_PORT 3333</div><div class="line">int main(int argc ,char **argv)</div><div class="line">&#123;</div><div class="line"> int listen_fd,accept_fd;</div><div class="line"> struct sockaddr_in     client_addr;</div><div class="line"> int n;</div><div class="line"> int sin_size;</div><div class="line"> </div><div class="line"> if((listen_fd=socket(AF_INET,SOCK_STREAM,0))&lt;0)</div><div class="line">  &#123;</div><div class="line">        printf(&quot;Socket Error:%s/n/a&quot;,strerror(errno));</div><div class="line">        exit(1);</div><div class="line">  &#125;</div><div class="line"> </div><div class="line"> bzero(&amp;client_addr,sizeof(struct sockaddr_in));</div><div class="line"> client_addr.sin_family=AF_INET;</div><div class="line"> client_addr.sin_port=htons(MY_PORT);</div><div class="line"> client_addr.sin_addr.s_addr=htonl(INADDR_ANY);</div><div class="line"> n=1;</div><div class="line"> /* 如果服务器终止后,服务器可以第二次快速启动而不用等待一段时间  */</div><div class="line"> setsockopt(listen_fd,SOL_SOCKET,SO_REUSEADDR,&amp;n,sizeof(int));</div><div class="line"> if(bind(listen_fd,(struct sockaddr *)&amp;client_addr,sizeof(client_addr))&lt;0)</div><div class="line">  &#123;</div><div class="line">        printf(&quot;Bind Error:%s/n/a&quot;,strerror(errno));</div><div class="line">        exit(1);</div><div class="line">  &#125;</div><div class="line">  listen(listen_fd,5);</div><div class="line">  sin_size=sizeof(struct sockaddr_in);</div><div class="line">  while(1)</div><div class="line">  &#123;</div><div class="line">    accept_fd=accept(listen_fd,(struct sockaddr*)&amp;client_addr,(struct socklen_t*)&amp;sin_size);</div><div class="line">    if((accept_fd&lt;0)&amp;&amp;(errno==EINTR))</div><div class="line">     continue;</div><div class="line">    else if(accept_fd&lt;0)</div><div class="line">  &#123;</div><div class="line">   printf(&quot;Accept Error:%s/n/a&quot;,strerror(errno));</div><div class="line">   continue;</div><div class="line">  &#125;</div><div class="line">   if((n=fork())==0)</div><div class="line">    &#123;</div><div class="line">   /* 子进程处理客户端的连接 */</div><div class="line">   char buffer[1024];</div><div class="line">   printf(&quot;get connect form %s/n&quot;,inet_ntoa(client_addr.sin_addr));</div><div class="line">  //打印出连接的客户端IP地址，</div><div class="line">   n=read(accept_fd,buffer,1024);</div><div class="line">  // write(accept_fd,buffer,n);</div><div class="line">   buffer[n]=&apos;/0&apos;;</div><div class="line"> //  close(listen_fd);</div><div class="line">   close(accept_fd);</div><div class="line">   printf(&quot;server revieve %s&quot;,buffer);</div><div class="line">   exit(0);</div><div class="line">    &#125;</div><div class="line">    else if(n&lt;0)</div><div class="line">   printf(&quot;Fork Error:%s/n/a&quot;,strerror(errno));</div><div class="line">    close(accept_fd);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>客户端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdlib.h&gt; </div><div class="line">#include &lt;stdio.h&gt; </div><div class="line">#include &lt;errno.h&gt; </div><div class="line">#include &lt;string.h&gt; </div><div class="line">#include &lt;netdb.h&gt; </div><div class="line">#include &lt;sys/types.h&gt; </div><div class="line">#include &lt;netinet/in.h&gt; </div><div class="line">#include &lt;sys/socket.h&gt; </div><div class="line">#define portnumber 3333</div><div class="line">int main(int argc, char *argv[]) </div><div class="line">&#123; </div><div class="line"> int sockfd; </div><div class="line"> char buffer[1024]; </div><div class="line"> struct sockaddr_in server_addr; </div><div class="line"> struct hostent *host; </div><div class="line">        /* 使用hostname查询host 名字 */</div><div class="line"> if(argc!=2) </div><div class="line"> &#123; </div><div class="line">  fprintf(stderr,&quot;Usage:%s hostname /a/n&quot;,argv[0]); </div><div class="line">  exit(1); </div><div class="line"> &#125; </div><div class="line"> if((host=gethostbyname(argv[1]))==NULL) </div><div class="line"> &#123; </div><div class="line">  fprintf(stderr,&quot;Gethostname error/n&quot;); </div><div class="line">  exit(1); </div><div class="line"> &#125; </div><div class="line"></div><div class="line"></div><div class="line"> /* 客户程序填充服务端的资料 */ </div><div class="line"> bzero(&amp;server_addr,sizeof(server_addr)); // 初始化,置0</div><div class="line"> server_addr.sin_family=AF_INET;          // IPV4</div><div class="line"> server_addr.sin_port=htons(portnumber);  // (将本机器上的short数据转化为网络上的short数据)端口号</div><div class="line"> server_addr.sin_addr=*((struct in_addr *)host-&gt;h_addr); // IP地址</div><div class="line"> /* 客户程序发起连接请求 */ </div><div class="line">  </div><div class="line"> while(1)</div><div class="line"> &#123; </div><div class="line">  /* 客户程序开始建立 sockfd描述符 */ </div><div class="line">  if((sockfd=socket(AF_INET,SOCK_STREAM,0))==-1) // AF_INET:Internet;SOCK_STREAM:TCP</div><div class="line">  &#123; </div><div class="line">   fprintf(stderr,&quot;Socket Error:%s/a/n&quot;,strerror(errno)); </div><div class="line">   exit(1); </div><div class="line">  &#125; </div><div class="line">  if(connect(sockfd,(struct sockaddr *)(&amp;server_addr),sizeof(struct sockaddr))==-1) </div><div class="line">  &#123; </div><div class="line">   fprintf(stderr,&quot;Connect Error:%s/a/n&quot;,strerror(errno)); </div><div class="line">   exit(1); </div><div class="line">  &#125; </div><div class="line">  /* 连接成功了 */ </div><div class="line">  printf(&quot;Please input char:/n&quot;);</div><div class="line">  </div><div class="line">  /* 发送数据 */</div><div class="line">  fgets(buffer,1024,stdin); </div><div class="line">  write(sockfd,buffer,strlen(buffer)); </div><div class="line">  /* 结束通讯 */ </div><div class="line"> </div><div class="line">  close(sockfd); </div><div class="line"> &#125;</div><div class="line"> exit(0); </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样服务端可以实现同时监听多个客户端，和UDP的作用效果一样，这仅仅是监听一个端口，如果想同时监听多个端口，可以使用select（）来实现IO复用。</p>
+<hr>
+<p>转载自：<a href="http://blog.csdn.net/seanyxie/article/details/5580162" target="_blank" rel="external">http://blog.csdn.net/seanyxie/article/details/5580162</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/01/霍夫变换检测直线和圆/" itemprop="url">
                   霍夫变换检测直线和圆
                 </a>
@@ -1771,127 +1897,6 @@ exit(EXIT_SUCCESS);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/21/为啥会搭建博客/" itemprop="url">
-                  为什么要搭建博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-21T21:53:00+08:00" content="2017-02-21">
-              2017-02-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习动力/" itemprop="url" rel="index">
-                    <span itemprop="name">学习动力</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/02/21/为啥会搭建博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/21/为啥会搭建博客/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>为什么要写博客？
-</code></pre><p>写博客不难，你可以当作是生活的记录，但是这样的记录没有任何的意义。<br>写要对得住写本身，写出来的东西应该是思考的结果。<br>我想，至少有以下几点理由值得我们去习惯写博客：<br>  1.提供持续学习的动力<br>  2.积累更多的知识<br>  3.提高将事情讲清楚的能力<br>  4.讨论反思<br>  5.记录自己学习、思考、总结的过程<br>最后，我想说一句，知识是无穷无尽的，贵在积累学习！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1937,7 +1942,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1945,7 +1950,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1954,7 +1959,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
