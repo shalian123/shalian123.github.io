@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="文本文件，二进制文件，读写," />
 
 
 
@@ -86,32 +86,19 @@
 
 
 
-<meta name="description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
+<meta name="description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
+二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试linux-fifo">
-<meta property="og:url" content="http://shalian123.github.io/2017/02/25/linux-fifo/index.html">
+<meta property="og:title" content="文本流和数据流">
+<meta property="og:url" content="http://shalian123.github.io/2017/04/11/文本流和数据流/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png">
-<meta property="og:updated_time" content="2017-03-13T07:26:31.469Z">
+<meta property="og:description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
+二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
+<meta property="og:updated_time" content="2017-04-11T13:08:41.401Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试linux-fifo">
-<meta name="twitter:description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
+<meta name="twitter:title" content="文本流和数据流">
+<meta name="twitter:description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
+二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
 
 
 
@@ -129,7 +116,7 @@
   };
 </script>
 
-  <title> 测试linux-fifo | Wind </title>
+  <title> 文本流和数据流 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +266,7 @@
             
             
               
-                测试linux-fifo
+                文本流和数据流
               
             
           </h1>
@@ -291,8 +278,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-25T20:19:17+08:00" content="2017-02-25">
-              2017-02-25
+            <time itemprop="dateCreated" datetime="2017-04-11T20:26:08+08:00" content="2017-04-11">
+              2017-04-11
             </time>
           </span>
 
@@ -305,8 +292,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
                   </a>
                 </span>
 
@@ -321,8 +308,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/25/linux-fifo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/25/linux-fifo/" itemprop="commentsCount"></span>
+                <a href="/2017/04/11/文本流和数据流/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/文本流和数据流/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -345,204 +332,12 @@
       
 
       
-        <h1 id="linux进程间通信之有名管道fifo"><a href="#linux进程间通信之有名管道fifo" class="headerlink" title="linux进程间通信之有名管道fifo"></a>linux进程间通信之有名管道fifo</h1><p>本文通过具体的实例带你深入了解进程通信里的有名管道通信</p>
-<h2 id="一、硬件工具"><a href="#一、硬件工具" class="headerlink" title="一、硬件工具"></a>一、硬件工具</h2><p>一块已经烧录最小系统进去的开发板<br>pc机<br>U盘或TF卡或NFS</p>
-<h2 id="二、软件工具"><a href="#二、软件工具" class="headerlink" title="二、软件工具"></a>二、软件工具</h2><p>ubuntu及虚拟机<br>交叉编译器（此处采用的是Arm-2009q3）<br>编辑器（此处采用的是notepad）<br>超级终端<br>vim编辑器</p>
-<h2 id="三、读本文前得了解的知识"><a href="#三、读本文前得了解的知识" class="headerlink" title="三、读本文前得了解的知识"></a>三、读本文前得了解的知识</h2><p>交叉编译，文件函数的操作（open，write，read等），对linux进程的了解，fork函数 mkfifo函数等。具体还有疑问可以在评论中一起交流。</p>
-<h2 id="四、有名管道-fifo"><a href="#四、有名管道-fifo" class="headerlink" title="四、有名管道 fifo"></a>四、有名管道 fifo</h2><p>有名管道可以实现无亲缘关系的通信（无名管道只能用于有亲缘进程之间的通信）。有名管道实现进程间通信的速度很快，同时遵行先进先出原则。</p>
-<blockquote>
-<p>man 3 mkfifo</p>
-</blockquote>
-<p>我们可以看到如下图mkfifo函数得用法：<br><img src="http://ols4zt49w.bkt.clouddn.com/mkfifo.png" alt="mkfifo"></p>
-<p>为了更好的体验有名管道得通信，我们首先编写creatc.c测试mkfifo函数。</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/stat.h&gt;
-#include &lt;fcntl.h&gt;
-
-void filecopy(FILE *,char *);
-
-int main(void)
-{
-FILE *fp1;
-long int i = 100000;
-char buf[] = &quot;I want to study Linux!\n&quot;;
-char *file1 = &quot;data.txt&quot;;
-
-printf(&quot;begin!\n&quot;);
-
-if((fp1 = fopen(file1,&quot;a+&quot;)) == NULL ){ //fopen返回值为FILE的指针
- //“a+”：Open for reading and appending (writing at end  of  file).
- //The file is created if it does not exist
-        printf(&quot;can&apos;t open %s\n&quot;,file1);
-}
-while(i--)
-filecopy(fp1,buf);//调用 filecopy 将数据写入 file1 文件中
-
-fclose(fp1);
-
-printf(&quot;over!\n&quot;);
-
-return 0;
-}
-
-void filecopy(FILE *ifp,char *buf)
-{
-char c;
-int i,j;
-j = 0;
-i = strlen(buf)-1;    
-while(i--){
-    putc(buf[j],ifp);//int putc(int c, FILE *stream);
-                     //writes the character c, cast to an unsigned char, to stream
-    j++;
-}
-putc(&apos;\n&apos;,ifp);
-}
-</code></pre><p>紧接着编写简单的writepipe.c测试对有名管道得写</p>
-<pre><code>#include &lt;unistd.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;fcntl.h&gt;  
-#include &lt;limits.h&gt;  //PIPE_BUF
-#include &lt;sys/types.h&gt;  
-#include &lt;sys/stat.h&gt;  
-#include &lt;stdio.h&gt;  
-#include &lt;string.h&gt;  
-
-int main()  
-{  
-const char *fifo_name = &quot;my_fifo&quot;;
-char *file1 = &quot;data.txt&quot;;    
-int pipe_fd = -1;  
-int data_fd = -1;  
-int res = 0;  
-const int open_mode = O_WRONLY;  
-int bytes_sent = 0;  
-char buffer[PIPE_BUF + 1];  //最后\0
-
-if(access(fifo_name, F_OK) == -1)  //检验权限函数，看文件是否存在
-{  
-    //管道文件不存在  
-    //创建命名管道  
-    res = mkfifo(fifo_name, 0777);  
-    if(res != 0)  
-    {  
-        fprintf(stderr, &quot;Could not create fifo %s\n&quot;, fifo_name);  
-        exit(EXIT_FAILURE);  
-    }  
-}  
-
-printf(&quot;Process %d opening FIFO O_WRONLY\n&quot;, getpid()); 
-
-//以只写阻塞方式打开FIFO文件，  
-pipe_fd = open(fifo_name, open_mode);
-
-//以只读方式打开数据文件  
-data_fd = open(file1, O_RDONLY);  
-printf(&quot;Process %d result %d\n&quot;, getpid(), pipe_fd);  
-
-if(pipe_fd != -1)  //打开FIFO文件成功
-{  
-    int bytes_read = 0;  
-    //向数据文件读取数据  
-    bytes_read = read(data_fd, buffer, PIPE_BUF);  
-    buffer[bytes_read] = &apos;\0&apos;;  
-    while(bytes_read &gt; 0)  
-    {  
-        //向FIFO文件写数据  
-        res = write(pipe_fd, buffer, bytes_read);  
-        if(res == -1)  
-        {  
-            fprintf(stderr, &quot;Write error on pipe\n&quot;);  
-            exit(EXIT_FAILURE);  
-        }  
-        //累加写的字节数，并继续读取数据  
-        bytes_sent += res;  
-        bytes_read = read(data_fd, buffer, PIPE_BUF);  
-        buffer[bytes_read] = &apos;\0&apos;;  
-    }  
-    close(pipe_fd);  
-    close(data_fd);  
-}  
-else  
-    exit(EXIT_FAILURE);  
-
-printf(&quot;Process %d finished\n&quot;, getpid());  
-exit(EXIT_SUCCESS);  
-} 
-</code></pre><p>最后编写readpipe.c测试对有名管道得读</p>
-<pre><code>#include &lt;unistd.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;stdio.h&gt;  
-#include &lt;fcntl.h&gt;  
-#include &lt;sys/types.h&gt;  
-#include &lt;sys/stat.h&gt;  
-#include &lt;limits.h&gt;  
-#include &lt;string.h&gt;  
-
-int main()  
-{  
-const char *fifo_name = &quot;my_fifo&quot;;  
-int pipe_fd = -1;  
-int data_fd = -1;  
-int res = 0;  
-int open_mode = O_RDONLY;  
-char buffer[PIPE_BUF + 1];  
-int bytes_read = 0;  
-int bytes_write = 0;  
-//清空缓冲数组  
-memset(buffer, &apos;\0&apos;, sizeof(buffer));  
-
-printf(&quot;Process %d opening FIFO O_RDONLY\n&quot;, getpid()); 
-
-//以只读阻塞方式打开管道文件，注意与fifowrite.c文件中的FIFO同名  
-pipe_fd = open(fifo_name, open_mode);  
-//以只写方式创建保存数据的文件  
-data_fd = open(&quot;DataFormFIFO.txt&quot;, O_WRONLY|O_CREAT, 0644);  
-printf(&quot;Process %d result %d\n&quot;,getpid(), pipe_fd);  
-
-if(pipe_fd != -1)  
-{  
-    do  
-    {  
-        //读取FIFO中的数据，并把它保存在文件DataFormFIFO.txt文件中  
-        res = read(pipe_fd, buffer, PIPE_BUF);  
-        bytes_write = write(data_fd, buffer, res);  
-        bytes_read += res;  
-    }while(res &gt; 0);  
-    close(pipe_fd);  
-    close(data_fd);  
-}  
-else  
-    exit(EXIT_FAILURE);  
-
-printf(&quot;Process %d finished, %d bytes read\n&quot;, getpid(), bytes_read);  
-exit(EXIT_SUCCESS);  
-} 
-</code></pre><p>待三个测试文件创建完成，接下来便是编译运行测试：</p>
-<blockquote>
-<p>arm-none-linux-gnueabi-gcc -o creatc creatc.c -static<br>arm-none-linux-gnueabi-gcc -o writepipe writepipe.c -static<br>arm-none-linux-gnueabi-gcc -o readpipe readpipe.c -static</p>
-</blockquote>
-<p>这里介绍 U 盘拷贝代码的方法，也可以编译进文件系统或者使用 NFS 文件系统等。</p>
-<blockquote>
-<p>mount /dev/sda1 /mnt/udisk/<br>加载U盘<br>./mnt/udisk/creatc<br>运行完会创建文本文件</p>
-</blockquote>
-<p>我们可以在终端里 ls 一下，会发现如下图多了data.txt文本：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png" alt=""><br>打开data.txt文本，里面是重复的“I want to study Linux!”，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png" alt=""></p>
-<blockquote>
-<p>使用命令./mnt/udisk/writepipe &amp;<br>后台运行管道写的程序，将data.txt文本中的数据写入管道</p>
-</blockquote>
-<p>我们可以使用linux命令jobs查看程序是否在运行<br><img src="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png" alt=""><br>此时ls,可以看到 my_fifo 管道被创立了。</p>
-<blockquote>
-<p>最后，运行time ./mnt/udisk/readpipe<br>运行并计时从管道读数据需要多长时间</p>
-</blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png" alt=""><br>如上图，共花费0.26s，jobs一下，程序早已运行结束。</p>
-<blockquote>
-<p>ls -la</p>
-</blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png" alt=""><br>可见整个数据量接近2.3M，传输速度接近10M/S.<br>综上，有名管道 fifo 给文件系统提供一个路径，这个路径和管道关联，只要知道这个管道路径，<br>就可以进行文件访问。且传输速度很快。</p>
-<h2 id="五、注意点"><a href="#五、注意点" class="headerlink" title="五、注意点"></a>五、注意点</h2><p>access(const char *pathname,int mode),检测权限函数，具体用法可man access查询一下。<br>PIPE_BUF,在linux中，它的大小是4096bytes,可man 7 pipe 查询。</p>
+        <p>QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。</p>
+<h5 id="二进制文件读写"><a href="#二进制文件读写" class="headerlink" title="二进制文件读写"></a>二进制文件读写</h5><p>QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 PC 上面写入的一个数据流，可以不经过任何处理，直接拿到运行了 Solaris 的 SPARC 机器上读取。由于数据流就是二进制流，因此我们也可以直接读写没有编码的二进制数据，例如图像、视频、音频等。<br>QDataStream既能够存取 C++ 基本类型，如 int、char、short 等，也可以存取复杂的数据类型，例如自定义的类。实际上QDataStream对于类的存储，是将复杂的类分割为很多基本单元实现的。结合QIODevice，QDataStream可以很方便地对文件、网络套接字等进行读写操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void MainWindow::fileFun()</div><div class="line">&#123;</div><div class="line">    QFile file(&quot;binary.dat&quot;);</div><div class="line">    file.open(QIODevice::WriteOnly | QIODevice::Truncate);</div><div class="line">    QDataStream out(&amp;file);                             //将数据序列化</div><div class="line">    out &lt;&lt; QString(tr(&quot;周何骏：&quot;));                      //字符串序列化</div><div class="line">    out &lt;&lt; QDate::fromString(&quot;1994/09/25&quot;, &quot;yyyy/MM/dd&quot;);</div><div class="line">    out &lt;&lt; (qint32)19;                                 	//整数序列化</div><div class="line">    file.close();</div><div class="line">    </div><div class="line">/***********************读***************/</div><div class="line">    file.setFileName(&quot;binary.dat&quot;);</div><div class="line">    if(!file.open(QIODevice::ReadOnly))</div><div class="line">    &#123;</div><div class="line">         qDebug()&lt;&lt; &quot;error!&quot;;</div><div class="line">         return;</div><div class="line">    &#125;</div><div class="line">    QDataStream in(&amp;file);                            	//从文件中读出数据</div><div class="line">    QString name;</div><div class="line">    QDate birthday;</div><div class="line">    qint32 age;</div><div class="line">    in &gt;&gt; name &gt;&gt; birthday &gt;&gt; age;                    	//获取字符串和整数</div><div class="line">    qDebug() &lt;&lt; name &lt;&lt; birthday &lt;&lt; age;</div><div class="line">    file.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>至此，我们介绍了有关QDataStream的相关内容。那么，既然QIODevice提供了read()、readLine()之类的函数，为什么还要有QDataStream呢？QDataStream同QIODevice有什么区别？区别在于，QDataStream提供流的形式，性能上一般比直接调用原始 API 更好一些。我们通过下面一段代码看看什么是流的形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">QFile file(&quot;file.dat&quot;);</div><div class="line">file.open(QIODevice::ReadWrite);</div><div class="line"></div><div class="line">QDataStream stream(&amp;file);</div><div class="line">QString str = &quot;the answer is 42&quot;;</div><div class="line">QString strout;</div><div class="line"></div><div class="line">stream &lt;&lt; str;</div><div class="line">file.flush();</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
+<p>在这段代码中，我们首先向文件中写入数据，紧接着把数据读出来。有什么问题吗？运行之后你会发现，strout实际是空的。为什么没有读取出来？我们不是已经添加了file.flush();语句吗？原因并不在于文件有没有写入，而是在于我们使用的是“流”。所谓流，就像水流一样，它的游标会随着输出向后移动。当使用&lt;&lt;操作符输出之后，流的游标已经到了最后，此时你再去读，当然什么也读不到了。所以你需要在输出之后重新把游标设置为 0 的位置才能够继续读取。具体代码片段如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stream &lt;&lt; str;</div><div class="line">stream.device()-&gt;seek(0);</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
+<h5 id="文本文件读写"><a href="#文本文件读写" class="headerlink" title="文本文件读写"></a>文本文件读写</h5><p>二进制文件比较小巧，却不是人可读的格式。而文本文件是一种人可读的文件。为了操作这种文件，我们需要使用QTextStream类。QTextStream和QDataStream的使用类似，只不过它是操作纯文本文件的。另外，像 XML、HTML 这种，虽然也是文本文件，可以由QTextStream生成，但 Qt 提供了更方便的 XML 操作类，这里就不包括这部分内容了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include &lt;QCoreApplication&gt;</div><div class="line">#include &lt;QFile&gt;</div><div class="line">#include &lt;QTextStream&gt;</div><div class="line">#include &lt;QDebug&gt;</div><div class="line">int main(int argc, char *argv[])</div><div class="line">&#123;</div><div class="line">    QCoreApplication a(argc, argv);</div><div class="line"></div><div class="line">    QFile data(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::WriteOnly|QFile::Truncate))</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        QTextStream out(&amp;data);</div><div class="line">        out.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        out&lt;&lt;QObject::tr(&quot;沙炼:&quot;)&lt;&lt;qSetFieldWidth(10)&lt;&lt;left&lt;&lt;10&lt;&lt;endl;//设置输出字宽10，左对齐</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">/**********将QTextStream（文本文件）写入的都出来**************/</div><div class="line">    data.setFileName(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::ReadOnly))</div><div class="line">    &#123;</div><div class="line">        QTextStream in (&amp;data);</div><div class="line">        in.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        QString str;</div><div class="line">        //int ans ;</div><div class="line">        in &gt;&gt; str ;</div><div class="line">        qDebug() &lt;&lt; str ;</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line">    return a.exec();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们在这里使用了QFile::WriteOnly | QIODevice::Truncate，也就是以只写并且覆盖已有内容的形式操作文件。注意，QIODevice::Truncate会直接将文件内容清空。<br><strong><em>注：默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用中文，需使用<br><code>stream.setCodec(&quot;UTF-8&quot;);</code><br>这样的函数进行设置。</em></strong><br>本文参考了：豆子的 QT学习之路2<br><a href="https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/</a><br><a href="https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/</a><br>以及电子版《QT5开发及实例》</p>
 
       
     </div>
@@ -562,22 +357,24 @@ exit(EXIT_SUCCESS);
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/文本文件，二进制文件，读写/" rel="tag">#文本文件，二进制文件，读写</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/21/为啥会搭建博客/" rel="next" title="为什么要搭建博客">
-                <i class="fa fa-chevron-left"></i> 为什么要搭建博客
+              <a href="/2017/04/10/linux并发服务器/" rel="next" title="linux并发服务器">
+                <i class="fa fa-chevron-left"></i> linux并发服务器
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/03/搭建NFS/" rel="prev" title="搭建NFS及注意点">
-                搭建NFS及注意点 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,10 +389,10 @@ exit(EXIT_SUCCESS);
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/25/linux-fifo/"
-     data-title="测试linux-fifo"
+        <div class="ds-share flat" data-thread-key="2017/04/11/文本流和数据流/"
+     data-title="文本流和数据流"
      data-content=""
-     data-url="http://shalian123.github.io/2017/02/25/linux-fifo/">
+     data-url="http://shalian123.github.io/2017/04/11/文本流和数据流/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -625,8 +422,8 @@ exit(EXIT_SUCCESS);
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/25/linux-fifo/"
-           data-title="测试linux-fifo" data-url="http://shalian123.github.io/2017/02/25/linux-fifo/">
+      <div class="ds-thread" data-thread-key="2017/04/11/文本流和数据流/"
+           data-title="文本流和数据流" data-url="http://shalian123.github.io/2017/04/11/文本流和数据流/">
       </div>
     
   </div>
@@ -775,7 +572,7 @@ exit(EXIT_SUCCESS);
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux进程间通信之有名管道fifo"><span class="nav-number">1.</span> <span class="nav-text">linux进程间通信之有名管道fifo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、硬件工具"><span class="nav-number">1.1.</span> <span class="nav-text">一、硬件工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、软件工具"><span class="nav-number">1.2.</span> <span class="nav-text">二、软件工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、读本文前得了解的知识"><span class="nav-number">1.3.</span> <span class="nav-text">三、读本文前得了解的知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、有名管道-fifo"><span class="nav-number">1.4.</span> <span class="nav-text">四、有名管道 fifo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、注意点"><span class="nav-number">1.5.</span> <span class="nav-text">五、注意点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#二进制文件读写"><span class="nav-number">1.</span> <span class="nav-text">二进制文件读写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文本文件读写"><span class="nav-number">2.</span> <span class="nav-text">文本文件读写</span></a></li></ol></div>
             
           </div>
         </section>
