@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="访问网络,json,API," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Qt 进行网络访问的类是QNetworkAccessManager,QNetworkAccessManager类允许应用程序发送网络请求以及接受服务器的响应。事实上，Qt 的整个访问网络 API 都是围绕着这个类进行的。QNetworkAccessManager保存发送的请求的最基本的配置信息，包含了代理和缓存的设置。最好的是，这个 API 本身就是异步设计，这意味着我们不需要自己为其开启线程，以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT实现简单的天气预报">
+<meta property="og:url" content="http://shalian123.github.io/2017/05/05/QT实现简单的天气预报/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="Qt 进行网络访问的类是QNetworkAccessManager,QNetworkAccessManager类允许应用程序发送网络请求以及接受服务器的响应。事实上，Qt 的整个访问网络 API 都是围绕着这个类进行的。QNetworkAccessManager保存发送的请求的最基本的配置信息，包含了代理和缓存的设置。最好的是，这个 API 本身就是异步设计，这意味着我们不需要自己为其开启线程，以">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/WX%7D@H%250$OFOPFI%5D$0%25AE901.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/~@%28GSJZI@NMK%7BV~Y$YBOJUA.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/url%E7%BC%96%E7%A0%81.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/8%7DPG7BQ76JQ%29R20%5DE%608%7D0B2.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/8$B$VNGGW%28%7DW~%29%259E@W%25X%7BR.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/G2@B9OIGUOBUCB%60_A%5BG0WWP.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/@%6037TE2%7B05ZAYR5%29VAQ%7B45O.png">
+<meta property="og:updated_time" content="2017-05-05T11:25:31.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QT实现简单的天气预报">
+<meta name="twitter:description" content="Qt 进行网络访问的类是QNetworkAccessManager,QNetworkAccessManager类允许应用程序发送网络请求以及接受服务器的响应。事实上，Qt 的整个访问网络 API 都是围绕着这个类进行的。QNetworkAccessManager保存发送的请求的最基本的配置信息，包含了代理和缓存的设置。最好的是，这个 API 本身就是异步设计，这意味着我们不需要自己为其开启线程，以">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/WX%7D@H%250$OFOPFI%5D$0%25AE901.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> QT实现简单的天气预报 | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                QT实现简单的天气预报
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-05T16:16:26+08:00" content="2017-05-05">
+              2017-05-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/05/QT实现简单的天气预报/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/QT实现简单的天气预报/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Qt 进行网络访问的类是QNetworkAccessManager,QNetworkAccessManager类允许应用程序发送网络请求以及接受服务器的响应。事实上，Qt 的整个访问网络 API 都是围绕着这个类进行的。QNetworkAccessManager保存发送的请求的最基本的配置信息，包含了代理和缓存的设置。最好的是，这个 API 本身就是异步设计，这意味着我们不需要自己为其开启线程，以防止界面被锁死。<strong>（补充：Qt 的界面活动是在一个主线程中进行。网络访问是一个相当耗时的操作，如果整个网络访问的过程以同步的形式在主线程进行，则当网络访问没有返回时，主线程会被阻塞，界面就会被锁死，不能执行任何响应，甚至包括一个代表响应进度的滚动条都会被卡死在那里。）</strong>QNetworkAccessManager是使用信号槽来达到这一目的的。<br>在掌握了访问网络和json解析等，我在此简易做了一个天气预报，既添加了学习趣味，也算是一种检验吧。</p>
+<h4 id="一、API"><a href="#一、API" class="headerlink" title="一、API"></a>一、API</h4><p>通过天气api获取当前天气，api网上有很多，我在此注册了一个 <a href="http://www.haoservice.com/" target="_blank" rel="external">http://www.haoservice.com/</a> 账号，可以免费申请数据，由于是体验用户，可以享受免费请求50次（调试的时候注意，如果调试访问超过50次就得花钱了）。<br>需要自己申请apikey,同时获取到的天气api数据是Jason格式的。<br><img src="http://ols4zt49w.bkt.clouddn.com/WX%7D@H%250$OFOPFI%5D$0%25AE901.png" alt=""></p>
+<p><img src="http://ols4zt49w.bkt.clouddn.com/~@%28GSJZI@NMK%7BV~Y$YBOJUA.png" alt=""></p>
+<p><strong>API发送请求</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">//发送请求</div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    manage = new QNetworkAccessManager(this);</div><div class="line">    QNetworkRequest network_request;</div><div class="line"></div><div class="line"></div><div class="line">    /*设置发送数据*/</div><div class="line"></div><div class="line">   //QString cityName = &quot;杭州&quot;;</div><div class="line"></div><div class="line">   network_request.setUrl(QUrl(&quot;http://apis.haoservice.com/weather?cityname=%E6%9D%AD%E5%B7%9E&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;));</div><div class="line"></div><div class="line"></div><div class="line">   /* 注意：当url里有中文或空格之类的，需要用一些在线转码工具进行url编码，这里纠结了很久*/</div><div class="line">   // network_request.setUrl(QUrl(QString(&quot; http://apis.haoservice.com/weather?cityname=1%&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;).arg(cityName)));</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    /*发送get网络请求*/</div><div class="line">    manage-&gt;get(network_request);</div><div class="line"></div><div class="line">    /*建立connect，replyFinished为自定义槽函数，获取api发回来的天气信息（Jason）格式*/</div><div class="line">    connect(manage,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里我一开始遇到了一个问题，很容易忽视，因为我的url中有中文的存在，每次访问都会失败，但是将网址输入浏览器却能有响应，这是因为浏览器会自动解析编码url，但是当你在代码中想访问请求时必须得编码，在此可以用在线编码软件，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/url%E7%BC%96%E7%A0%81.png" alt=""></p>
+<p><strong>获取API传回得数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">void Widget::getReplyFinished(QNetworkReply *reply)</div><div class="line">&#123;</div><div class="line">    if(reply-&gt;error()!= QNetworkReply::NoError)</div><div class="line">       qDebug() &lt;&lt; QStringLiteral(&quot;响应失败&quot;);</div><div class="line"></div><div class="line">    QByteArray bytes = reply-&gt;readAll();</div><div class="line">    QJsonParseError jsonError;</div><div class="line">    QJsonDocument document = QJsonDocument::fromJson(bytes,&amp;jsonError);</div><div class="line">    if (jsonError.error != QJsonParseError::NoError) &#123;</div><div class="line">            qDebug() &lt;&lt; QStringLiteral(&quot;解析Json失败&quot;);//此处可以验证是否获取到天气信息（json格式）</div><div class="line">            qDebug() &lt;&lt; bytes;//如果API响应的不是json格式的数据，则不用解析，直接输出</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    QJsonObject data = document.object();</div><div class="line">    qDebug() &lt;&lt; &quot;天气Jason：&quot; &lt;&lt; data;</div><div class="line"></div><div class="line">    getTodayWeatherInfo(data);//获取当日天气信息</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">//获取当日天气信息，即解析json</div><div class="line">void Widget::getTodayWeatherInfo(QJsonObject data)</div><div class="line">&#123;</div><div class="line">    QJsonObject today = data.value(&quot;result&quot;).toObject().value(&quot;today&quot;).toObject();</div><div class="line">    WeatherInfo todayInfo;</div><div class="line">    todayInfo.city = today.value(&quot;city&quot;).toString();//北京</div><div class="line">    todayInfo.date = today.value(&quot;date_y&quot;).toString();//2017年05月04日</div><div class="line">    todayInfo.week = today.value(&quot;week&quot;).toString();//星期</div><div class="line">    todayInfo.type = today.value(&quot;weather&quot;).toString();//阵雨</div><div class="line">    todayInfo.curTemp = today.value(&quot;temperature&quot;).toString();//温度</div><div class="line">    todayInfo.fengli = today.value(&quot;wind&quot;).toString();//风</div><div class="line"></div><div class="line"></div><div class="line">    qDebug() &lt;&lt; &quot;getTodayWeatherInfo:\n&quot; &lt;&lt;todayInfo.city&lt;&lt; todayInfo.date &lt;&lt; todayInfo.week &lt;&lt; todayInfo.type &lt;&lt; todayInfo.curTemp</div><div class="line">            &lt;&lt;todayInfo.fengli ;</div><div class="line"></div><div class="line">    QStringList todayInfoList;//在文本框里显示</div><div class="line">    todayInfoList &lt;&lt;todayInfo.city &lt;&lt; todayInfo.date + todayInfo.week &lt;&lt; todayInfo.type &lt;&lt; todayInfo.curTemp</div><div class="line">                   &lt;&lt; todayInfo.fengli ;</div><div class="line">    for(int i=0; i &lt; todayInfoList.size(); i++)</div><div class="line">    &#123;</div><div class="line">        ui-&gt;textBrowser-&gt;append(todayInfoList.at(i));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/8%7DPG7BQ76JQ%29R20%5DE%608%7D0B2.png" alt=""><br>返回的json数据如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;error_code&quot;: 0,</div><div class="line">    &quot;reason&quot;: &quot;成功&quot;,</div><div class="line">    &quot;result&quot;: &#123;</div><div class="line">        &quot;sk&quot;: &#123;</div><div class="line">            &quot;temp&quot;: &quot;25&quot;,</div><div class="line">            &quot;wind_direction&quot;: &quot;北风&quot;,</div><div class="line">            &quot;wind_strength&quot;: &quot;4级&quot;,</div><div class="line">            &quot;humidity&quot;: &quot;57&quot;,</div><div class="line">            &quot;time&quot;: &quot;16:34&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;today&quot;: &#123;</div><div class="line">            &quot;city&quot;: &quot;杭州&quot;,</div><div class="line">            &quot;date_y&quot;: &quot;2017年05月05日&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期五&quot;,</div><div class="line">            &quot;temperature&quot;: &quot;17~27&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 3-4 级&quot;,</div><div class="line">            &quot;dressing_index&quot;: &quot;舒适&quot;,</div><div class="line">            &quot;dressing_advice&quot;: &quot;建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。&quot;,</div><div class="line">            &quot;uv_index&quot;: &quot;弱&quot;,</div><div class="line">            &quot;comfort_index&quot;: &quot;--&quot;,</div><div class="line">            &quot;wash_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;travel_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;exercise_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;drying_index&quot;: &quot;--&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;future&quot;: [&#123;</div><div class="line">            &quot;temperature&quot;: &quot;15~23&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;02&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期六&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170506&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;16~25&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;02&quot;,</div><div class="line">            &quot;fb&quot;: &quot;03&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期日&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170507&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;17~22&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阵雨&quot;,</div><div class="line">            &quot;fa&quot;: &quot;03&quot;,</div><div class="line">            &quot;fb&quot;: &quot;02&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期一&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170508&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;17~24&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期二&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170509&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;19~32&quot;,</div><div class="line">            &quot;weather&quot;: &quot;晴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;00&quot;,</div><div class="line">            &quot;fb&quot;: &quot;00&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期三&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170510&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;21~31&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;04&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期四&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170511&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;20~28&quot;,</div><div class="line">            &quot;weather&quot;: &quot;雷阵雨&quot;,</div><div class="line">            &quot;fa&quot;: &quot;04&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期五&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170512&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;20~29&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;00&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期六&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170513&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;19~29&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期日&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170514&quot;</div><div class="line">        &#125;]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我只解析了显示了today的一部分，并用文本框textbrowser里显示</p>
+<h4 id="二、换肤"><a href="#二、换肤" class="headerlink" title="二、换肤"></a>二、换肤</h4><p>这里我主要设置了背景图片，并且想要达到点击换肤的效果。<br>widget设置显示背景图片我这里尝试了三种方法：<br>方法一：如果widget是顶层窗口（无父类的窗口),设置背景图片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/* 如果widget是顶层窗口（无父类的窗口),设置背景图片*/</div><div class="line">           //方法一：</div><div class="line">     /* QImage _image;</div><div class="line">      _image.load(&quot;:/image/images/UI1.png&quot;);</div><div class="line">      setAutoFillBackground(true);   // 这个属性一定要设置</div><div class="line">      QPalette pal(palette());</div><div class="line">      pal.setBrush(QPalette::Window, QBrush(_image.scaled(size(), Qt::IgnoreAspectRatio,</div><div class="line">                          Qt::SmoothTransformation)));</div><div class="line">      setPalette(pal);</div><div class="line">     */</div></pre></td></tr></table></figure></p>
+<p>方法二：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">     // 方法二：</div><div class="line">/*QPalette palette;</div><div class="line">//palette.setColor(QPalette::Background, QColor(192,253,123));//设置背景颜色</div><div class="line">  palette.setBrush(QPalette::Background, QBrush(QPixmap(&quot;:/image/images/UI1.png&quot;)));</div><div class="line"></div><div class="line">      //上面一句相当于下面两句</div><div class="line">//pixmap.load(&quot;:/image/images/UI1.png&quot;);</div><div class="line">//palette.setBrush(QPalette::Background, QBrush(pixmap));</div><div class="line"></div><div class="line">  setPalette(palette);</div><div class="line">*/</div></pre></td></tr></table></figure></p>
+<p>方法三：利用QPainter的drawPixmap函数，这种方法只能用在paintEvent()函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">   //方法三：利用QPainter的drawPixmap函数，这种方法只能用在paintEvent()函数中</div><div class="line">void Widget::paintEvent(QPaintEvent *)</div><div class="line">&#123;</div><div class="line">    QPainter painter(this);</div><div class="line">   // QPixmap pixmap(&quot;:/image/images/UI.png&quot;);</div><div class="line">    painter.drawPixmap(0, 0, pixmap);//绘制UI</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里为了达到换肤的效果，我采用了第三种方法。同时初始背景图片</p>
+<blockquote>
+<p>pixmap.load(“:/image/images/UI0”); //初始背景图片<br>// resize(pixmap.size());//保留图片大小<br>uid=0;</p>
+</blockquote>
+<p>下面是简单的换肤程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//简单换肤</div><div class="line">void Widget::on_updateButton_clicked()</div><div class="line">&#123;</div><div class="line">    //选择UI的id</div><div class="line">    if(uid == 3)</div><div class="line">        uid = 0;</div><div class="line">    else</div><div class="line">        uid = uid + 1;</div><div class="line">    //拼凑成UI路径</div><div class="line">    QString UIpath = tr(&quot;:/image/images/UI%1&quot;).arg(uid);</div><div class="line">    //qDebug()&lt;&lt;UIpath;</div><div class="line">    //加载UI</div><div class="line">    pixmap.load(UIpath);</div><div class="line">    //产生paintEvent重绘UI</div><div class="line">    update();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5.png" alt=""><br> 此处是由于在初始化时没有注释掉  <code>// resize(pixmap.size());//保留图片大小</code><br> 在注释掉后，界面明显有了改善：<br> <img src="http://ols4zt49w.bkt.clouddn.com/8$B$VNGGW%28%7DW~%29%259E@W%25X%7BR.png" alt=""><br> <img src="http://ols4zt49w.bkt.clouddn.com/G2@B9OIGUOBUCB%60_A%5BG0WWP.png" alt=""></p>
+<h4 id="三、展望"><a href="#三、展望" class="headerlink" title="三、展望"></a>三、展望</h4><p>到此，我想实现的效果已经基本实现，所学的知识也有了检验，但是偶然在网上看到一个帖子，里面有一个更加完善的demo,在此我把它贴出，代码量不是太多，功能和我的差不多，但是他的布局和界面优化显示明显花了更大的功夫。详细代码参考这里：<a href="https://github.com/ghsxl/QT5-Weather" target="_blank" rel="external">github</a><br>最终的效果：<br><img src="http://ols4zt49w.bkt.clouddn.com/@%6037TE2%7B05ZAYR5%29VAQ%7B45O.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/访问网络/" rel="tag">#访问网络</a>
+          
+            <a href="/tags/json/" rel="tag">#json</a>
+          
+            <a href="/tags/API/" rel="tag">#API</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/23/QT之http网络编程，json访问应答/" rel="next" title="QT之http网络编程，json访问应答">
+                <i class="fa fa-chevron-left"></i> QT之http网络编程，json访问应答
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/05/QT实现简单的天气预报/"
+     data-title="QT实现简单的天气预报"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/05/05/QT实现简单的天气预报/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/05/QT实现简单的天气预报/"
+           data-title="QT实现简单的天气预报" data-url="http://shalian123.github.io/2017/05/05/QT实现简单的天气预报/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、API"><span class="nav-number">1.</span> <span class="nav-text">一、API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、换肤"><span class="nav-number">2.</span> <span class="nav-text">二、换肤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、展望"><span class="nav-number">3.</span> <span class="nav-text">三、展望</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
