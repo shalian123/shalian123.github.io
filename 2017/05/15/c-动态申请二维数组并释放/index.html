@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="动态二维数组,c++," />
 
 
 
@@ -86,32 +86,28 @@
 
 
 
-<meta name="description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
+<meta name="description" content="在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。c++中有三种方法来动态申请多维数组
+(1)C中的malloc/free
+(2)C++中的new/delete
+(3)STL容器中的vector
+第一种malloc/free动态开辟一维数组1234567891011121314151617181920">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试linux-fifo">
-<meta property="og:url" content="http://shalian123.github.io/2017/02/25/linux-fifo/index.html">
+<meta property="og:title" content="c++动态申请一维、二维数组并释放">
+<meta property="og:url" content="http://shalian123.github.io/2017/05/15/c-动态申请二维数组并释放/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png">
-<meta property="og:updated_time" content="2017-03-13T07:26:31.469Z">
+<meta property="og:description" content="在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。c++中有三种方法来动态申请多维数组
+(1)C中的malloc/free
+(2)C++中的new/delete
+(3)STL容器中的vector
+第一种malloc/free动态开辟一维数组1234567891011121314151617181920">
+<meta property="og:updated_time" content="2017-05-15T02:07:06.259Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试linux-fifo">
-<meta name="twitter:description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
-一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
-二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
-三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
+<meta name="twitter:title" content="c++动态申请一维、二维数组并释放">
+<meta name="twitter:description" content="在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。c++中有三种方法来动态申请多维数组
+(1)C中的malloc/free
+(2)C++中的new/delete
+(3)STL容器中的vector
+第一种malloc/free动态开辟一维数组1234567891011121314151617181920">
 
 
 
@@ -129,7 +125,7 @@
   };
 </script>
 
-  <title> 测试linux-fifo | Wind </title>
+  <title> c++动态申请一维、二维数组并释放 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +275,7 @@
             
             
               
-                测试linux-fifo
+                c++动态申请一维、二维数组并释放
               
             
           </h1>
@@ -291,8 +287,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-25T20:19:17+08:00" content="2017-02-25">
-              2017-02-25
+            <time itemprop="dateCreated" datetime="2017-05-15T08:59:59+08:00" content="2017-05-15">
+              2017-05-15
             </time>
           </span>
 
@@ -305,8 +301,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
                   </a>
                 </span>
 
@@ -321,8 +317,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/25/linux-fifo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/25/linux-fifo/" itemprop="commentsCount"></span>
+                <a href="/2017/05/15/c-动态申请二维数组并释放/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/15/c-动态申请二维数组并释放/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -345,204 +341,15 @@
       
 
       
-        <h1 id="linux进程间通信之有名管道fifo"><a href="#linux进程间通信之有名管道fifo" class="headerlink" title="linux进程间通信之有名管道fifo"></a>linux进程间通信之有名管道fifo</h1><p>本文通过具体的实例带你深入了解进程通信里的有名管道通信</p>
-<h2 id="一、硬件工具"><a href="#一、硬件工具" class="headerlink" title="一、硬件工具"></a>一、硬件工具</h2><p>一块已经烧录最小系统进去的开发板<br>pc机<br>U盘或TF卡或NFS</p>
-<h2 id="二、软件工具"><a href="#二、软件工具" class="headerlink" title="二、软件工具"></a>二、软件工具</h2><p>ubuntu及虚拟机<br>交叉编译器（此处采用的是Arm-2009q3）<br>编辑器（此处采用的是notepad）<br>超级终端<br>vim编辑器</p>
-<h2 id="三、读本文前得了解的知识"><a href="#三、读本文前得了解的知识" class="headerlink" title="三、读本文前得了解的知识"></a>三、读本文前得了解的知识</h2><p>交叉编译，文件函数的操作（open，write，read等），对linux进程的了解，fork函数 mkfifo函数等。具体还有疑问可以在评论中一起交流。</p>
-<h2 id="四、有名管道-fifo"><a href="#四、有名管道-fifo" class="headerlink" title="四、有名管道 fifo"></a>四、有名管道 fifo</h2><p>有名管道可以实现无亲缘关系的通信（无名管道只能用于有亲缘进程之间的通信）。有名管道实现进程间通信的速度很快，同时遵行先进先出原则。</p>
-<blockquote>
-<p>man 3 mkfifo</p>
-</blockquote>
-<p>我们可以看到如下图mkfifo函数得用法：<br><img src="http://ols4zt49w.bkt.clouddn.com/mkfifo.png" alt="mkfifo"></p>
-<p>为了更好的体验有名管道得通信，我们首先编写creatc.c测试mkfifo函数。</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/stat.h&gt;
-#include &lt;fcntl.h&gt;
-
-void filecopy(FILE *,char *);
-
-int main(void)
-{
-FILE *fp1;
-long int i = 100000;
-char buf[] = &quot;I want to study Linux!\n&quot;;
-char *file1 = &quot;data.txt&quot;;
-
-printf(&quot;begin!\n&quot;);
-
-if((fp1 = fopen(file1,&quot;a+&quot;)) == NULL ){ //fopen返回值为FILE的指针
- //“a+”：Open for reading and appending (writing at end  of  file).
- //The file is created if it does not exist
-        printf(&quot;can&apos;t open %s\n&quot;,file1);
-}
-while(i--)
-filecopy(fp1,buf);//调用 filecopy 将数据写入 file1 文件中
-
-fclose(fp1);
-
-printf(&quot;over!\n&quot;);
-
-return 0;
-}
-
-void filecopy(FILE *ifp,char *buf)
-{
-char c;
-int i,j;
-j = 0;
-i = strlen(buf)-1;    
-while(i--){
-    putc(buf[j],ifp);//int putc(int c, FILE *stream);
-                     //writes the character c, cast to an unsigned char, to stream
-    j++;
-}
-putc(&apos;\n&apos;,ifp);
-}
-</code></pre><p>紧接着编写简单的writepipe.c测试对有名管道得写</p>
-<pre><code>#include &lt;unistd.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;fcntl.h&gt;  
-#include &lt;limits.h&gt;  //PIPE_BUF
-#include &lt;sys/types.h&gt;  
-#include &lt;sys/stat.h&gt;  
-#include &lt;stdio.h&gt;  
-#include &lt;string.h&gt;  
-
-int main()  
-{  
-const char *fifo_name = &quot;my_fifo&quot;;
-char *file1 = &quot;data.txt&quot;;    
-int pipe_fd = -1;  
-int data_fd = -1;  
-int res = 0;  
-const int open_mode = O_WRONLY;  
-int bytes_sent = 0;  
-char buffer[PIPE_BUF + 1];  //最后\0
-
-if(access(fifo_name, F_OK) == -1)  //检验权限函数，看文件是否存在
-{  
-    //管道文件不存在  
-    //创建命名管道  
-    res = mkfifo(fifo_name, 0777);  
-    if(res != 0)  
-    {  
-        fprintf(stderr, &quot;Could not create fifo %s\n&quot;, fifo_name);  
-        exit(EXIT_FAILURE);  
-    }  
-}  
-
-printf(&quot;Process %d opening FIFO O_WRONLY\n&quot;, getpid()); 
-
-//以只写阻塞方式打开FIFO文件，  
-pipe_fd = open(fifo_name, open_mode);
-
-//以只读方式打开数据文件  
-data_fd = open(file1, O_RDONLY);  
-printf(&quot;Process %d result %d\n&quot;, getpid(), pipe_fd);  
-
-if(pipe_fd != -1)  //打开FIFO文件成功
-{  
-    int bytes_read = 0;  
-    //向数据文件读取数据  
-    bytes_read = read(data_fd, buffer, PIPE_BUF);  
-    buffer[bytes_read] = &apos;\0&apos;;  
-    while(bytes_read &gt; 0)  
-    {  
-        //向FIFO文件写数据  
-        res = write(pipe_fd, buffer, bytes_read);  
-        if(res == -1)  
-        {  
-            fprintf(stderr, &quot;Write error on pipe\n&quot;);  
-            exit(EXIT_FAILURE);  
-        }  
-        //累加写的字节数，并继续读取数据  
-        bytes_sent += res;  
-        bytes_read = read(data_fd, buffer, PIPE_BUF);  
-        buffer[bytes_read] = &apos;\0&apos;;  
-    }  
-    close(pipe_fd);  
-    close(data_fd);  
-}  
-else  
-    exit(EXIT_FAILURE);  
-
-printf(&quot;Process %d finished\n&quot;, getpid());  
-exit(EXIT_SUCCESS);  
-} 
-</code></pre><p>最后编写readpipe.c测试对有名管道得读</p>
-<pre><code>#include &lt;unistd.h&gt;  
-#include &lt;stdlib.h&gt;  
-#include &lt;stdio.h&gt;  
-#include &lt;fcntl.h&gt;  
-#include &lt;sys/types.h&gt;  
-#include &lt;sys/stat.h&gt;  
-#include &lt;limits.h&gt;  
-#include &lt;string.h&gt;  
-
-int main()  
-{  
-const char *fifo_name = &quot;my_fifo&quot;;  
-int pipe_fd = -1;  
-int data_fd = -1;  
-int res = 0;  
-int open_mode = O_RDONLY;  
-char buffer[PIPE_BUF + 1];  
-int bytes_read = 0;  
-int bytes_write = 0;  
-//清空缓冲数组  
-memset(buffer, &apos;\0&apos;, sizeof(buffer));  
-
-printf(&quot;Process %d opening FIFO O_RDONLY\n&quot;, getpid()); 
-
-//以只读阻塞方式打开管道文件，注意与fifowrite.c文件中的FIFO同名  
-pipe_fd = open(fifo_name, open_mode);  
-//以只写方式创建保存数据的文件  
-data_fd = open(&quot;DataFormFIFO.txt&quot;, O_WRONLY|O_CREAT, 0644);  
-printf(&quot;Process %d result %d\n&quot;,getpid(), pipe_fd);  
-
-if(pipe_fd != -1)  
-{  
-    do  
-    {  
-        //读取FIFO中的数据，并把它保存在文件DataFormFIFO.txt文件中  
-        res = read(pipe_fd, buffer, PIPE_BUF);  
-        bytes_write = write(data_fd, buffer, res);  
-        bytes_read += res;  
-    }while(res &gt; 0);  
-    close(pipe_fd);  
-    close(data_fd);  
-}  
-else  
-    exit(EXIT_FAILURE);  
-
-printf(&quot;Process %d finished, %d bytes read\n&quot;, getpid(), bytes_read);  
-exit(EXIT_SUCCESS);  
-} 
-</code></pre><p>待三个测试文件创建完成，接下来便是编译运行测试：</p>
-<blockquote>
-<p>arm-none-linux-gnueabi-gcc -o creatc creatc.c -static<br>arm-none-linux-gnueabi-gcc -o writepipe writepipe.c -static<br>arm-none-linux-gnueabi-gcc -o readpipe readpipe.c -static</p>
-</blockquote>
-<p>这里介绍 U 盘拷贝代码的方法，也可以编译进文件系统或者使用 NFS 文件系统等。</p>
-<blockquote>
-<p>mount /dev/sda1 /mnt/udisk/<br>加载U盘<br>./mnt/udisk/creatc<br>运行完会创建文本文件</p>
-</blockquote>
-<p>我们可以在终端里 ls 一下，会发现如下图多了data.txt文本：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png" alt=""><br>打开data.txt文本，里面是重复的“I want to study Linux!”，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png" alt=""></p>
-<blockquote>
-<p>使用命令./mnt/udisk/writepipe &amp;<br>后台运行管道写的程序，将data.txt文本中的数据写入管道</p>
-</blockquote>
-<p>我们可以使用linux命令jobs查看程序是否在运行<br><img src="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png" alt=""><br>此时ls,可以看到 my_fifo 管道被创立了。</p>
-<blockquote>
-<p>最后，运行time ./mnt/udisk/readpipe<br>运行并计时从管道读数据需要多长时间</p>
-</blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png" alt=""><br>如上图，共花费0.26s，jobs一下，程序早已运行结束。</p>
-<blockquote>
-<p>ls -la</p>
-</blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png" alt=""><br>可见整个数据量接近2.3M，传输速度接近10M/S.<br>综上，有名管道 fifo 给文件系统提供一个路径，这个路径和管道关联，只要知道这个管道路径，<br>就可以进行文件访问。且传输速度很快。</p>
-<h2 id="五、注意点"><a href="#五、注意点" class="headerlink" title="五、注意点"></a>五、注意点</h2><p>access(const char *pathname,int mode),检测权限函数，具体用法可man access查询一下。<br>PIPE_BUF,在linux中，它的大小是4096bytes,可man 7 pipe 查询。</p>
+        <p>在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。<br>c++中有三种方法来动态申请多维数组</p>
+<p><strong>(1)C中的malloc/free</strong></p>
+<p><strong>(2)C++中的new/delete</strong></p>
+<p><strong>(3)STL容器中的vector</strong></p>
+<p><strong>第一种malloc/free</strong><br>动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">动态开辟一维数组</div><div class="line">void dynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int m;</div><div class="line">	int i;</div><div class="line">	int *p;</div><div class="line">    </div><div class="line">	printf(&quot;请输入开辟的数组长度：&quot;);</div><div class="line">	scanf(&quot;%d&quot;,&amp;m);</div><div class="line">	p = (int*)malloc(sizeof(int)*m);//动态开辟</div><div class="line"></div><div class="line">	printf(&quot;请输入数据：&quot;);</div><div class="line">	for(i = 0; i &lt; m ; i++)</div><div class="line">		scanf(&quot;%d&quot;,&amp;p[i]);</div><div class="line"></div><div class="line">    printf(&quot;输出数据：\n&quot;);</div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">		printf(&quot;%d &quot;,p[i]);</div><div class="line">	free(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">void dynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	int i,j;</div><div class="line">	int **p;</div><div class="line"></div><div class="line">    printf(&quot;请输入数组行和列：&quot;);</div><div class="line">	scanf(&quot;%d%d&quot;,&amp;m,&amp;n);</div><div class="line"></div><div class="line">	p = (int**)malloc(sizeof(int*)*m); //开辟行</div><div class="line"></div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		*(p+i) = (int*)malloc(sizeof(int)*n);//开辟列</div><div class="line">	&#125;</div><div class="line">	//输入数据</div><div class="line">	printf(&quot;请输入数：&quot;);</div><div class="line">    for(i = 0 ; i &lt; m;i++)</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">			scanf(&quot;%d&quot;,&amp;p[i][j]);</div><div class="line">    </div><div class="line">	//输出数据</div><div class="line">	for(i = 0 ; i &lt; m;i++)</div><div class="line">	&#123;</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">		&#123;</div><div class="line">		   printf(&quot;%3d &quot;,p[i][j]);</div><div class="line">		&#125;</div><div class="line">		printf(&quot;\n&quot;);</div><div class="line">	&#125;</div><div class="line">	//释放开辟的二维空间</div><div class="line">	for(i = 0; i &lt; m;i++)</div><div class="line">		free(*(p+i));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>第二种：new/delete</strong><br>1.动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int len;</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入长度：&quot;;</div><div class="line">	cin&gt;&gt;len;</div><div class="line">	</div><div class="line">	int *p = new int[len];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">    for(int i = 0; i &lt; len; i++)</div><div class="line">		cin&gt;&gt;p[i];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(i = 0; i &lt; len; i++)</div><div class="line">		cout&lt;&lt;setw(4)&lt;&lt;p[i];</div><div class="line">	</div><div class="line">	delete[] p;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m, n;</div><div class="line">	cout &lt;&lt; &quot;请输入行和列：&quot;;</div><div class="line">	cin &gt;&gt; m &gt;&gt; n;</div><div class="line"></div><div class="line">	//动态开辟空间</div><div class="line">	int **p = new int*[m]; //开辟行</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		p[i] = new int[n]; //开辟列</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入数据：&quot;;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	for (int j = 0; j &lt; n; j++)</div><div class="line">		cin &gt;&gt; p[i][j];</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;输出数据：&quot; &lt;&lt; endl;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		for (int j = 0; j &lt; n; j++)</div><div class="line">			cout &lt;&lt; setw(3) &lt;&lt; p[i][j];</div><div class="line">		cout &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//释放开辟的资源</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		delete[] p[i];</div><div class="line">	delete[] p;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>第三种：STL中的vector</strong><br>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void VectorCreate()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	cout&lt;&lt;&quot;请输入行和列：&quot;;</div><div class="line">	cin&gt;&gt;m&gt;&gt;n;</div><div class="line">	</div><div class="line">	//注意下面这一行：vector &lt;int后两个 &quot;&gt; &quot;之间要有空格！否则会被认为是重载 &quot;&gt; &gt; &quot;。 </div><div class="line">    vector&lt;vector&lt;int&gt; &gt; p(m,vector&lt;int&gt;(n));</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">	for(int i = 0 ; i &lt; m ; i++)</div><div class="line">		for(int j = 0; j &lt; n; j++)</div><div class="line">			cin&gt;&gt;p[i][j];</div><div class="line">		</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">    	for(int j = 0; j &lt; n; j++)</div><div class="line">			cout&lt;&lt;setw(3)&lt;&lt;p[i][j];</div><div class="line">		cout&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line">			</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -562,22 +369,26 @@ exit(EXIT_SUCCESS);
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/动态二维数组/" rel="tag">#动态二维数组</a>
+          
+            <a href="/tags/c/" rel="tag">#c++</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/21/为啥会搭建博客/" rel="next" title="为什么要搭建博客">
-                <i class="fa fa-chevron-left"></i> 为什么要搭建博客
+              <a href="/2017/05/05/QT实现简单的天气预报/" rel="next" title="QT实现简单的天气预报">
+                <i class="fa fa-chevron-left"></i> QT实现简单的天气预报
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/03/搭建NFS/" rel="prev" title="搭建NFS及注意点">
-                搭建NFS及注意点 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,10 +403,10 @@ exit(EXIT_SUCCESS);
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/25/linux-fifo/"
-     data-title="测试linux-fifo"
+        <div class="ds-share flat" data-thread-key="2017/05/15/c-动态申请二维数组并释放/"
+     data-title="c++动态申请一维、二维数组并释放"
      data-content=""
-     data-url="http://shalian123.github.io/2017/02/25/linux-fifo/">
+     data-url="http://shalian123.github.io/2017/05/15/c-动态申请二维数组并释放/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -625,8 +436,8 @@ exit(EXIT_SUCCESS);
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/25/linux-fifo/"
-           data-title="测试linux-fifo" data-url="http://shalian123.github.io/2017/02/25/linux-fifo/">
+      <div class="ds-thread" data-thread-key="2017/05/15/c-动态申请二维数组并释放/"
+           data-title="c++动态申请一维、二维数组并释放" data-url="http://shalian123.github.io/2017/05/15/c-动态申请二维数组并释放/">
       </div>
     
   </div>
@@ -775,7 +586,7 @@ exit(EXIT_SUCCESS);
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux进程间通信之有名管道fifo"><span class="nav-number">1.</span> <span class="nav-text">linux进程间通信之有名管道fifo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、硬件工具"><span class="nav-number">1.1.</span> <span class="nav-text">一、硬件工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、软件工具"><span class="nav-number">1.2.</span> <span class="nav-text">二、软件工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、读本文前得了解的知识"><span class="nav-number">1.3.</span> <span class="nav-text">三、读本文前得了解的知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、有名管道-fifo"><span class="nav-number">1.4.</span> <span class="nav-text">四、有名管道 fifo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、注意点"><span class="nav-number">1.5.</span> <span class="nav-text">五、注意点</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
