@@ -1,0 +1,742 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="网络编程,qt,ftp," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="FTP(文件传输协议)是一个主要用来浏览远程目录和传输文件的协议。FTP使用两个网络连接，一个用来发送命令，一个用来输出数据。FTP协议有一个状态，并且需要客户端在传输文件之前发送一些命令。FTP客户端建立一个连接，并且在整个会话期间一直保持打开。在每个会话期间可以发生多个传输。
+注意：在QT5之前，为了方便网络编程，Qt 提供了 Network 模块。该模块包含了许多类，例如：QFtp类 - 能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT网络编程之FTP">
+<meta property="og:url" content="http://shalian123.github.io/2017/05/15/QT网络编程之FTP/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="FTP(文件传输协议)是一个主要用来浏览远程目录和传输文件的协议。FTP使用两个网络连接，一个用来发送命令，一个用来输出数据。FTP协议有一个状态，并且需要客户端在传输文件之前发送一些命令。FTP客户端建立一个连接，并且在整个会话期间一直保持打开。在每个会话期间可以发生多个传输。
+注意：在QT5之前，为了方便网络编程，Qt 提供了 Network 模块。该模块包含了许多类，例如：QFtp类 - 能">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/34$LEQ9JRY3J5S~%5DCD08L14.png">
+<meta property="og:updated_time" content="2017-05-15T06:55:38.634Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QT网络编程之FTP">
+<meta name="twitter:description" content="FTP(文件传输协议)是一个主要用来浏览远程目录和传输文件的协议。FTP使用两个网络连接，一个用来发送命令，一个用来输出数据。FTP协议有一个状态，并且需要客户端在传输文件之前发送一些命令。FTP客户端建立一个连接，并且在整个会话期间一直保持打开。在每个会话期间可以发生多个传输。
+注意：在QT5之前，为了方便网络编程，Qt 提供了 Network 模块。该模块包含了许多类，例如：QFtp类 - 能">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/34$LEQ9JRY3J5S~%5DCD08L14.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> QT网络编程之FTP | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                QT网络编程之FTP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-15T14:33:15+08:00" content="2017-05-15">
+              2017-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/15/QT网络编程之FTP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/15/QT网络编程之FTP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>FTP(文件传输协议)是一个主要用来<strong>浏览远程目录</strong>和<strong>传输文件</strong>的协议。FTP使用两个网络连接，一个用来发送命令，一个用来输出数据。FTP协议有一个状态，并且需要客户端在传输文件之前发送一些命令。FTP客户端建立一个连接，并且在整个会话期间<strong>一直保持打开</strong>。在每个会话期间可以发生多个传输。</p>
+<p><strong>注意：</strong>在QT5之前，为了方便网络编程，Qt 提供了 Network 模块。<strong>该模块包含了许多类</strong>，例如：<strong>QFtp类</strong> - <strong>能够更加轻松使用 FTP 协议进行网络编程</strong>。但是，从 Qt5.x 之后，Qt Network 发生了很大的变化，不再导出 QFtp 和 QUrlInfo 类，改用了 QNetworkAccessManager。</p>
+<p>在QT5中，使用 QNetworkAccessManager类实现FTP与前面的http应用十分相似，只需要在QUrl对象中设置好主机的地址，用户名，密码等，然后使用get()、put()等函数完成文件的获取和上传。<strong>注意：因为Qt5不再支持QFtp类,需要的话得重现编译.所以只能在根目录上传下载。如果想要实现其它功能，如：cd()改变服务器的工作目录到指定目录；list()列出ftp服务器上指定目录的内容，默认列出当前目录的内容；等，就只能用QFtp。</strong></p>
+<p>虽然在QT5中QFtp类被废除了，在QT5中不能直接使用该类，但是在<strong>QT5的兼容性扩展模块QtFtp中包含了支持Qt5的QFtp类。</strong><br>QFtp 类提供了一个 FTP 协议的客户端实现，具有以下特点：<br>1.<strong>非阻塞行为，QFtp异步工作</strong>。如果无法立即执行操作，函数仍将立即返回，并且该操作将被调度以供以后执行。调度操作的结果通过信号报告，这种方法依赖于事件循环操作。</p>
+<p>2.命令ID。可以调度的操作（也被称为“命令”）有：connectToHost()、login()、close()、list()、cd()、get()、put()、remove()、mkdir()、rmdir()、rename() 和 rawCommand()。<strong>当每一个命令被执行时，QFtp都会使用该命令ID发射commandStarted()和commandFinished()信号。</strong></p>
+<p>3.数据传输进度指示。当<strong>有数据传输时</strong>，QFtp会发射信号( <strong>QFtp::dataTransferProgress()</strong>,QNetworkReply::downloadProgress()和QNetworkReply::uploadProgress() ),可以关联这些信号到QProgressBar::setProgress()或者QProgressDialog::setProgresss()上。</p>
+<p>4.QIODevice支持。该类支持对QIODevice进行上传和下载。</p>
+<p>这里我主要采用第二种方法，即采用QFtp类。我挑重点讲：<br><strong>连接</strong><br>在此处可以直接在ui界面里初始化，然后添加信号槽。ui界面如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/34$LEQ9JRY3J5S~%5DCD08L14.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">// 连接按钮</div><div class="line">void MainWindow::on_connectButton_clicked()</div><div class="line">&#123;</div><div class="line">    ui-&gt;fileList-&gt;clear();</div><div class="line">    currentPath.clear();</div><div class="line">    isDirectory.clear();</div><div class="line">    ui-&gt;progressBar-&gt;setValue(0);</div><div class="line">    ui-&gt;progressBar_2-&gt;setValue(0);</div><div class="line">    ftp = new QFtp(this);</div><div class="line">    //每当一个命令被执行时，QFtp都会使用该命令ID发射commandStartedcommunity()和commandFinished()信号</div><div class="line">    connect(ftp, &amp;QFtp::commandStarted, this,</div><div class="line">            &amp;MainWindow::ftpCommandStarted);</div><div class="line">    connect(ftp, &amp;QFtp::commandFinished,</div><div class="line">            this, &amp;MainWindow::ftpCommandFinished);</div><div class="line"></div><div class="line">    //listInfo()信号在执行完list()命令时发射</div><div class="line">    connect(ftp, &amp;QFtp::listInfo, this, &amp;MainWindow::addToList);</div><div class="line"></div><div class="line">    //当有数据传输时，QFTP会发射信号（QFtp::dataTransferProgress(),QNetworkReply::downloadProgress()和QNetworkReply::uploadProgress()）</div><div class="line">   /* connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress);</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress_2);*/</div><div class="line"></div><div class="line">    QString ftpServer = ui-&gt;ftpServerLineEdit-&gt;text();</div><div class="line">    QString userName = ui-&gt;userNameLineEdit-&gt;text();</div><div class="line">    QString passWord = ui-&gt;passWordLineEdit-&gt;text();</div><div class="line">    ftp-&gt;connectToHost(ftpServer, 21);</div><div class="line">    ftp-&gt;login(userName, passWord);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然，也可以请求连接服务器，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">ftp = new QFtp(this);</div><div class="line"></div><div class="line">ftp-&gt;connectToHost(&quot;wscloudy.com&quot;);//指定端口连接到FTP服务器主机，默认端口号21</div><div class="line">ftp-&gt;login(&quot;user&quot;, &quot;8677&quot;);//指定用户名和密码登陆到FTP服务器</div><div class="line">ftp-&gt;get(&quot;sha.txt&quot;);//从服务器下载指定文件</div><div class="line">ftp-&gt;close();</div><div class="line">connect(ftp, &amp;QFtp::commandStarted,</div><div class="line">        this, &amp;MainWindow::ftpCommandStarted);</div><div class="line">connect(ftp, &amp;QFtp::commandFinished,</div><div class="line">        this, &amp;MainWindow::ftpCommandFinished);</div></pre></td></tr></table></figure></p>
+<p><strong>下载</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">void MainWindow::on_downloadButton_clicked()</div><div class="line">&#123;</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress);</div><div class="line">    // 注意：因为文件名称可能是中文，所以在使用get()函数前需要进行编码转换</div><div class="line">    QString fileName = ui-&gt;fileList-&gt;currentItem()-&gt;text(0);</div><div class="line">    QString name = QLatin1String(fileName.toUtf8());</div><div class="line">    file = new QFile(fileName);//根据要下载的文件的名称创建本地文件</div><div class="line">    if (!file-&gt;open(QIODevice::WriteOnly)) &#123;</div><div class="line">        delete file;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    ui-&gt;downloadButton-&gt;setEnabled(false);</div><div class="line">    ftp-&gt;get(name, file);//文件下载</div><div class="line">&#125;</div><div class="line">//下载进度更新</div><div class="line">void MainWindow::updateDataTransferProgress(qint64 readBytes,qint64 totalBytes)</div><div class="line">&#123;</div><div class="line">    ui-&gt;progressBar-&gt;setMaximum(totalBytes);</div><div class="line">    ui-&gt;progressBar-&gt;setValue(readBytes);</div><div class="line">   // ui-&gt;progressBar_2-&gt;setValue(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>上传</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//上传按钮</div><div class="line">void MainWindow::on_uploadButton_clicked()</div><div class="line">&#123;</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress_2);</div><div class="line"></div><div class="line">    file = new QFile (&quot;E:/ftpshare/shalian.txt&quot;);</div><div class="line">    ftp-&gt;put(file,&quot;shalian.txt&quot;); //将我电脑E盘下的文件上传至服务器</div><div class="line">    ui-&gt;uploadButton-&gt;setEnabled(false);</div><div class="line"></div><div class="line">&#125;</div><div class="line">//上传进度更新</div><div class="line">void MainWindow::updateDataTransferProgress_2(qint64 readBytes,qint64 totalBytes)</div><div class="line">&#123;</div><div class="line">    ui-&gt;progressBar_2-&gt;setMaximum(totalBytes);</div><div class="line">    ui-&gt;progressBar_2-&gt;setValue(readBytes);</div><div class="line">    //ui-&gt;progressBar-&gt;setValue(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>：一开始我在学校用自己的电脑配置搭建了一个ftp服务器，但是由于是校园局域网，外网进来需要路由允许穿越。(当然我可没法要求校园网络管理员实现)，因此借助了公司同事服务器上的ftp服务器，在他的路由上设置了允许我的穿进。<br>本文参考了：<br><a href="http://blog.csdn.net/liang19890820/article/details/53318906" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/53318906</a><br><a href="http://blog.csdn.net/liang19890820/article/details/53188182" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/53188182</a><br><a href="http://blog.csdn.net/sinat_29173167/article/details/54601643" target="_blank" rel="external">http://blog.csdn.net/sinat_29173167/article/details/54601643</a><br>欢迎一起讨论交流！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络编程/" rel="tag">#网络编程</a>
+          
+            <a href="/tags/qt/" rel="tag">#qt</a>
+          
+            <a href="/tags/ftp/" rel="tag">#ftp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/15/c-动态申请二维数组并释放/" rel="next" title="c++动态申请一维、二维数组并释放">
+                <i class="fa fa-chevron-left"></i> c++动态申请一维、二维数组并释放
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/15/QT网络编程之FTP/"
+     data-title="QT网络编程之FTP"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/05/15/QT网络编程之FTP/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/15/QT网络编程之FTP/"
+           data-title="QT网络编程之FTP" data-url="http://shalian123.github.io/2017/05/15/QT网络编程之FTP/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
