@@ -1,0 +1,747 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="c++,读写文本," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在c和c++代码的操作中，我们有时会用到一些文件操作，为了方便以后的调用，我在此总结了一些简单的文件读写操作，并依次展示效果。
+C语言方式在代码中，主要用到了以下几个头文件：为了方便，此处将几次代码的头文件汇到了一起，你可以直接复制过去。12345#include&amp;lt;iostream&amp;gt; //c++的#include&amp;lt;stdio.h&amp;gt;  //c的#include&amp;lt;stri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逐行读写字符串数组到文本txt文件">
+<meta property="og:url" content="http://shalian123.github.io/2017/06/02/逐行读写字符串数组到文本txt文件/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="在c和c++代码的操作中，我们有时会用到一些文件操作，为了方便以后的调用，我在此总结了一些简单的文件读写操作，并依次展示效果。
+C语言方式在代码中，主要用到了以下几个头文件：为了方便，此处将几次代码的头文件汇到了一起，你可以直接复制过去。12345#include&amp;lt;iostream&amp;gt; //c++的#include&amp;lt;stdio.h&amp;gt;  //c的#include&amp;lt;stri">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/51N_X%281B6$EIC$W~ORIV%25%7DT.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/M_8VG%5BRJM5%7D%5BPA95%7B6%254V%60A.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/K4FYVZ5$%29OIJ@_%6007%7DJ%60~%5B5.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/79%25%25GY~48KKPO%5B3LT%28K%5BO1U.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/ZPH%28KD016GH%25HN%7B%7D~5T%28DJM.png">
+<meta property="og:updated_time" content="2017-06-02T07:42:22.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="逐行读写字符串数组到文本txt文件">
+<meta name="twitter:description" content="在c和c++代码的操作中，我们有时会用到一些文件操作，为了方便以后的调用，我在此总结了一些简单的文件读写操作，并依次展示效果。
+C语言方式在代码中，主要用到了以下几个头文件：为了方便，此处将几次代码的头文件汇到了一起，你可以直接复制过去。12345#include&amp;lt;iostream&amp;gt; //c++的#include&amp;lt;stdio.h&amp;gt;  //c的#include&amp;lt;stri">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/51N_X%281B6$EIC$W~ORIV%25%7DT.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 逐行读写字符串数组到文本txt文件 | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                逐行读写字符串数组到文本txt文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-02T14:31:30+08:00" content="2017-06-02">
+              2017-06-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/02/逐行读写字符串数组到文本txt文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/02/逐行读写字符串数组到文本txt文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在c和c++代码的操作中，我们有时会用到一些文件操作，为了方便以后的调用，我在此总结了一些简单的文件读写操作，并依次展示效果。</p>
+<h4 id="C语言方式"><a href="#C语言方式" class="headerlink" title="C语言方式"></a>C语言方式</h4><p>在代码中，主要用到了以下几个头文件：为了方便，此处将几次代码的头文件汇到了一起，你可以直接复制过去。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt; //c++的</div><div class="line">#include&lt;stdio.h&gt;  //c的</div><div class="line">#include&lt;string&gt;</div><div class="line">#include&lt;fstream&gt; //c++文件读写操作函数</div><div class="line">using namespace std;</div></pre></td></tr></table></figure></p>
+<h5 id="fprintf-函数将字符串数组写入到txt文件中"><a href="#fprintf-函数将字符串数组写入到txt文件中" class="headerlink" title="fprintf()函数将字符串数组写入到txt文件中"></a>fprintf()函数将字符串数组写入到txt文件中</h5><p>此处的fprintf()函数：输出函数(格式化输出数据至文件)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   FILE *fp;</div><div class="line">errno_t err;</div><div class="line">char * name[] = &#123; &quot;file1&quot;, &quot;file2&quot;, &quot;file3&quot;, &quot;file4&quot;, &quot;file5&quot; &#125;;</div><div class="line">if((err=fopen_s(&amp;fp,&quot;E://test.txt&quot;, &quot;w&quot;))!=0)</div><div class="line">   printf(&quot;the file was not opened\n&quot;);</div><div class="line">      </div><div class="line">for (int i = 0; i &lt; 5; i++)</div><div class="line">&#123;</div><div class="line">	fprintf(fp, &quot;%s\n&quot;, name[i]);</div><div class="line">&#125;</div><div class="line">   </div><div class="line">fclose(fp);</div></pre></td></tr></table></figure></p>
+<p>此处，补充一点知识，在vs里经常遇到：<br><strong>fopen的用法是: fp  = fopen(filename, “w”)。<br>而对于fopen_s来说，还得定义另外一个变量errno_t  err，然后err = fopen_s(&amp;fp, filename, “w”)。<br>返回值的话，对于fopen来说，打开文件成功的话返回文件指针（赋值给fp），打开失败则返回NULL值；<br>对于fopen_s来说，打开文件成功返回0，失败返回非0。</strong></p>
+<p>最终效果如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/51N_X%281B6$EIC$W~ORIV%25%7DT.png" alt=""></p>
+<h5 id="使用fputs函数逐行写入文本"><a href="#使用fputs函数逐行写入文本" class="headerlink" title="使用fputs函数逐行写入文本"></a>使用fputs函数逐行写入文本</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">   char *InputStr = &quot;that is ok&quot;;</div><div class="line">FILE* fp;</div><div class="line">errno_t err;</div><div class="line">if ((err = fopen_s(&amp;fp, &quot;C://1.txt&quot;, &quot;wt&quot;)) != 0)</div><div class="line">	printf(&quot;the file was not opened\n&quot;);</div><div class="line">//FILE* fp = fopen(&quot;C:\\1.txt&quot;, &quot;wt&quot;);</div><div class="line">//if (fp != NULL)</div><div class="line">//&#123;</div><div class="line">	fseek(fp, 0, SEEK_END);</div><div class="line">	fputs(InputStr, fp);</div><div class="line">	fputs(&quot;\r\n&quot;, fp);</div><div class="line">	fclose(fp);</div><div class="line">//&#125;</div></pre></td></tr></table></figure>
+<p>最终效果：<br><img src="http://ols4zt49w.bkt.clouddn.com/M_8VG%5BRJM5%7D%5BPA95%7B6%254V%60A.png" alt=""></p>
+<h5 id="利用fscanf对文件进行格式化输入，读取文件中的数据"><a href="#利用fscanf对文件进行格式化输入，读取文件中的数据" class="headerlink" title="利用fscanf对文件进行格式化输入，读取文件中的数据"></a>利用fscanf对文件进行格式化输入，读取文件中的数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   int i = 0;</div><div class="line">FILE *fp;</div><div class="line">fopen_s(&amp;fp,&quot;E://test.txt&quot;, &quot;r&quot;);</div><div class="line">char  name[6][10] = &#123;0&#125;;//如果没有初始化，最后没有读取的几位将会乱码。整个字符数组输出，如未初始化，则没有写入确定值的元素是一些不确定值，输出可能就是一堆乱码了。</div><div class="line"></div><div class="line">while (!feof(fp))</div><div class="line">&#123;</div><div class="line">	fscanf_s(fp, &quot;%s&quot;, name[i],sizeof(name[i]));</div><div class="line">	printf(&quot;%s\n&quot;, name[i]);</div><div class="line">	i++;</div><div class="line">&#125;</div><div class="line">fclose(fp);</div></pre></td></tr></table></figure>
+<p><strong>注意：整个字符数组输出，如未初始化，则没有写入确定值的元素是一些不确定值，输出可能就是一堆乱码了。</strong><br>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/K4FYVZ5$%29OIJ@_%6007%7DJ%60~%5B5.png" alt=""></p>
+<h4 id="C-语言方式"><a href="#C-语言方式" class="headerlink" title="C++语言方式"></a>C++语言方式</h4><p>在看具体实例前，我先简要介绍一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#include &lt;fstream&gt;  </div><div class="line">ofstream         //文件写操作 内存写入存储设备   </div><div class="line">ifstream         //文件读操作，存储设备读区到内存中  </div><div class="line">fstream          //读写操作，对打开的文件可进行读写操作</div></pre></td></tr></table></figure></p>
+<p>下面主要列举两个例子，一个是从文件里读取数据，然后控制台输出；另一个是读取一个文件数据，并将数据写入另一个文件，即复制。</p>
+<h5 id="c-读文件"><a href="#c-读文件" class="headerlink" title="c++读文件"></a>c++读文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   ifstream in(&quot;E://test.txt&quot;);</div><div class="line">string filename;</div><div class="line">string line;</div><div class="line"></div><div class="line">if (in) // 有该文件</div><div class="line">&#123;</div><div class="line">	while (getline(in, line)) // line中不包括每行的换行符</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; line &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">else // 没有该文件</div><div class="line">&#123;</div><div class="line">	cout &lt;&lt; &quot;no such file&quot; &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/79%25%25GY~48KKPO%5B3LT%28K%5BO1U.png" alt=""></p>
+<h5 id="c-文件间数据的复制"><a href="#c-文件间数据的复制" class="headerlink" title="c++文件间数据的复制"></a>c++文件间数据的复制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/*实现读取文件file1，写入到文件file2，实现复制*/</div><div class="line">void fileCopy(char *file1, char *file2)</div><div class="line">&#123;</div><div class="line">	// 最好对file1和file2进行判断</div><div class="line"></div><div class="line">	ifstream in(file1);</div><div class="line">	ofstream out(file2);</div><div class="line">	string filename;</div><div class="line">	string line;</div><div class="line"></div><div class="line">	while (getline(in, line))</div><div class="line">	&#123;</div><div class="line">		out &lt;&lt; line &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    fileCopy(&quot;E://1.txt&quot;, &quot;E://2.txt&quot;);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/ZPH%28KD016GH%25HN%7B%7D~5T%28DJM.png" alt=""><br><strong>补充</strong>：这里只是简单的文件操作，关于<strong>c++</strong>的文件读写详解可以参考：<br><strong>C++</strong>文件读写详解（ofstream,ifstream,fstream） <a href="http://blog.csdn.net/kingstar158/article/details/6859379" target="_blank" rel="external">http://blog.csdn.net/kingstar158/article/details/6859379</a><br>里面还包含一些二进制文件，缓存与同步等。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag">#c++</a>
+          
+            <a href="/tags/读写文本/" rel="tag">#读写文本</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/01/c-11-新特性/" rel="next" title="c++11新特性">
+                <i class="fa fa-chevron-left"></i> c++11新特性
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/06/02/逐行读写字符串数组到文本txt文件/"
+     data-title="逐行读写字符串数组到文本txt文件"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/06/02/逐行读写字符串数组到文本txt文件/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/06/02/逐行读写字符串数组到文本txt文件/"
+           data-title="逐行读写字符串数组到文本txt文件" data-url="http://shalian123.github.io/2017/06/02/逐行读写字符串数组到文本txt文件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#C语言方式"><span class="nav-number">1.</span> <span class="nav-text">C语言方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#fprintf-函数将字符串数组写入到txt文件中"><span class="nav-number">1.1.</span> <span class="nav-text">fprintf()函数将字符串数组写入到txt文件中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用fputs函数逐行写入文本"><span class="nav-number">1.2.</span> <span class="nav-text">使用fputs函数逐行写入文本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用fscanf对文件进行格式化输入，读取文件中的数据"><span class="nav-number">1.3.</span> <span class="nav-text">利用fscanf对文件进行格式化输入，读取文件中的数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-语言方式"><span class="nav-number">2.</span> <span class="nav-text">C++语言方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#c-读文件"><span class="nav-number">2.1.</span> <span class="nav-text">c++读文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-文件间数据的复制"><span class="nav-number">2.2.</span> <span class="nav-text">c++文件间数据的复制</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

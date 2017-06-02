@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="c++11," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="C++面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。
+1.右值的引用传统的 C++ 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 &amp;amp;&amp;amp; 表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++11新特性">
+<meta property="og:url" content="http://shalian123.github.io/2017/06/01/c-11-新特性/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="C++面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。
+1.右值的引用传统的 C++ 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 &amp;amp;&amp;amp; 表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的">
+<meta property="og:updated_time" content="2017-06-02T07:41:18.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c++11新特性">
+<meta name="twitter:description" content="C++面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。
+1.右值的引用传统的 C++ 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 &amp;amp;&amp;amp; 表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> c++11新特性 | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                c++11新特性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-01T21:50:54+08:00" content="2017-06-01">
+              2017-06-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/01/c-11-新特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/01/c-11-新特性/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>C++</strong>面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。</p>
+<h5 id="1-右值的引用"><a href="#1-右值的引用" class="headerlink" title="1.右值的引用"></a>1.右值的引用</h5><p>传统的 <strong>C++</strong> 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 <strong>&amp;&amp; </strong>表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的函数。记住一点，<strong>左值与右值的根本区别在于能否获取内存地址，而能否赋值不是区分的依据</strong>。<br>下面简要总结一下<strong>引用和指针的区别</strong>：<br>两者都是与地址相关的概念。<strong>引用是变量的别名，而指针则是变量的地址</strong><br>区别如下：<br>==1.指针是一个实体（分配内存），而引用仅是个别名；<br>2.引用只能在定义时被初始化一次，之后不可变；指针可变；引用“从一而终”，指针可以“见异思迁”；<br>3.引用没有const，指针有const，const的指针不可变；<br>4.引用不能为空，指针可以为空；<br>5.“sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身的大小；<br>从上面可以看出引用更接近 const 指针。==<br>引入右值引用的主要目的之一是实现移动语义，下面展开来谈==</p>
+<h5 id="2-移动语句"><a href="#2-移动语句" class="headerlink" title="2.移动语句"></a>2.移动语句</h5><p>为方便理解移动语句，考虑下面的示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vector&lt;string&gt; allcpas(const vector&lt;string&gt; &amp;vs)</div><div class="line">&#123;</div><div class="line">    vector&lt;string&gt; temp;</div><div class="line">    // 将 vs 复制给 temp</div><div class="line">    return temp;</div><div class="line">&#125;</div><div class="line">vector&lt;string&gt; vstr;</div><div class="line">// vstr 是包含 20000 个 string 的向量，每个元素有 1000 个字符</div><div class="line">vector&lt;string&gt; vstr_copy1(vstr);</div><div class="line">vector&lt;string&gt; vstr_copy2(allcps(vstr));    // #2</div></pre></td></tr></table></figure></p>
+<p>对语句# 2， <code>allcps</code> 将返回值 temp 复制给临时形参变量，再将该形参复制给<code>vstr_copy2</code> 。编译器对 vstr 复制了两次。这样显然很消耗资源。如果将对数据的所有权直接转让给 <code>vstr_copy2</code> ，显然会更好，对此我们只需要实现 vstr_copy2 的<strong>移动构造函数</strong>，在函数内部将调整临时变量的所有权，从而避免一次无意义的复制。移动语义实际上避免了移动原始数据，而只是修改了记录。</p>
+<h5 id="3-基于范围的for循环"><a href="#3-基于范围的for循环" class="headerlink" title="3.基于范围的for循环"></a>3.基于范围的for循环</h5><p>对于内置数组已经包含 <code>begin()</code> 和 <code>end()</code> 的类和 STL 容器，基于范围的 for 循环可以简化为它们编写循环的工作。这种循环对数组或容器中的每个元素执行指定的操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; vi(6);</div><div class="line">for (auto &amp;x : vi)</div><div class="line">    x = std::rand()</div></pre></td></tr></table></figure></p>
+<p>x 依次为 vi 中的每个元素的引用，从而实现了对数组每个元素的修改。</p>
+<h5 id="4-智能指针"><a href="#4-智能指针" class="headerlink" title="4.智能指针"></a>4.智能指针</h5><p>智能指针的出现很自然，其行为类似于指针的类对象，可以在离开对象周期使自动析构函数，释放动态申请的内存。<br>模板 <code>auto_ptr</code> 是 <strong>c++98</strong> 提供的解决方案，C++11 已将其摈弃，并提供了 unique_ptr ，shared_ptr 两种解决方案。<br>智能指针很多方面都类似于常规指针。例如，如果 ps 是一个智能指针对象，则可以对它执行解除引用操作（*ps）、用它来访问结构成员，将他赋值给相同类型的常规指针。将智能指针对象赋值给对另一个同类型的智能指针对象，将引起一个问题。看下面例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">auto_ptr&lt;string&gt; ps (new string(&quot;I reigned lonely as a cloud.&quot;));</div><div class="line">auto_ptr&lt;string&gt; vocation;</div><div class="line">vocation = ps;</div></pre></td></tr></table></figure></p>
+<p>两个指针指向同一块内存，会造成程序试图删除同一个对象两次。避免这种问题，有如下思路：<br>1.建立所有权的概念，对于特定的指针，只能有一个智能指针对象可以拥有它。让赋值操作转让所有权。这就是用于 auto_ptr 和 unique_ptr 的策略。<br>2.创建智能更高的指针，跟踪引用计数特定对象的智能指针数。这称为引用计数。例如，赋值计数加1，过期时，计数减1。仅当最后一个指针过期时，才调用 delete。这是 shared_ptr 采用的策略。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-11/" rel="tag">#c++11</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/QT5-3-2连接Mysql老是失败！/" rel="next" title="QT5.3.2连接Mysql老是失败！">
+                <i class="fa fa-chevron-left"></i> QT5.3.2连接Mysql老是失败！
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/02/逐行读写字符串数组到文本txt文件/" rel="prev" title="逐行读写字符串数组到文本txt文件">
+                逐行读写字符串数组到文本txt文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/06/01/c-11-新特性/"
+     data-title="c++11新特性"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/06/01/c-11-新特性/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/06/01/c-11-新特性/"
+           data-title="c++11新特性" data-url="http://shalian123.github.io/2017/06/01/c-11-新特性/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-右值的引用"><span class="nav-number">1.</span> <span class="nav-text">1.右值的引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-移动语句"><span class="nav-number">2.</span> <span class="nav-text">2.移动语句</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-基于范围的for循环"><span class="nav-number">3.</span> <span class="nav-text">3.基于范围的for循环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-智能指针"><span class="nav-number">4.</span> <span class="nav-text">4.智能指针</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
