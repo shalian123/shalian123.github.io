@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="数据结构，堆和栈，静态变量," />
+  <meta name="keywords" content="linux,无法登陆," />
 
 
 
@@ -86,24 +86,25 @@
 
 
 
-<meta name="description" content="动态变量和静态变量的区别：1、存储位置动态变量：存储在内存出栈数据区静态变量：存储在全局数据区（静态数据区）
-2、生命期动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效静态变量：程序结束时才释放
-3、作用域动态变量：同样的要根据你定义的位置才能确定，和第二点的一样静态变量：当前文件中有效具体可以见下例：一般标志位可定义成静态变量，每次给值后就不会变化了，除非再">
+<meta name="description" content="最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。
+产生原因问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。注意：这里的主目录是你登陆的用户，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构-堆和栈,静态和动态">
-<meta property="og:url" content="http://shalian123.github.io/2017/03/23/数据结构-堆和栈-静态和动态/index.html">
+<meta property="og:title" content="linux输入登陆密码正确，闪回登陆界面，无法登陆">
+<meta property="og:url" content="http://shalian123.github.io/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="动态变量和静态变量的区别：1、存储位置动态变量：存储在内存出栈数据区静态变量：存储在全局数据区（静态数据区）
-2、生命期动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效静态变量：程序结束时才释放
-3、作用域动态变量：同样的要根据你定义的位置才能确定，和第二点的一样静态变量：当前文件中有效具体可以见下例：一般标志位可定义成静态变量，每次给值后就不会变化了，除非再">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/LKRNFXD8X%5DRPKJ6L%29%5DL%60%5D5G.png">
-<meta property="og:updated_time" content="2017-03-23T14:16:11.104Z">
+<meta property="og:description" content="最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。
+产生原因问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。注意：这里的主目录是你登陆的用户，">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1496492971%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1496493023%281.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1496493060%281.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1496493097%281.png">
+<meta property="og:updated_time" content="2017-06-03T13:03:29.971Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据结构-堆和栈,静态和动态">
-<meta name="twitter:description" content="动态变量和静态变量的区别：1、存储位置动态变量：存储在内存出栈数据区静态变量：存储在全局数据区（静态数据区）
-2、生命期动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效静态变量：程序结束时才释放
-3、作用域动态变量：同样的要根据你定义的位置才能确定，和第二点的一样静态变量：当前文件中有效具体可以见下例：一般标志位可定义成静态变量，每次给值后就不会变化了，除非再">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/LKRNFXD8X%5DRPKJ6L%29%5DL%60%5D5G.png">
+<meta name="twitter:title" content="linux输入登陆密码正确，闪回登陆界面，无法登陆">
+<meta name="twitter:description" content="最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。
+产生原因问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。注意：这里的主目录是你登陆的用户，">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png">
 
 
 
@@ -121,7 +122,7 @@
   };
 </script>
 
-  <title> 数据结构-堆和栈,静态和动态 | Wind </title>
+  <title> linux输入登陆密码正确，闪回登陆界面，无法登陆 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +272,7 @@
             
             
               
-                数据结构-堆和栈,静态和动态
+                linux输入登陆密码正确，闪回登陆界面，无法登陆
               
             
           </h1>
@@ -283,8 +284,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-23T21:58:20+08:00" content="2017-03-23">
-              2017-03-23
+            <time itemprop="dateCreated" datetime="2017-06-03T20:13:25+08:00" content="2017-06-03">
+              2017-06-03
             </time>
           </span>
 
@@ -297,8 +298,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -313,8 +314,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/03/23/数据结构-堆和栈-静态和动态/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="commentsCount"></span>
+                <a href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -337,11 +338,10 @@
       
 
       
-        <h4 id="动态变量和静态变量的区别："><a href="#动态变量和静态变量的区别：" class="headerlink" title="动态变量和静态变量的区别："></a>动态变量和静态变量的区别：</h4><p>1、存储位置<br>动态变量：存储在内存出栈数据区<br>静态变量：存储在全局数据区（静态数据区）</p>
-<p>2、生命期<br>动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效<br>静态变量：程序结束时才释放</p>
-<p>3、作用域<br>动态变量：同样的要根据你定义的位置才能确定，和第二点的一样<br>静态变量：当前文件中有效<br>具体可以见下例：<br><img src="http://ols4zt49w.bkt.clouddn.com/LKRNFXD8X%5DRPKJ6L%29%5DL%60%5D5G.png" alt=""><br>一般标志位可定义成静态变量，每次给值后就不会变化了，除非再给它赋新值；不像动态变量每次重赋初值。</p>
-<h4 id="堆和栈的区分："><a href="#堆和栈的区分：" class="headerlink" title="堆和栈的区分："></a>堆和栈的区分：</h4><p>分配方式：<strong>堆都是动态分配的</strong>，没有静态分配的堆。<br>栈有2种分配方式：静态分配和动态分配。静态分配是编译器完成的，比如局部变量的分配。动态分配由alloca() ，alloca的函数返回的时候, 它分配的内存会自动释放，但是栈的动态分配和堆是不同的，<strong>堆需要手动释放</strong>。<br><strong><em>堆是通过new，malloc, calloc, realloc等来分配的内存，需要手动析构，栈由系统管理，无需人为处理。</em></strong></p>
-<h5 id="全局变量和静态变量存放在全局区（静态区）"><a href="#全局变量和静态变量存放在全局区（静态区）" class="headerlink" title="全局变量和静态变量存放在全局区（静态区）"></a>全局变量和静态变量存放在全局区（静态区）</h5><h5 id="new和malloc申请的在堆区"><a href="#new和malloc申请的在堆区" class="headerlink" title="new和malloc申请的在堆区"></a>new和malloc申请的在堆区</h5><h5 id="函数局部变量和函数的参数在栈区"><a href="#函数局部变量和函数的参数在栈区" class="headerlink" title="函数局部变量和函数的参数在栈区"></a>函数局部变量和函数的参数在栈区</h5>
+        <p>最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。</p>
+<h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><p>问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。<br><strong>注意：这里的主目录是你登陆的用户，不是root用户</strong><br><strong>说明：</strong>Xauthority，是<strong>startx</strong>脚本记录文件。Xserver启动时，读文件~/.Xauthority,读入对应其display 的记录。当一个需要显示的客户程序启动调用XOpenDisplay()也读这个文 件，并把找到的magic code 发送给 Xserver。当Xserver验证这个magic code正确以后，就同意连接啦。观察startx脚本也可以看到，每次startx 运行，都在调用xinit以前使用了xauth的add命令添加了一个新的记录到~/.Xauthority，用来这次运行X使用认证。(<strong>注意：一般sudo startx后就这样不能登陆了</strong>)</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>1.在需要输入密码的登陆界面，按下ctrl+alt+F1组合键，进入tty1终端<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1496492971%281%29.png" alt=""><br>2.输入登陆ubuntu时的用户名和密码，在tty1终端出现登陆成功的提示，这里我的用户名是topeet，默认进入当前用户主目录（我的是/home/topeet）,可以用pwd命令查看，若不是，则切换至：<br>cd  或者<br>cd /home/topeet/ 注意：我这里的用户名是topeet,根据自己的实际情况更改。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493023%281.png" alt=""><br>3.执行命令，将Xauthority的拥有者改为用户topeet<br>$ sudo chown topeet:topeet .Xauthority<br>备注：本人的用户名为topeet，因此 chown后面跟了topeet:topeet若为其他用户名修改成相应的名称即可）<br>(我的用户和用户组都是topeet,如果你不知道可以用<code>more /etc/group</code>及<code>more /etc/passwd</code>查看)<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493060%281.png" alt=""><br>4.然后在终端提示符后输入：$ ls .Xauthority -l<br>正确无误后显示如下：-rw——- 1 topeet topeet 51  May 22 23:14 .Xauthority<br>此时拥有者已经变为用户。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493097%281.png" alt=""><br>5.按下ctrl + alt + F7切换回图形登陆界面登陆即可。<br><strong>易错点：</strong><br>一开始我是切换到root用户下修改.Xauthority文件的拥有者的，但是试了几次都没成功，在次特别强调按下ctrl+alt+F1组合键，进入tty1终端后登入你想登入的账户，而不是root用户。</p>
+
       
     </div>
 
@@ -362,7 +362,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构，堆和栈，静态变量/" rel="tag">#数据结构，堆和栈，静态变量</a>
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+            <a href="/tags/无法登陆/" rel="tag">#无法登陆</a>
           
         </div>
       
@@ -371,17 +373,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/22/利用QT发布应用程序/" rel="next" title="利用QT发布应用程序">
-                <i class="fa fa-chevron-left"></i> 利用QT发布应用程序
+              <a href="/2017/06/02/逐行读写字符串数组到文本txt文件/" rel="next" title="逐行读写字符串数组到文本txt文件">
+                <i class="fa fa-chevron-left"></i> 逐行读写字符串数组到文本txt文件
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/01/霍夫变换检测直线和圆/" rel="prev" title="霍夫变换检测直线和圆">
-                霍夫变换检测直线和圆 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -396,10 +394,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/03/23/数据结构-堆和栈-静态和动态/"
-     data-title="数据结构-堆和栈,静态和动态"
+        <div class="ds-share flat" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/"
+     data-title="linux输入登陆密码正确，闪回登陆界面，无法登陆"
      data-content=""
-     data-url="http://shalian123.github.io/2017/03/23/数据结构-堆和栈-静态和动态/">
+     data-url="http://shalian123.github.io/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -429,8 +427,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/23/数据结构-堆和栈-静态和动态/"
-           data-title="数据结构-堆和栈,静态和动态" data-url="http://shalian123.github.io/2017/03/23/数据结构-堆和栈-静态和动态/">
+      <div class="ds-thread" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/"
+           data-title="linux输入登陆密码正确，闪回登陆界面，无法登陆" data-url="http://shalian123.github.io/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/">
       </div>
     
   </div>
@@ -579,7 +577,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态变量和静态变量的区别："><span class="nav-number">1.</span> <span class="nav-text">动态变量和静态变量的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆和栈的区分："><span class="nav-number">2.</span> <span class="nav-text">堆和栈的区分：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#全局变量和静态变量存放在全局区（静态区）"><span class="nav-number">2.1.</span> <span class="nav-text">全局变量和静态变量存放在全局区（静态区）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#new和malloc申请的在堆区"><span class="nav-number">2.2.</span> <span class="nav-text">new和malloc申请的在堆区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数局部变量和函数的参数在栈区"><span class="nav-number">2.3.</span> <span class="nav-text">函数局部变量和函数的参数在栈区</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#产生原因"><span class="nav-number">1.</span> <span class="nav-text">产生原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方法"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
             
           </div>
         </section>
