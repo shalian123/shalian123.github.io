@@ -99,7 +99,7 @@ C语言方式在代码中，主要用到了以下几个头文件：为了方便�
 <meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/K4FYVZ5$%29OIJ@_%6007%7DJ%60~%5B5.png">
 <meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/79%25%25GY~48KKPO%5B3LT%28K%5BO1U.png">
 <meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/ZPH%28KD016GH%25HN%7B%7D~5T%28DJM.png">
-<meta property="og:updated_time" content="2017-06-02T07:42:22.086Z">
+<meta property="og:updated_time" content="2017-06-08T03:38:51.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逐行读写字符串数组到文本txt文件">
 <meta name="twitter:description" content="在c和c++代码的操作中，我们有时会用到一些文件操作，为了方便以后的调用，我在此总结了一些简单的文件读写操作，并依次展示效果。
@@ -352,7 +352,7 @@ C语言方式在代码中，主要用到了以下几个头文件：为了方便�
 <h5 id="c-读文件"><a href="#c-读文件" class="headerlink" title="c++读文件"></a>c++读文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   ifstream in(&quot;E://test.txt&quot;);</div><div class="line">string filename;</div><div class="line">string line;</div><div class="line"></div><div class="line">if (in) // 有该文件</div><div class="line">&#123;</div><div class="line">	while (getline(in, line)) // line中不包括每行的换行符</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; line &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">else // 没有该文件</div><div class="line">&#123;</div><div class="line">	cout &lt;&lt; &quot;no such file&quot; &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/79%25%25GY~48KKPO%5B3LT%28K%5BO1U.png" alt=""></p>
 <h5 id="c-文件间数据的复制"><a href="#c-文件间数据的复制" class="headerlink" title="c++文件间数据的复制"></a>c++文件间数据的复制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/*实现读取文件file1，写入到文件file2，实现复制*/</div><div class="line">void fileCopy(char *file1, char *file2)</div><div class="line">&#123;</div><div class="line">	// 最好对file1和file2进行判断</div><div class="line"></div><div class="line">	ifstream in(file1);</div><div class="line">	ofstream out(file2);</div><div class="line">	string filename;</div><div class="line">	string line;</div><div class="line"></div><div class="line">	while (getline(in, line))</div><div class="line">	&#123;</div><div class="line">		out &lt;&lt; line &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    fileCopy(&quot;E://1.txt&quot;, &quot;E://2.txt&quot;);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/ZPH%28KD016GH%25HN%7B%7D~5T%28DJM.png" alt=""><br><strong>补充</strong>：这里只是简单的文件操作，关于<strong>c++</strong>的文件读写详解可以参考：<br><strong>C++</strong>文件读写详解（ofstream,ifstream,fstream） <a href="http://blog.csdn.net/kingstar158/article/details/6859379" target="_blank" rel="external">http://blog.csdn.net/kingstar158/article/details/6859379</a><br>里面还包含一些二进制文件，缓存与同步等。</p>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/ZPH%28KD016GH%25HN%7B%7D~5T%28DJM.png" alt=""><br><strong>补充</strong>：这里只是简单的文件操作，关于<strong>c++</strong>的文件读写详解可以参考：<br><strong>C++</strong>文件读写详解（ofstream,ifstream,fstream） <a href="http://blog.csdn.net/kingstar158/article/details/6859379" target="_blank" rel="external">http://blog.csdn.net/kingstar158/article/details/6859379</a><br>里面还包含一些二进制文件，缓存与同步等。<br><strong>扩展：</strong><br>C++的输入输出分为三种：<br>(1)基于控制台的I/O，头文件iostream<br>(2)基于文件的I/O, 头文件fstream<br>(3)基于字符串的I/O,头文件sstream<br>具体参考博客：<a href="http://www.cnblogs.com/gamesky/archive/2013/01/09/2852356.html" target="_blank" rel="external">http://www.cnblogs.com/gamesky/archive/2013/01/09/2852356.html</a></p>
 
       
     </div>
@@ -489,7 +489,7 @@ C语言方式在代码中，主要用到了以下几个头文件：为了方便�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -506,7 +506,7 @@ C语言方式在代码中，主要用到了以下几个头文件：为了方便�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
