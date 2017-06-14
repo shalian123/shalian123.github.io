@@ -265,6 +265,272 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/15/c-动态申请二维数组并释放/" itemprop="url">
+                  c++动态申请一维、二维数组并释放
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-15T08:59:59+08:00" content="2017-05-15">
+              2017-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/15/c-动态申请二维数组并释放/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/15/c-动态申请二维数组并释放/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。<br>c++中有三种方法来动态申请多维数组</p>
+<p><strong>(1)C中的malloc/free</strong></p>
+<p><strong>(2)C++中的new/delete</strong></p>
+<p><strong>(3)STL容器中的vector</strong></p>
+<p><strong>第一种malloc/free</strong><br>动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">动态开辟一维数组</div><div class="line">void dynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int m;</div><div class="line">	int i;</div><div class="line">	int *p;</div><div class="line">    </div><div class="line">	printf(&quot;请输入开辟的数组长度：&quot;);</div><div class="line">	scanf(&quot;%d&quot;,&amp;m);</div><div class="line">	p = (int*)malloc(sizeof(int)*m);//动态开辟</div><div class="line"></div><div class="line">	printf(&quot;请输入数据：&quot;);</div><div class="line">	for(i = 0; i &lt; m ; i++)</div><div class="line">		scanf(&quot;%d&quot;,&amp;p[i]);</div><div class="line"></div><div class="line">    printf(&quot;输出数据：\n&quot;);</div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">		printf(&quot;%d &quot;,p[i]);</div><div class="line">	free(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">void dynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	int i,j;</div><div class="line">	int **p;</div><div class="line"></div><div class="line">    printf(&quot;请输入数组行和列：&quot;);</div><div class="line">	scanf(&quot;%d%d&quot;,&amp;m,&amp;n);</div><div class="line"></div><div class="line">	p = (int**)malloc(sizeof(int*)*m); //开辟行</div><div class="line"></div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		*(p+i) = (int*)malloc(sizeof(int)*n);//开辟列</div><div class="line">	&#125;</div><div class="line">	//输入数据</div><div class="line">	printf(&quot;请输入数：&quot;);</div><div class="line">    for(i = 0 ; i &lt; m;i++)</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">			scanf(&quot;%d&quot;,&amp;p[i][j]);</div><div class="line">    </div><div class="line">	//输出数据</div><div class="line">	for(i = 0 ; i &lt; m;i++)</div><div class="line">	&#123;</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">		&#123;</div><div class="line">		   printf(&quot;%3d &quot;,p[i][j]);</div><div class="line">		&#125;</div><div class="line">		printf(&quot;\n&quot;);</div><div class="line">	&#125;</div><div class="line">	//释放开辟的二维空间</div><div class="line">	for(i = 0; i &lt; m;i++)</div><div class="line">		free(*(p+i));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>第二种：new/delete</strong><br>1.动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int len;</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入长度：&quot;;</div><div class="line">	cin&gt;&gt;len;</div><div class="line">	</div><div class="line">	int *p = new int[len];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">    for(int i = 0; i &lt; len; i++)</div><div class="line">		cin&gt;&gt;p[i];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(i = 0; i &lt; len; i++)</div><div class="line">		cout&lt;&lt;setw(4)&lt;&lt;p[i];</div><div class="line">	</div><div class="line">	delete[] p;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m, n;</div><div class="line">	cout &lt;&lt; &quot;请输入行和列：&quot;;</div><div class="line">	cin &gt;&gt; m &gt;&gt; n;</div><div class="line"></div><div class="line">	//动态开辟空间</div><div class="line">	int **p = new int*[m]; //开辟行</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		p[i] = new int[n]; //开辟列</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入数据：&quot;;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	for (int j = 0; j &lt; n; j++)</div><div class="line">		cin &gt;&gt; p[i][j];</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;输出数据：&quot; &lt;&lt; endl;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		for (int j = 0; j &lt; n; j++)</div><div class="line">			cout &lt;&lt; setw(3) &lt;&lt; p[i][j];</div><div class="line">		cout &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//释放开辟的资源</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		delete[] p[i];</div><div class="line">	delete[] p;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>第三种：STL中的vector</strong><br>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void VectorCreate()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	cout&lt;&lt;&quot;请输入行和列：&quot;;</div><div class="line">	cin&gt;&gt;m&gt;&gt;n;</div><div class="line">	</div><div class="line">	//注意下面这一行：vector &lt;int后两个 &quot;&gt; &quot;之间要有空格！否则会被认为是重载 &quot;&gt; &gt; &quot;。 </div><div class="line">    vector&lt;vector&lt;int&gt; &gt; p(m,vector&lt;int&gt;(n));</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">	for(int i = 0 ; i &lt; m ; i++)</div><div class="line">		for(int j = 0; j &lt; n; j++)</div><div class="line">			cin&gt;&gt;p[i][j];</div><div class="line">		</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">    	for(int j = 0; j &lt; n; j++)</div><div class="line">			cout&lt;&lt;setw(3)&lt;&lt;p[i][j];</div><div class="line">		cout&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line">			</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/05/QT实现简单的天气预报/" itemprop="url">
+                  QT实现简单的天气预报
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-05T16:16:26+08:00" content="2017-05-05">
+              2017-05-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/05/QT实现简单的天气预报/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/05/QT实现简单的天气预报/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Qt 进行网络访问的类是QNetworkAccessManager,QNetworkAccessManager类允许应用程序发送网络请求以及接受服务器的响应。事实上，Qt 的整个访问网络 API 都是围绕着这个类进行的。QNetworkAccessManager保存发送的请求的最基本的配置信息，包含了代理和缓存的设置。最好的是，这个 API 本身就是异步设计，这意味着我们不需要自己为其开启线程，以防止界面被锁死。<strong>（补充：Qt 的界面活动是在一个主线程中进行。网络访问是一个相当耗时的操作，如果整个网络访问的过程以同步的形式在主线程进行，则当网络访问没有返回时，主线程会被阻塞，界面就会被锁死，不能执行任何响应，甚至包括一个代表响应进度的滚动条都会被卡死在那里。）</strong>QNetworkAccessManager是使用信号槽来达到这一目的的。<br>在掌握了访问网络和json解析等，我在此简易做了一个天气预报，既添加了学习趣味，也算是一种检验吧。</p>
+<h4 id="一、API"><a href="#一、API" class="headerlink" title="一、API"></a>一、API</h4><p>通过天气api获取当前天气，api网上有很多，我在此注册了一个 <a href="http://www.haoservice.com/" target="_blank" rel="external">http://www.haoservice.com/</a> 账号，可以免费申请数据，由于是体验用户，可以享受免费请求50次（调试的时候注意，如果调试访问超过50次就得花钱了）。<br>需要自己申请apikey,同时获取到的天气api数据是Jason格式的。<br><img src="http://ols4zt49w.bkt.clouddn.com/WX%7D@H%250$OFOPFI%5D$0%25AE901.png" alt=""></p>
+<p><img src="http://ols4zt49w.bkt.clouddn.com/~@%28GSJZI@NMK%7BV~Y$YBOJUA.png" alt=""></p>
+<p><strong>API发送请求</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">//发送请求</div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    manage = new QNetworkAccessManager(this);</div><div class="line">    QNetworkRequest network_request;</div><div class="line"></div><div class="line"></div><div class="line">    /*设置发送数据*/</div><div class="line"></div><div class="line">   //QString cityName = &quot;杭州&quot;;</div><div class="line"></div><div class="line">   network_request.setUrl(QUrl(&quot;http://apis.haoservice.com/weather?cityname=%E6%9D%AD%E5%B7%9E&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;));</div><div class="line"></div><div class="line"></div><div class="line">   /* 注意：当url里有中文或空格之类的，需要用一些在线转码工具进行url编码，这里纠结了很久*/</div><div class="line">   // network_request.setUrl(QUrl(QString(&quot; http://apis.haoservice.com/weather?cityname=1%&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;).arg(cityName)));</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    /*发送get网络请求*/</div><div class="line">    manage-&gt;get(network_request);</div><div class="line"></div><div class="line">    /*建立connect，replyFinished为自定义槽函数，获取api发回来的天气信息（Jason）格式*/</div><div class="line">    connect(manage,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里我一开始遇到了一个问题，很容易忽视，因为我的url中有中文的存在，每次访问都会失败，但是将网址输入浏览器却能有响应，这是因为浏览器会自动解析编码url，但是当你在代码中想访问请求时必须得编码，在此可以用在线编码软件，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/url%E7%BC%96%E7%A0%81.png" alt=""></p>
+<p><strong>获取API传回得数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">void Widget::getReplyFinished(QNetworkReply *reply)</div><div class="line">&#123;</div><div class="line">    if(reply-&gt;error()!= QNetworkReply::NoError)</div><div class="line">       qDebug() &lt;&lt; QStringLiteral(&quot;响应失败&quot;);</div><div class="line"></div><div class="line">    QByteArray bytes = reply-&gt;readAll();</div><div class="line">    QJsonParseError jsonError;</div><div class="line">    QJsonDocument document = QJsonDocument::fromJson(bytes,&amp;jsonError);</div><div class="line">    if (jsonError.error != QJsonParseError::NoError) &#123;</div><div class="line">            qDebug() &lt;&lt; QStringLiteral(&quot;解析Json失败&quot;);//此处可以验证是否获取到天气信息（json格式）</div><div class="line">            qDebug() &lt;&lt; bytes;//如果API响应的不是json格式的数据，则不用解析，直接输出</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    QJsonObject data = document.object();</div><div class="line">    qDebug() &lt;&lt; &quot;天气Jason：&quot; &lt;&lt; data;</div><div class="line"></div><div class="line">    getTodayWeatherInfo(data);//获取当日天气信息</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">//获取当日天气信息，即解析json</div><div class="line">void Widget::getTodayWeatherInfo(QJsonObject data)</div><div class="line">&#123;</div><div class="line">    QJsonObject today = data.value(&quot;result&quot;).toObject().value(&quot;today&quot;).toObject();</div><div class="line">    WeatherInfo todayInfo;</div><div class="line">    todayInfo.city = today.value(&quot;city&quot;).toString();//北京</div><div class="line">    todayInfo.date = today.value(&quot;date_y&quot;).toString();//2017年05月04日</div><div class="line">    todayInfo.week = today.value(&quot;week&quot;).toString();//星期</div><div class="line">    todayInfo.type = today.value(&quot;weather&quot;).toString();//阵雨</div><div class="line">    todayInfo.curTemp = today.value(&quot;temperature&quot;).toString();//温度</div><div class="line">    todayInfo.fengli = today.value(&quot;wind&quot;).toString();//风</div><div class="line"></div><div class="line"></div><div class="line">    qDebug() &lt;&lt; &quot;getTodayWeatherInfo:\n&quot; &lt;&lt;todayInfo.city&lt;&lt; todayInfo.date &lt;&lt; todayInfo.week &lt;&lt; todayInfo.type &lt;&lt; todayInfo.curTemp</div><div class="line">            &lt;&lt;todayInfo.fengli ;</div><div class="line"></div><div class="line">    QStringList todayInfoList;//在文本框里显示</div><div class="line">    todayInfoList &lt;&lt;todayInfo.city &lt;&lt; todayInfo.date + todayInfo.week &lt;&lt; todayInfo.type &lt;&lt; todayInfo.curTemp</div><div class="line">                   &lt;&lt; todayInfo.fengli ;</div><div class="line">    for(int i=0; i &lt; todayInfoList.size(); i++)</div><div class="line">    &#123;</div><div class="line">        ui-&gt;textBrowser-&gt;append(todayInfoList.at(i));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/8%7DPG7BQ76JQ%29R20%5DE%608%7D0B2.png" alt=""><br>返回的json数据如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;error_code&quot;: 0,</div><div class="line">    &quot;reason&quot;: &quot;成功&quot;,</div><div class="line">    &quot;result&quot;: &#123;</div><div class="line">        &quot;sk&quot;: &#123;</div><div class="line">            &quot;temp&quot;: &quot;25&quot;,</div><div class="line">            &quot;wind_direction&quot;: &quot;北风&quot;,</div><div class="line">            &quot;wind_strength&quot;: &quot;4级&quot;,</div><div class="line">            &quot;humidity&quot;: &quot;57&quot;,</div><div class="line">            &quot;time&quot;: &quot;16:34&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;today&quot;: &#123;</div><div class="line">            &quot;city&quot;: &quot;杭州&quot;,</div><div class="line">            &quot;date_y&quot;: &quot;2017年05月05日&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期五&quot;,</div><div class="line">            &quot;temperature&quot;: &quot;17~27&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 3-4 级&quot;,</div><div class="line">            &quot;dressing_index&quot;: &quot;舒适&quot;,</div><div class="line">            &quot;dressing_advice&quot;: &quot;建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。&quot;,</div><div class="line">            &quot;uv_index&quot;: &quot;弱&quot;,</div><div class="line">            &quot;comfort_index&quot;: &quot;--&quot;,</div><div class="line">            &quot;wash_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;travel_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;exercise_index&quot;: &quot;较适宜&quot;,</div><div class="line">            &quot;drying_index&quot;: &quot;--&quot;</div><div class="line">        &#125;,</div><div class="line">        &quot;future&quot;: [&#123;</div><div class="line">            &quot;temperature&quot;: &quot;15~23&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;02&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期六&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170506&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;16~25&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;02&quot;,</div><div class="line">            &quot;fb&quot;: &quot;03&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期日&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170507&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;17~22&quot;,</div><div class="line">            &quot;weather&quot;: &quot;阵雨&quot;,</div><div class="line">            &quot;fa&quot;: &quot;03&quot;,</div><div class="line">            &quot;fb&quot;: &quot;02&quot;,</div><div class="line">            &quot;wind&quot;: &quot;东南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期一&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170508&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;17~24&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期二&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170509&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;19~32&quot;,</div><div class="line">            &quot;weather&quot;: &quot;晴&quot;,</div><div class="line">            &quot;fa&quot;: &quot;00&quot;,</div><div class="line">            &quot;fb&quot;: &quot;00&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期三&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170510&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;21~31&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;04&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期四&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170511&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;20~28&quot;,</div><div class="line">            &quot;weather&quot;: &quot;雷阵雨&quot;,</div><div class="line">            &quot;fa&quot;: &quot;04&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西北风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期五&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170512&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;20~29&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;00&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期六&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170513&quot;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            &quot;temperature&quot;: &quot;19~29&quot;,</div><div class="line">            &quot;weather&quot;: &quot;多云&quot;,</div><div class="line">            &quot;fa&quot;: &quot;01&quot;,</div><div class="line">            &quot;fb&quot;: &quot;01&quot;,</div><div class="line">            &quot;wind&quot;: &quot;西南风 微风&quot;,</div><div class="line">            &quot;week&quot;: &quot;星期日&quot;,</div><div class="line">            &quot;date&quot;: &quot;20170514&quot;</div><div class="line">        &#125;]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我只解析了显示了today的一部分，并用文本框textbrowser里显示</p>
+<h4 id="二、换肤"><a href="#二、换肤" class="headerlink" title="二、换肤"></a>二、换肤</h4><p>这里我主要设置了背景图片，并且想要达到点击换肤的效果。<br>widget设置显示背景图片我这里尝试了三种方法：<br>方法一：如果widget是顶层窗口（无父类的窗口),设置背景图片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/* 如果widget是顶层窗口（无父类的窗口),设置背景图片*/</div><div class="line">           //方法一：</div><div class="line">     /* QImage _image;</div><div class="line">      _image.load(&quot;:/image/images/UI1.png&quot;);</div><div class="line">      setAutoFillBackground(true);   // 这个属性一定要设置</div><div class="line">      QPalette pal(palette());</div><div class="line">      pal.setBrush(QPalette::Window, QBrush(_image.scaled(size(), Qt::IgnoreAspectRatio,</div><div class="line">                          Qt::SmoothTransformation)));</div><div class="line">      setPalette(pal);</div><div class="line">     */</div></pre></td></tr></table></figure></p>
+<p>方法二：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">     // 方法二：</div><div class="line">/*QPalette palette;</div><div class="line">//palette.setColor(QPalette::Background, QColor(192,253,123));//设置背景颜色</div><div class="line">  palette.setBrush(QPalette::Background, QBrush(QPixmap(&quot;:/image/images/UI1.png&quot;)));</div><div class="line"></div><div class="line">      //上面一句相当于下面两句</div><div class="line">//pixmap.load(&quot;:/image/images/UI1.png&quot;);</div><div class="line">//palette.setBrush(QPalette::Background, QBrush(pixmap));</div><div class="line"></div><div class="line">  setPalette(palette);</div><div class="line">*/</div></pre></td></tr></table></figure></p>
+<p>方法三：利用QPainter的drawPixmap函数，这种方法只能用在paintEvent()函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">   //方法三：利用QPainter的drawPixmap函数，这种方法只能用在paintEvent()函数中</div><div class="line">void Widget::paintEvent(QPaintEvent *)</div><div class="line">&#123;</div><div class="line">    QPainter painter(this);</div><div class="line">   // QPixmap pixmap(&quot;:/image/images/UI.png&quot;);</div><div class="line">    painter.drawPixmap(0, 0, pixmap);//绘制UI</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里为了达到换肤的效果，我采用了第三种方法。同时初始背景图片</p>
+<blockquote>
+<p>pixmap.load(“:/image/images/UI0”); //初始背景图片<br>// resize(pixmap.size());//保留图片大小<br>uid=0;</p>
+</blockquote>
+<p>下面是简单的换肤程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//简单换肤</div><div class="line">void Widget::on_updateButton_clicked()</div><div class="line">&#123;</div><div class="line">    //选择UI的id</div><div class="line">    if(uid == 3)</div><div class="line">        uid = 0;</div><div class="line">    else</div><div class="line">        uid = uid + 1;</div><div class="line">    //拼凑成UI路径</div><div class="line">    QString UIpath = tr(&quot;:/image/images/UI%1&quot;).arg(uid);</div><div class="line">    //qDebug()&lt;&lt;UIpath;</div><div class="line">    //加载UI</div><div class="line">    pixmap.load(UIpath);</div><div class="line">    //产生paintEvent重绘UI</div><div class="line">    update();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5.png" alt=""><br> 此处是由于在初始化时没有注释掉  <code>// resize(pixmap.size());//保留图片大小</code><br> 在注释掉后，界面明显有了改善：<br> <img src="http://ols4zt49w.bkt.clouddn.com/8$B$VNGGW%28%7DW~%29%259E@W%25X%7BR.png" alt=""><br> <img src="http://ols4zt49w.bkt.clouddn.com/G2@B9OIGUOBUCB%60_A%5BG0WWP.png" alt=""></p>
+<h4 id="三、展望"><a href="#三、展望" class="headerlink" title="三、展望"></a>三、展望</h4><p>到此，我想实现的效果已经基本实现，所学的知识也有了检验，但是偶然在网上看到一个帖子，里面有一个更加完善的demo,在此我把它贴出，代码量不是太多，功能和我的差不多，但是他的布局和界面优化显示明显花了更大的功夫。详细代码参考这里：<a href="https://github.com/ghsxl/QT5-Weather" target="_blank" rel="external">github</a><br>最终的效果：<br><img src="http://ols4zt49w.bkt.clouddn.com/@%6037TE2%7B05ZAYR5%29VAQ%7B45O.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/23/QT之http网络编程，json访问应答/" itemprop="url">
                   QT之http网络编程，json访问应答
                 </a>
@@ -1291,353 +1557,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/21/数据结构注意点-指针与结构体/" itemprop="url">
-                  数据结构注意点(指针与结构体)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-21T22:55:32+08:00" content="2017-03-21">
-              2017-03-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/c-c/" itemprop="url" rel="index">
-                    <span itemprop="name">c/c++</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/21/数据结构注意点-指针与结构体/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/21/数据结构注意点-指针与结构体/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在c语言中，结构体和指针常常能见到他们的身影，本文初步总结了在平常写代码中易忽视的一些小细节。</p>
-<h4 id="typedef-struct-A-和-typedef-struct-A-A；有什么区别"><a href="#typedef-struct-A-和-typedef-struct-A-A；有什么区别" class="headerlink" title="typedef struct A{};和 typedef struct A{}A；有什么区别"></a>typedef struct A{};和 typedef struct A{}A；有什么区别</h4><p>首先，关于结构体补充一点，国内经典教材——谭浩强的《C++程序设计》中明确指出：</p>
-<p>1、在C语言中，定义结构体变量格式为：struct A a；</p>
-<p>2、在C++中，定义结构体变量格式为：A a；</p>
-<p>另外，<strong>c++</strong>保留了C的风格，即C++中既可以struct A a，也可以用A a，谭先生建议用新式写法A a；</p>
-<p>所以该问题，可以这么回答：</p>
-<p>（1）<strong>在C语言中（或C风格的程序）</strong>：</p>
-<p>使用 <strong>typedef struct A{}A可以在定义结构体变量时，不必写成struct A a，直接写成A a</strong>（这里的A是 typedef struct A{}A后边</p>
-<p>的A），目的是省去struct使程序更简练；</p>
-<p><strong>而使用typedef struct A{}定义结构体变量时必须写成struct A a，不能省略struct</strong>；</p>
-<p>（2）<strong>在C++语言中</strong>（或C++风格的程序）：</p>
-<p>在<strong>C++</strong>中一般也不会出现 typedef struct A{}A这样多此一举的形式，出现的原因可能是分不清C与C++；</p>
-<p>另外，<strong>关于结构体C与C++还有一点区别：</strong> <strong>C结构体不能包含函数，C++结构体可以包含函数，**</strong>但一般<strong>不这样做而是</strong>采用类**的方法实现。</p>
-<h4 id="结构指针的赋值问题（空指针）"><a href="#结构指针的赋值问题（空指针）" class="headerlink" title="结构指针的赋值问题（空指针）"></a>结构指针的赋值问题（空指针）</h4><p>首先我们先看一段程序：</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-struct abc
-{
-    int a;
-};
-struct abc *p;
-p-&gt;a = 1;
-printf(&quot;%d&quot;, p-&gt;a);
-getchar();
-return 0;
-}
-</code></pre><p>这段代码有一个明显的错误：定义了一个结构体指针，用来指向此类结构体，但是却没有给他赋值，此时p的值为null，你没有在内存中为p分配任何空间。（<strong>注：空指针很危险也很容易犯错</strong>）<br>改法1：</p>
-<pre><code>#include&lt;stdio.h&gt;
-int main()
-{
-struct abc
-{
-    int a;
-};
-struct abc *p,temp;
-p = &amp;temp; //让p指向一个已存在的内存空间
-p-&gt;a = 1;
-printf(&quot;%d&quot;, p-&gt;a);
-getchar();
-return 0;
-
-}
-</code></pre><p>改法2：</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-int main()
-{
-struct abc
-{
-    int a;
-};
-struct abc *p；
-p = (struct abc *)malloc(sizeof(struct abc));给p分配一段内存空间，并使其指向此空间
-p-&gt;a = 1;
-printf(&quot;%d&quot;, p-&gt;a);
-getchar();
-return 0;
-free(p);//释放内存
-}
-</code></pre><h4 id="结构体指针与结构体变量用作函数参数区别"><a href="#结构体指针与结构体变量用作函数参数区别" class="headerlink" title="结构体指针与结构体变量用作函数参数区别"></a>结构体指针与结构体变量用作函数参数区别</h4><p>见代码：</p>
-<pre><code>#include&lt;stdio.h&gt;
-/* 定义结构体类型Point */
-typedef struct
-{
-int x;
-int y;
-}Point;
-
-void fun1(Point point){
-point.x += 10;
-point.y += 10;
-}
-
-void fun2(Point *pPoint){
-pPoint-&gt;x += 10;
-pPoint-&gt;y += 10;
-}
-
-void main()
-{
-Point p;
-p.x = 100;
-p.y = 200;
-
-/* 调用 fun1 */
-fun1(p);
-printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
-printf(&quot;\n&quot;);
-
-/* 调用 fun2：取p的地址作为参数 */
-fun2(&amp;p);
-printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
-getchar();
-}
-</code></pre><p>输出结果：<br>x=100, y=200<br>x=110, y=210<br><strong>注意：调用fun1时，所传递的参数p被复制到调用堆栈中，fun1函数所操作是堆栈中的变量而不是原来的那个变量（main中的p）；另一方面，调用fun2时，传入的p的地址，fun2通过地址，修改了main中的变量p。这是结构体指针与结构体变量用作函数参数最大的区别</strong></p>
-<h4 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h4><p><strong>指针常量：</strong><br>int a；<br>int <strong>*</strong> const p = &amp;a    //指针常量，<strong>*</strong>p可以修改 <strong>*p = 8（OK）； p 不可以修改 p++（ERROR），即指针所指地址不能变，但地址中存的值可以变</strong></p>
-<p><strong>常量指针</strong><br>int a，b；<br>const int <strong>*</strong>p = &amp;a；//常量指针    <strong>*</strong>p不可修改， <strong>*</strong>p = 8；（ERROR）； p 可以修改 p = &amp;b （OK）<strong>即地址可改，值不能改</strong></p>
-<p><strong>还有一种</strong><br>const int <strong>* </strong>const p = &amp;a；    // *p 和 p均不可改变了</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="url">
-                  QT/Qte/Qtopia三者的区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-16T11:44:33+08:00" content="2017-03-16">
-              2017-03-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/16/QT-Qte-Qtopia三者的区别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Qt-Qte-Qtopia三者的区别"><a href="#Qt-Qte-Qtopia三者的区别" class="headerlink" title="Qt/Qte/Qtopia三者的区别"></a>Qt/Qte/Qtopia三者的区别</h3><h5 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h5><p><strong>泛指 Qt software的所有版本的图像界面库</strong>,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个<strong>跨平台</strong>的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。</p>
-<p>(Nokia 在2008年收购 Trolltech 后，将 Qt 更名为 Qt Software，随后改为 Qt Development Frameworks。而后 Nokia 开发了 IDE 工具 <strong>Qt Creator</strong>，于是Qt FrameWork + Qt Creator = Qt SDK。)</p>
-<h5 id="Qte：Qt-Embeded-for-linux"><a href="#Qte：Qt-Embeded-for-linux" class="headerlink" title="Qte：Qt/Embeded for linux"></a>Qte：Qt/Embeded for linux</h5><p><strong>它是用于嵌入式 Linux 系统的 Qt 版本</strong>，<strong>也是一套界面库</strong>,Qt/Embeded 也简称 Qte 或 Qt/E，Qte 去掉了 X Lib 的依赖而直接工作在 Framebuffer 上，而且Qte在此基础上实现了自己的窗口管理系统QWS（Qt Windows System),这是Qte与Qt/X11最大的区别。因此Qte可以在嵌入式Linux系统中没有X11库的环境下构建独立的图形用户界面，而且不会占用太多的嵌入式系统资源。</p>
-<p>Qte为方便嵌入式Qt应用的开发，还提供qvfb工具和makeqpf工具。qvfb工具可以实现Qte的应用能在PC上进行调试和测试，避开X11库的干扰。makeqpf工具则是用来制作qpf字体文件，用来在嵌入式界面中显示特殊渲染字体。</p>
-<h5 id="Qtopia"><a href="#Qtopia" class="headerlink" title="Qtopia"></a>Qtopia</h5><p>Qtopia 是一个<strong>基于 Qte 的类似桌面系统的应用环境</strong>,同时又为开发者为嵌入式设备编写程序提供了一套面向对象的API，包含有 PDA 版本和 Phone 版本。<strong>请注意是基于Qte 的应用环境</strong>,Qtopia 是用 Qte 这个库开发出来的应用程序，<strong>实际上Qtopia就相当于是嵌入式设备上的桌面环境</strong>，也就是类似于PC上的KDE，提供有自己的窗口管理、控制等GUI接口，简化了其上Qte应用的开发。就算不使用Qtopia也可以使用Qte创建自己的图形界面。</p>
-<p>Qtopia早期是一个sf.net上的开源项目，构建于Qte之上（<em>在QT4版本前要安装Qtopia需要先装Qt/E，4之后的Qtopia 已经带有QT/E库了</em>）。从Qt4.1开始，<strong>Qt/Embedded改名为Qtopia Core</strong>，又<strong>从Qt4.4.1开始，Qtopia Core又改名为Qt for Embedded Linux，就是现在的Qte（eveywhere）</strong>。</p>
-<p>Qtopia Platform<br>Qtopia平台由Qt/E, libqpe, libqtopia1, qtopiapim这些库和Qtopia server/launcher组成。应用开发者通过使用这些库提供的API来为Qtopia设备开发应用程序。Qtopia server/launcher作为主程序负责窗口系统的控制、进程间的通讯、启动所有的应用及其它的任务。</p>
-<p>Qtopia/Qte的版本<br>Qtopia1.7.0 / Qte 2.3.7<br>Qtopia2.1.1 / Qte 2.3.10<br>Qtopia2.1.2 / Qte 2.3.11<br>Qtopia2.2.0 / Qte 2.3.12 (包含在qtopia2.2源码包中，2005年，最后一个免费的版本)<br>qtopia 2的应用基于qte 2.3.x的，qtopia 4的应用基于qtopia core(相当于原来的qte) 4.x。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>所以总的来说，QT也就三种：面向桌面的x11、面向嵌入式的Qt/E、以及面向嵌入式带各种应用程序的Qtopia桌面系统！！！</p>
-<p>注：本博客参考了一些网友的看法，最终加上了自己的理解与总结等。参考链接如下：<br><a href="http://m.blog.csdn.net/article/details?id=50577358" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=50577358</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1683,7 +1602,7 @@ getchar();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1691,7 +1610,7 @@ getchar();
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1700,7 +1619,7 @@ getchar();
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

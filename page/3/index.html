@@ -265,6 +265,353 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/21/数据结构注意点-指针与结构体/" itemprop="url">
+                  数据结构注意点(指针与结构体)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-21T22:55:32+08:00" content="2017-03-21">
+              2017-03-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/21/数据结构注意点-指针与结构体/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/21/数据结构注意点-指针与结构体/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在c语言中，结构体和指针常常能见到他们的身影，本文初步总结了在平常写代码中易忽视的一些小细节。</p>
+<h4 id="typedef-struct-A-和-typedef-struct-A-A；有什么区别"><a href="#typedef-struct-A-和-typedef-struct-A-A；有什么区别" class="headerlink" title="typedef struct A{};和 typedef struct A{}A；有什么区别"></a>typedef struct A{};和 typedef struct A{}A；有什么区别</h4><p>首先，关于结构体补充一点，国内经典教材——谭浩强的《C++程序设计》中明确指出：</p>
+<p>1、在C语言中，定义结构体变量格式为：struct A a；</p>
+<p>2、在C++中，定义结构体变量格式为：A a；</p>
+<p>另外，<strong>c++</strong>保留了C的风格，即C++中既可以struct A a，也可以用A a，谭先生建议用新式写法A a；</p>
+<p>所以该问题，可以这么回答：</p>
+<p>（1）<strong>在C语言中（或C风格的程序）</strong>：</p>
+<p>使用 <strong>typedef struct A{}A可以在定义结构体变量时，不必写成struct A a，直接写成A a</strong>（这里的A是 typedef struct A{}A后边</p>
+<p>的A），目的是省去struct使程序更简练；</p>
+<p><strong>而使用typedef struct A{}定义结构体变量时必须写成struct A a，不能省略struct</strong>；</p>
+<p>（2）<strong>在C++语言中</strong>（或C++风格的程序）：</p>
+<p>在<strong>C++</strong>中一般也不会出现 typedef struct A{}A这样多此一举的形式，出现的原因可能是分不清C与C++；</p>
+<p>另外，<strong>关于结构体C与C++还有一点区别：</strong> <strong>C结构体不能包含函数，C++结构体可以包含函数，**</strong>但一般<strong>不这样做而是</strong>采用类**的方法实现。</p>
+<h4 id="结构指针的赋值问题（空指针）"><a href="#结构指针的赋值问题（空指针）" class="headerlink" title="结构指针的赋值问题（空指针）"></a>结构指针的赋值问题（空指针）</h4><p>首先我们先看一段程序：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p;
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+}
+</code></pre><p>这段代码有一个明显的错误：定义了一个结构体指针，用来指向此类结构体，但是却没有给他赋值，此时p的值为null，你没有在内存中为p分配任何空间。（<strong>注：空指针很危险也很容易犯错</strong>）<br>改法1：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p,temp;
+p = &amp;temp; //让p指向一个已存在的内存空间
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+
+}
+</code></pre><p>改法2：</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p；
+p = (struct abc *)malloc(sizeof(struct abc));给p分配一段内存空间，并使其指向此空间
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+free(p);//释放内存
+}
+</code></pre><h4 id="结构体指针与结构体变量用作函数参数区别"><a href="#结构体指针与结构体变量用作函数参数区别" class="headerlink" title="结构体指针与结构体变量用作函数参数区别"></a>结构体指针与结构体变量用作函数参数区别</h4><p>见代码：</p>
+<pre><code>#include&lt;stdio.h&gt;
+/* 定义结构体类型Point */
+typedef struct
+{
+int x;
+int y;
+}Point;
+
+void fun1(Point point){
+point.x += 10;
+point.y += 10;
+}
+
+void fun2(Point *pPoint){
+pPoint-&gt;x += 10;
+pPoint-&gt;y += 10;
+}
+
+void main()
+{
+Point p;
+p.x = 100;
+p.y = 200;
+
+/* 调用 fun1 */
+fun1(p);
+printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
+printf(&quot;\n&quot;);
+
+/* 调用 fun2：取p的地址作为参数 */
+fun2(&amp;p);
+printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
+getchar();
+}
+</code></pre><p>输出结果：<br>x=100, y=200<br>x=110, y=210<br><strong>注意：调用fun1时，所传递的参数p被复制到调用堆栈中，fun1函数所操作是堆栈中的变量而不是原来的那个变量（main中的p）；另一方面，调用fun2时，传入的p的地址，fun2通过地址，修改了main中的变量p。这是结构体指针与结构体变量用作函数参数最大的区别</strong></p>
+<h4 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h4><p><strong>指针常量：</strong><br>int a；<br>int <strong>*</strong> const p = &amp;a    //指针常量，<strong>*</strong>p可以修改 <strong>*p = 8（OK）； p 不可以修改 p++（ERROR），即指针所指地址不能变，但地址中存的值可以变</strong></p>
+<p><strong>常量指针</strong><br>int a，b；<br>const int <strong>*</strong>p = &amp;a；//常量指针    <strong>*</strong>p不可修改， <strong>*</strong>p = 8；（ERROR）； p 可以修改 p = &amp;b （OK）<strong>即地址可改，值不能改</strong></p>
+<p><strong>还有一种</strong><br>const int <strong>* </strong>const p = &amp;a；    // *p 和 p均不可改变了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="url">
+                  QT/Qte/Qtopia三者的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-16T11:44:33+08:00" content="2017-03-16">
+              2017-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/16/QT-Qte-Qtopia三者的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Qt-Qte-Qtopia三者的区别"><a href="#Qt-Qte-Qtopia三者的区别" class="headerlink" title="Qt/Qte/Qtopia三者的区别"></a>Qt/Qte/Qtopia三者的区别</h3><h5 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h5><p><strong>泛指 Qt software的所有版本的图像界面库</strong>,包括 Qt/X11（Unix/Linux),Qt Windows, Qt Mac 等，但这只是相对于二进制来说的。Qt作为一个<strong>跨平台</strong>的应用程序和GUI 框架(C++图形用户界面应用程序开发框架)，在源码上对所有平台都是一致的。Unix/Linux上最流行的桌面环境之一KDE就是采用Qt来写的。</p>
+<p>(Nokia 在2008年收购 Trolltech 后，将 Qt 更名为 Qt Software，随后改为 Qt Development Frameworks。而后 Nokia 开发了 IDE 工具 <strong>Qt Creator</strong>，于是Qt FrameWork + Qt Creator = Qt SDK。)</p>
+<h5 id="Qte：Qt-Embeded-for-linux"><a href="#Qte：Qt-Embeded-for-linux" class="headerlink" title="Qte：Qt/Embeded for linux"></a>Qte：Qt/Embeded for linux</h5><p><strong>它是用于嵌入式 Linux 系统的 Qt 版本</strong>，<strong>也是一套界面库</strong>,Qt/Embeded 也简称 Qte 或 Qt/E，Qte 去掉了 X Lib 的依赖而直接工作在 Framebuffer 上，而且Qte在此基础上实现了自己的窗口管理系统QWS（Qt Windows System),这是Qte与Qt/X11最大的区别。因此Qte可以在嵌入式Linux系统中没有X11库的环境下构建独立的图形用户界面，而且不会占用太多的嵌入式系统资源。</p>
+<p>Qte为方便嵌入式Qt应用的开发，还提供qvfb工具和makeqpf工具。qvfb工具可以实现Qte的应用能在PC上进行调试和测试，避开X11库的干扰。makeqpf工具则是用来制作qpf字体文件，用来在嵌入式界面中显示特殊渲染字体。</p>
+<h5 id="Qtopia"><a href="#Qtopia" class="headerlink" title="Qtopia"></a>Qtopia</h5><p>Qtopia 是一个<strong>基于 Qte 的类似桌面系统的应用环境</strong>,同时又为开发者为嵌入式设备编写程序提供了一套面向对象的API，包含有 PDA 版本和 Phone 版本。<strong>请注意是基于Qte 的应用环境</strong>,Qtopia 是用 Qte 这个库开发出来的应用程序，<strong>实际上Qtopia就相当于是嵌入式设备上的桌面环境</strong>，也就是类似于PC上的KDE，提供有自己的窗口管理、控制等GUI接口，简化了其上Qte应用的开发。就算不使用Qtopia也可以使用Qte创建自己的图形界面。</p>
+<p>Qtopia早期是一个sf.net上的开源项目，构建于Qte之上（<em>在QT4版本前要安装Qtopia需要先装Qt/E，4之后的Qtopia 已经带有QT/E库了</em>）。从Qt4.1开始，<strong>Qt/Embedded改名为Qtopia Core</strong>，又<strong>从Qt4.4.1开始，Qtopia Core又改名为Qt for Embedded Linux，就是现在的Qte（eveywhere）</strong>。</p>
+<p>Qtopia Platform<br>Qtopia平台由Qt/E, libqpe, libqtopia1, qtopiapim这些库和Qtopia server/launcher组成。应用开发者通过使用这些库提供的API来为Qtopia设备开发应用程序。Qtopia server/launcher作为主程序负责窗口系统的控制、进程间的通讯、启动所有的应用及其它的任务。</p>
+<p>Qtopia/Qte的版本<br>Qtopia1.7.0 / Qte 2.3.7<br>Qtopia2.1.1 / Qte 2.3.10<br>Qtopia2.1.2 / Qte 2.3.11<br>Qtopia2.2.0 / Qte 2.3.12 (包含在qtopia2.2源码包中，2005年，最后一个免费的版本)<br>qtopia 2的应用基于qte 2.3.x的，qtopia 4的应用基于qtopia core(相当于原来的qte) 4.x。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>所以总的来说，QT也就三种：面向桌面的x11、面向嵌入式的Qt/E、以及面向嵌入式带各种应用程序的Qtopia桌面系统！！！</p>
+<p>注：本博客参考了一些网友的看法，最终加上了自己的理解与总结等。参考链接如下：<br><a href="http://m.blog.csdn.net/article/details?id=50577358" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=50577358</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/13/ARM简介/" itemprop="url">
                   ARM简介
                 </a>
@@ -1335,7 +1682,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1343,7 +1690,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1352,7 +1699,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
