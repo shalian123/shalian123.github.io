@@ -265,6 +265,133 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/01/c-11-新特性/" itemprop="url">
+                  c++11新特性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-01T21:50:54+08:00" content="2017-06-01">
+              2017-06-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/01/c-11-新特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/01/c-11-新特性/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>C++</strong>面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。</p>
+<h5 id="1-右值的引用"><a href="#1-右值的引用" class="headerlink" title="1.右值的引用"></a>1.右值的引用</h5><p>传统的 <strong>C++</strong> 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 <strong>&amp;&amp; </strong>表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的函数。记住一点，<strong>左值与右值的根本区别在于能否获取内存地址，而能否赋值不是区分的依据</strong>。<br>下面简要总结一下<strong>引用和指针的区别</strong>：<br>两者都是与地址相关的概念。<strong>引用是变量的别名，而指针则是变量的地址</strong><br>区别如下：<br>==1.指针是一个实体（分配内存），而引用仅是个别名；<br>2.引用只能在定义时被初始化一次，之后不可变；指针可变；引用“从一而终”，指针可以“见异思迁”；<br>3.引用没有const，指针有const，const的指针不可变；<br>4.引用不能为空，指针可以为空；<br>5.“sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身的大小；<br>从上面可以看出引用更接近 const 指针。==<br>引入右值引用的主要目的之一是实现移动语义，下面展开来谈==</p>
+<h5 id="2-移动语句"><a href="#2-移动语句" class="headerlink" title="2.移动语句"></a>2.移动语句</h5><p>为方便理解移动语句，考虑下面的示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vector&lt;string&gt; allcpas(const vector&lt;string&gt; &amp;vs)</div><div class="line">&#123;</div><div class="line">    vector&lt;string&gt; temp;</div><div class="line">    // 将 vs 复制给 temp</div><div class="line">    return temp;</div><div class="line">&#125;</div><div class="line">vector&lt;string&gt; vstr;</div><div class="line">// vstr 是包含 20000 个 string 的向量，每个元素有 1000 个字符</div><div class="line">vector&lt;string&gt; vstr_copy1(vstr);</div><div class="line">vector&lt;string&gt; vstr_copy2(allcps(vstr));    // #2</div></pre></td></tr></table></figure></p>
+<p>对语句# 2， <code>allcps</code> 将返回值 temp 复制给临时形参变量，再将该形参复制给<code>vstr_copy2</code> 。编译器对 vstr 复制了两次。这样显然很消耗资源。如果将对数据的所有权直接转让给 <code>vstr_copy2</code> ，显然会更好，对此我们只需要实现 vstr_copy2 的<strong>移动构造函数</strong>，在函数内部将调整临时变量的所有权，从而避免一次无意义的复制。移动语义实际上避免了移动原始数据，而只是修改了记录。</p>
+<h5 id="3-基于范围的for循环"><a href="#3-基于范围的for循环" class="headerlink" title="3.基于范围的for循环"></a>3.基于范围的for循环</h5><p>对于内置数组已经包含 <code>begin()</code> 和 <code>end()</code> 的类和 STL 容器，基于范围的 for 循环可以简化为它们编写循环的工作。这种循环对数组或容器中的每个元素执行指定的操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; vi(6);</div><div class="line">for (auto &amp;x : vi)</div><div class="line">    x = std::rand()</div></pre></td></tr></table></figure></p>
+<p>x 依次为 vi 中的每个元素的引用，从而实现了对数组每个元素的修改。</p>
+<h5 id="4-智能指针"><a href="#4-智能指针" class="headerlink" title="4.智能指针"></a>4.智能指针</h5><p>智能指针的出现很自然，其行为类似于指针的类对象，可以在离开对象周期使自动析构函数，释放动态申请的内存。<br>模板 <code>auto_ptr</code> 是 <strong>c++98</strong> 提供的解决方案，C++11 已将其摈弃，并提供了 unique_ptr ，shared_ptr 两种解决方案。<br>智能指针很多方面都类似于常规指针。例如，如果 ps 是一个智能指针对象，则可以对它执行解除引用操作（*ps）、用它来访问结构成员，将他赋值给相同类型的常规指针。将智能指针对象赋值给对另一个同类型的智能指针对象，将引起一个问题。看下面例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">auto_ptr&lt;string&gt; ps (new string(&quot;I reigned lonely as a cloud.&quot;));</div><div class="line">auto_ptr&lt;string&gt; vocation;</div><div class="line">vocation = ps;</div></pre></td></tr></table></figure></p>
+<p>两个指针指向同一块内存，会造成程序试图删除同一个对象两次。避免这种问题，有如下思路：<br>1.建立所有权的概念，对于特定的指针，只能有一个智能指针对象可以拥有它。让赋值操作转让所有权。这就是用于 auto_ptr 和 unique_ptr 的策略。<br>2.创建智能更高的指针，跟踪引用计数特定对象的智能指针数。这称为引用计数。例如，赋值计数加1，过期时，计数减1。仅当最后一个指针过期时，才调用 delete。这是 shared_ptr 采用的策略。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/05/18/QT5-3-2连接Mysql老是失败！/" itemprop="url">
                   QT5.3.2连接Mysql老是失败！
                 </a>
@@ -1437,140 +1564,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/01/霍夫变换检测直线和圆/" itemprop="url">
-                  霍夫变换检测直线和圆
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-01T19:46:55+08:00" content="2017-04-01">
-              2017-04-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/图像处理/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/01/霍夫变换检测直线和圆/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/01/霍夫变换检测直线和圆/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>霍夫变换的基本原理是点-线的对偶性(duality)（即在参数空间中相交于同一个点的所有直线在图像空间里都有共线的点与之对应）。图像变换前在图像空间，变换后在参数空间。<br>在实现此功能前，我们需要理清思路，具体需要四步走：<br>1.图像灰度化，二值化，即边缘检测结果。（注意：二值化的好坏对检测结果有很大影响，常用的有prewitt，canny等算子）<br>2.霍夫变换。<br>3.检测直线和圆并标记出来。<br>4.调参数。</p>
-<h4 id="图像灰度化，二值化"><a href="#图像灰度化，二值化" class="headerlink" title="图像灰度化，二值化"></a>图像灰度化，二值化</h4><p>图像灰度化这个过程很简单，我这里不会给太多的描述，但是二值化的好坏对检测结果有很大影响。二值化的时候有很多算子，我在这里用了两种，分别是prewitt算子和canny算子。在调参数之前我们首先得讨论二值化（即算子的选择）对检测结果得影响，因此我在同一组参数下，对采用不同算子二值化后进行了边缘检测和霍夫变换检测，比较结果如下：<br>原图如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E5%B0%8F%E7%BB%84-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E5%83%8F-2.jpg" alt=""><br><strong>canny算子</strong><br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">thresh=[0.01,0.10];  %canny算子方法中的双阈值算法检测。参数可调</div><div class="line">sigma=2;%定义高斯参数   </div><div class="line">f=edge(double(rotI),&apos;canny&apos;,thresh,sigma);   </div><div class="line">figure,imshow(f,[]);   </div><div class="line">title(&apos;canny Edge Detect Result&apos;);  %%canny算子边缘检测</div></pre></td></tr></table></figure></p>
-<p>检测结果如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%871.png" alt=""><br><strong>prewitt算子</strong><br>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BW=edge(rotI,&apos;prewitt&apos;);</div><div class="line">figure,imshow(BW);</div><div class="line">title(&apos;prewitt算子边缘检测后图像&apos;);%二值图像</div></pre></td></tr></table></figure></p>
-<p>检测结果如下<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%872.png" alt=""><br>显然，通过上面结果的对比，我们可以发现canny算子间断点相对少很多。明显效果比prewitt算子好点。<br><strong>经过查资料得以再次验证上述结论</strong><br>常用的检测算子有：<br>(1)微分算子：Sobel算子， Robert算子，prewitt算子<br>(2)拉普拉斯高斯算子<br>(3)canny算子<br><strong><em>比较结果</em></strong><br>Roberts算子检测方法对具有陡峭的低噪声的图像处理效果较好，但是利用roberts算子提取边缘的结果是边缘比较粗，因此边缘的定位不是很准确。<br>Sobel算子检测方法对灰度渐变和噪声较多的图像处理效果较好，sobel算子对边缘定位不是很准确，图像的边缘不止一个像素。<br>Prewitt算子检测方法对灰度渐变和噪声较多的图像处理效果较好。但边缘较宽，而且间断点多。<br>Laplacian算子法对噪声比较敏感，所以很少用该算子检测边缘，而是用来判断边缘像素视为与图像的明区还是暗区。<br>Canny方法不容易受噪声干扰，能够检测到真正的弱边缘。优点在于，使用两种不同的阈值分别检测强边缘和弱边缘，并且当弱边缘和强边缘相连时，才将弱边缘包含在输出图像中。<br>附：具体比较可以参考<a href="https://wenku.baidu.com/view/987b48f525c52cc58bd6bea6.html" target="_blank" rel="external">https://wenku.baidu.com/view/987b48f525c52cc58bd6bea6.html</a></p>
-<h4 id="霍夫变换"><a href="#霍夫变换" class="headerlink" title="霍夫变换"></a>霍夫变换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">%%在canny算子边缘检测后，hough变换，可以换成其他算子</div><div class="line">[H,T,R]=hough(f);% 这里是直线 %cos(theta)*x+sin(theta)*y=rho,H霍夫变换矩阵，角度theta指rho与X轴之间的夹角，rho为到直线几何垂直距离</div><div class="line">figure,imshow(H,[],&apos;XData&apos;,T,&apos;YData&apos;,R,&apos;InitialMagnification&apos;,&apos;fit&apos;);</div><div class="line">title(&apos;霍夫变换图&apos;);</div><div class="line">xlabel(&apos;\theta&apos;),ylabel(&apos;\rho&apos;);%坐标</div><div class="line">axis on , axis normal, hold on;</div><div class="line">colormap(hot);%颜色突显</div><div class="line">P=houghpeaks(H,5,&apos;threshold&apos;,ceil(0.3*max(H(:))));%参数可调，5--指定要识别的峰值的最大数量</div><div class="line">x=T(P(:,2));y=R(P(:,1));</div><div class="line">plot(x,y,&apos;s&apos;,&apos;color&apos;,&apos;white&apos;);</div></pre></td></tr></table></figure>
-<p>效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%873.jpg" alt=""></p>
-<h4 id="利用极坐标中的霍夫变换检测直线和圆"><a href="#利用极坐标中的霍夫变换检测直线和圆" class="headerlink" title="利用极坐标中的霍夫变换检测直线和圆"></a>利用极坐标中的霍夫变换检测直线和圆</h4><p><strong>直线检测</strong>，每个像素坐标点经过变换都变成都直线特质有贡献的统一度量，一个简单的例子如下：一条直线在图像中是一系列离散点的集合，通过一个直线的离散极坐标公式，可以表达出直线的离散点几何等式如下：<br>X <strong>*</strong>cos(theta) + y * sin(theta)  = r 其中角度theta指r与X轴之间的夹角，r为到直线几何垂直距离。任何在直线上点，x, y都可以表达，其中 r， theta是常量。该公式图形表示如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%9B%BE%E7%89%874.png" alt=""><br>然而在实现的图像处理领域，图像的像素坐标P(x, y)是已知的，而r, theta则是我们要寻找的变量。如果我们能绘制每个(r, theta)值根据像素点坐标P(x, y)值的话，那么就从图像笛卡尔坐标系统转换到极坐标霍夫空间系统，这种从点到曲线的变换称为直线的霍夫变换。</p>
-<p><strong>检测圆</strong><br>利用公式x=a+rcos(theta),   y=b+rsin(theta)求出a和b的值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">function [para] = findcircle(f,stepR,stepAngle,minR,maxR,p)</div><div class="line">%[HOUGH_SPACE,HOUGH_CIRCLE,PARA] = HOUGH_CIRCLE(BW,STEP_R,STEP_ANGLE,R_MAX,P)</div><div class="line">%------------------------------算法概述-----------------------------</div><div class="line">% 该算法通过a = x-r*cos(angle)，b = y-r*sin(angle)将圆图像中的边缘点</div><div class="line">% 映射到参数空间(a,b,r)中，由于是数字图像且采取极坐标，angle和r都取</div><div class="line">% 一定的范围和步长，这样通过两重循环（angle循环和r循环）即可将原图像</div><div class="line">% 空间的点映射到参数空间中，再在参数空间（即一个由许多小立方体组成的</div><div class="line">% 大立方体)中寻找圆心，然后求出半径坐标。</div><div class="line">%----------------------------------------------------------------------</div><div class="line"></div><div class="line">%------------------------------输入参数-----------------------------</div><div class="line">% BW或f:二值图像；</div><div class="line">% stepR:检测的圆半径步长</div><div class="line">% stepAngle:角度步长，单位为弧度</div><div class="line">% minR:最小圆半径</div><div class="line">% maxR:最大圆半径</div><div class="line">% p:以p*hough_space的最大值为阈值，p取0，1之间的数</div><div class="line">%-------------------------------------------------------------------</div><div class="line"></div><div class="line">%------------------------------输出参数-----------------------------</div><div class="line">% hough_space:参数空间，h(a,b,r)表示圆心在(a,b)半径为r的圆上的点数</div><div class="line">%hough_circl:二值图像，检测到的圆</div><div class="line">% para:检测到的圆的圆心、半径</div><div class="line">%-------------------------------------------------------------------</div><div class="line"></div><div class="line">[m,n] = size(BW);% f:canny二值图像   BW:prewitt算子二值图像；</div><div class="line">cntR = round((maxR-minR)/stepR)+1;% stepR:检测的圆半径步长， minR:最小圆半径， maxR:最大圆半径</div><div class="line">cntAngle = round(2*pi/stepAngle);% stepAngle:角度步长，单位为弧度</div><div class="line">hough_space = zeros(m,n,cntR);% hough_space:参数空间，h(a,b,r)表示圆心在(a,b)半径为r的圆上的点数</div><div class="line">[rows,cols] = find(BW);</div><div class="line">cntPoints = size(rows,1);</div><div class="line"> </div><div class="line">% Hough变换将图像空间(x,y)对应到参数空间(a,b,r)</div><div class="line">% a = x-r*cos(angle), b = y-r*sin(angle)</div><div class="line">for i=1:cntPoints</div><div class="line">    for r=1:cntR</div><div class="line">        for k=1:cntAngle</div><div class="line">            a = round(rows(i)-(minR+(r-1)*stepR)*cos(k*stepAngle));</div><div class="line">            b = round(cols(i)-(minR+(r-1)*stepR)*sin(k*stepAngle));</div><div class="line">            if(a&gt;0 &amp;&amp; a&lt;=m &amp;&amp; b&gt;0 &amp;&amp; b&lt;=n)</div><div class="line">                hough_space(a,b,r) = hough_space(a,b,r)+1;</div><div class="line">            end</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div><div class="line"> </div><div class="line">% 寻找满足阈值的圆的参数</div><div class="line">max_para = max(max(max(hough_space)));</div><div class="line">index = find(hough_space&gt;=max_para*p); % p:以p*hough_space的最大值为阈值，p取0，1之间的数</div><div class="line">length = size(index,1);</div><div class="line">hough_circle=zeros(m,n);</div><div class="line">for i=1:cntPoints</div><div class="line">    for k=1:length</div><div class="line">        par3 = floor(index(k)/(m*n))+1;</div><div class="line">        par2 = floor((index(k)-(par3-1)*(m*n))/m)+1;</div><div class="line">        par1 = index(k)-(par3-1)*(m*n)-(par2-1)*m;</div><div class="line">        if((rows(i)-par1)^2+(cols(i)-par2)^2&lt;(minR+(par3-1)*stepR)^2+5 &amp;&amp; (rows(i)-par1)^2+(cols(i)-par2)^2&gt;(minR+(par3-1)*stepR)^2-5)</div><div class="line">            hough_circle(rows(i),cols(i)) = 1;% hough_circl:二值图像，检测到的圆</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div><div class="line"> </div><div class="line">for k=1:length</div><div class="line">    par3 = floor(index(k)/(m*n))+1;     </div><div class="line">    par2 = floor((index(k)-(par3-1)*(m*n))/m)+1;    % 圆心y坐标</div><div class="line">    par1 = index(k)-(par3-1)*(m*n)-(par2-1)*m;      % 圆心x坐标</div><div class="line">    par3 = minR+(par3-1)*stepR;                    % 圆的半径</div><div class="line">   % fprintf(1,&apos;Center %d %d radius %d\n&apos;,par1,par2,par3);</div><div class="line">    para(k,:) = [par1,par2,par3];  % para:检测到的圆的圆心、半径</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>主函数里：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">%find lines and plot them</div><div class="line">lines=houghlines(f,T,R,P,&apos;FillGap&apos;,5,&apos;MinLength&apos;,20);%参数可调，将20调大，即一些间距比较小的直线将不会被标记出来</div><div class="line">figure,imshow(f),hold on</div><div class="line">title(&apos;霍夫变换图像检测&apos;);</div><div class="line">max_len=0;</div><div class="line">for k = 1:length(lines)</div><div class="line">    xy=[lines(k).point1;lines(k).point2];</div><div class="line">    plot(xy(:,1),xy(:,2),&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;green&apos;);</div><div class="line">    plot(xy(1,1),xy(1,2),&apos;x&apos;,&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;yellow&apos;);</div><div class="line">    plot(xy(2,1),xy(2,2),&apos;x&apos;,&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;red&apos;);</div><div class="line">len=norm(lines(k).point1-lines(k).point2);</div><div class="line">if(len&gt;max_len)</div><div class="line">max_len=len;</div><div class="line">xy_long=xy;</div><div class="line">end</div><div class="line">end</div><div class="line">%plot(xy_long(:,1),xy_long(:,2),&apos;LineWidth&apos;,2,&apos;Color&apos;,&apos;cyan&apos;);%斜率最大的可用单独颜色标记</div><div class="line"></div><div class="line">%%%下面是圆</div><div class="line">parm = findcircle(f,2,0.05,15,100,0.75);%参数可调</div><div class="line">% 绘制所有找到的圆</div><div class="line">for i = 1:size(parm,1)</div><div class="line">    x0 = parm(i,1); y0 = parm(i,2);  r0 = parm(i,3);</div><div class="line">    xi=[-r0:0 0:r0];</div><div class="line">    yi=round((r0^2-xi.^2).^0.5);</div><div class="line">    plot(yi+y0,xi+x0,&apos;Color&apos;,&apos;g&apos;,&apos;LineWidth&apos;,3); % 下半圆</div><div class="line">    plot(-yi+y0,xi+x0,&apos;Color&apos;,&apos;g&apos;,&apos;LineWidth&apos;,3); % 上半圆</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<h4 id="调参数"><a href="#调参数" class="headerlink" title="调参数"></a>调参数</h4><p>在本代码中有一些参数需要根据实际图像来调节，我列出了一些可以调节的地方，具体需要先将代码读懂，有问题可以在下面评价。<br>最终检测结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E5%9B%BE%E5%83%8F%E6%A3%80%E6%B5%8B%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%9C%86.jpg" alt=""><br>直线和圆的个数大小都可以调节参数达到预期的效果。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1611,7 +1609,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -265,6 +265,126 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/03/装饰模式-衣服穿着设计/" itemprop="url">
+                  装饰模式-衣服穿着设计
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-03T10:54:26+08:00" content="2017-07-03">
+              2017-07-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">大话设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/03/装饰模式-衣服穿着设计/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/03/装饰模式-衣服穿着设计/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一个人可以穿休闲装：运动鞋，体恤，马裤；也可以穿正装：皮鞋，西服，领带；也可以穿其他的各种非主流装、超人装。将所有的装饰都写在一个类中难于维护，因此可<strong>将不同的装饰封装到不同的类中</strong>，<strong>有一个抽象类Finery类来指明要穿着的对象</strong>。这里没有用到Component类，直接让服饰类Decorator继承人类ConcreteComponent类<br><img src="http://ols4zt49w.bkt.clouddn.com/HJ%28QC10GAX5Z%60NZMMI4%5B1JC.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line"></div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class Person</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	string name;</div><div class="line">public:</div><div class="line">	Person(string&amp; na) : name(na)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line">	Person()</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;装扮的&quot; &lt;&lt; name &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/* 服饰类 */</div><div class="line">class Finery : public Person</div><div class="line">&#123;</div><div class="line">protected:</div><div class="line">	Person* component; /* 指向Person类对象的指针，用于接收Person类的子类的对象，即具体的服饰打扮 */</div><div class="line"></div><div class="line">public:</div><div class="line">	/* 打扮 */</div><div class="line">	void Decorate(Person* comp)</div><div class="line">	&#123;</div><div class="line">		component = comp;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/*重写展示函数，根据不同的对象调用不同的函数 */</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		if (component != NULL)</div><div class="line">		&#123;</div><div class="line">			component-&gt;Show();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*****************************</div><div class="line">** 具体服饰类 **</div><div class="line">*****************************/</div><div class="line">class TShirts : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;大T恤  &quot;;  //显示装饰对象</div><div class="line">		component-&gt;Show();  //显示下一个装饰对象</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class BigTrouser : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;垮裤  &quot;;</div><div class="line">		component-&gt;Show();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Sneakers : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;破球鞋  &quot;;</div><div class="line">		component-&gt;Show();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class LeatherShoes : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;皮鞋  &quot;;</div><div class="line">		component-&gt;Show();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Tie : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;领带  &quot;;</div><div class="line">		component-&gt;Show();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Suit : public Finery</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void Show()</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; &quot;西装  &quot;;</div><div class="line">		component-&gt;Show();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	string name = &quot;小菜&quot;;</div><div class="line">	Person xc(name);</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;第一种装扮：&quot; &lt;&lt; endl;</div><div class="line">	Sneakers pqx;</div><div class="line">	BigTrouser kk;</div><div class="line">	TShirts dtx;</div><div class="line"></div><div class="line">	/*装饰过程，注意装饰顺序*/</div><div class="line">	pqx.Decorate(&amp;xc);</div><div class="line">	kk.Decorate(&amp;pqx);</div><div class="line">	dtx.Decorate(&amp;kk);</div><div class="line">	dtx.Show();</div><div class="line"></div><div class="line">	return 0;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/28/QT小结-1/" itemprop="url">
                   QT小结(1)
                 </a>
@@ -1380,138 +1500,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/01/c-11-新特性/" itemprop="url">
-                  c++11新特性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-01T21:50:54+08:00" content="2017-06-01">
-              2017-06-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/c-c/" itemprop="url" rel="index">
-                    <span itemprop="name">c/c++</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/01/c-11-新特性/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/01/c-11-新特性/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>C++</strong>面试中经常会被问到的一个问题是:了解哪些 C++11 新特性，下面总结几条实用的新特性,注意以下不是全部，只是部分，在以后学习的过程中继续补充。</p>
-<h5 id="1-右值的引用"><a href="#1-右值的引用" class="headerlink" title="1.右值的引用"></a>1.右值的引用</h5><p>传统的 <strong>C++</strong> 引用（现在称为左值引用）使标识符关联到左值。左值是一个表示数据的表达式（如变量名或解除引用的指针）。C++11 新增了右值引用，使用 <strong>&amp;&amp; </strong>表示。右值则包括字面常量、诸如 x + y 表达式以及返回值的函数。记住一点，<strong>左值与右值的根本区别在于能否获取内存地址，而能否赋值不是区分的依据</strong>。<br>下面简要总结一下<strong>引用和指针的区别</strong>：<br>两者都是与地址相关的概念。<strong>引用是变量的别名，而指针则是变量的地址</strong><br>区别如下：<br>==1.指针是一个实体（分配内存），而引用仅是个别名；<br>2.引用只能在定义时被初始化一次，之后不可变；指针可变；引用“从一而终”，指针可以“见异思迁”；<br>3.引用没有const，指针有const，const的指针不可变；<br>4.引用不能为空，指针可以为空；<br>5.“sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身的大小；<br>从上面可以看出引用更接近 const 指针。==<br>引入右值引用的主要目的之一是实现移动语义，下面展开来谈==</p>
-<h5 id="2-移动语句"><a href="#2-移动语句" class="headerlink" title="2.移动语句"></a>2.移动语句</h5><p>为方便理解移动语句，考虑下面的示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vector&lt;string&gt; allcpas(const vector&lt;string&gt; &amp;vs)</div><div class="line">&#123;</div><div class="line">    vector&lt;string&gt; temp;</div><div class="line">    // 将 vs 复制给 temp</div><div class="line">    return temp;</div><div class="line">&#125;</div><div class="line">vector&lt;string&gt; vstr;</div><div class="line">// vstr 是包含 20000 个 string 的向量，每个元素有 1000 个字符</div><div class="line">vector&lt;string&gt; vstr_copy1(vstr);</div><div class="line">vector&lt;string&gt; vstr_copy2(allcps(vstr));    // #2</div></pre></td></tr></table></figure></p>
-<p>对语句# 2， <code>allcps</code> 将返回值 temp 复制给临时形参变量，再将该形参复制给<code>vstr_copy2</code> 。编译器对 vstr 复制了两次。这样显然很消耗资源。如果将对数据的所有权直接转让给 <code>vstr_copy2</code> ，显然会更好，对此我们只需要实现 vstr_copy2 的<strong>移动构造函数</strong>，在函数内部将调整临时变量的所有权，从而避免一次无意义的复制。移动语义实际上避免了移动原始数据，而只是修改了记录。</p>
-<h5 id="3-基于范围的for循环"><a href="#3-基于范围的for循环" class="headerlink" title="3.基于范围的for循环"></a>3.基于范围的for循环</h5><p>对于内置数组已经包含 <code>begin()</code> 和 <code>end()</code> 的类和 STL 容器，基于范围的 for 循环可以简化为它们编写循环的工作。这种循环对数组或容器中的每个元素执行指定的操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">std::vector&lt;int&gt; vi(6);</div><div class="line">for (auto &amp;x : vi)</div><div class="line">    x = std::rand()</div></pre></td></tr></table></figure></p>
-<p>x 依次为 vi 中的每个元素的引用，从而实现了对数组每个元素的修改。</p>
-<h5 id="4-智能指针"><a href="#4-智能指针" class="headerlink" title="4.智能指针"></a>4.智能指针</h5><p>智能指针的出现很自然，其行为类似于指针的类对象，可以在离开对象周期使自动析构函数，释放动态申请的内存。<br>模板 <code>auto_ptr</code> 是 <strong>c++98</strong> 提供的解决方案，C++11 已将其摈弃，并提供了 unique_ptr ，shared_ptr 两种解决方案。<br>智能指针很多方面都类似于常规指针。例如，如果 ps 是一个智能指针对象，则可以对它执行解除引用操作（*ps）、用它来访问结构成员，将他赋值给相同类型的常规指针。将智能指针对象赋值给对另一个同类型的智能指针对象，将引起一个问题。看下面例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">auto_ptr&lt;string&gt; ps (new string(&quot;I reigned lonely as a cloud.&quot;));</div><div class="line">auto_ptr&lt;string&gt; vocation;</div><div class="line">vocation = ps;</div></pre></td></tr></table></figure></p>
-<p>两个指针指向同一块内存，会造成程序试图删除同一个对象两次。避免这种问题，有如下思路：<br>1.建立所有权的概念，对于特定的指针，只能有一个智能指针对象可以拥有它。让赋值操作转让所有权。这就是用于 auto_ptr 和 unique_ptr 的策略。<br>2.创建智能更高的指针，跟踪引用计数特定对象的智能指针数。这称为引用计数。例如，赋值计数加1，过期时，计数减1。仅当最后一个指针过期时，才调用 delete。这是 shared_ptr 采用的策略。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1552,7 +1545,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
