@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="友元类，运算符重载," />
+  <meta name="keywords" content="c++,设计模式," />
 
 
 
@@ -86,19 +86,18 @@
 
 
 
-<meta name="description" content="之前在看设计模式时遇到了一些问题，一直没有时间来整理，现在终于研一课程全部结束了，因此回过头来整理一下。
-1.friend ostream&amp;amp; operator &amp;lt;&amp;lt;（ostream&amp;amp; out，const Money&amp;amp; x）是什么意思？答：对”&amp;lt;&amp;lt;”运算符的重载。一般我们用的”&amp;lt;&amp;lt;”只能输出整型、实型等普通类型。要想输出类的类型，则必须对”">
+<meta name="description" content="代理模式：为其他对象提供一种代理以控制对这个对象的访问。代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。可以应用的场合：1、远程代理；2、虚拟代理；3安全代理；4、智能指引1.远中程代理为一个对象在不同地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。例子：WebService在.Net中的应用。当在应用程序中加入web引用，引用一个webse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++笔记之友元类和运算符重载">
-<meta property="og:url" content="http://shalian123.github.io/2017/06/14/c-笔记之友元类和运算符重载/index.html">
+<meta property="og:title" content="代理模式-代理追求者">
+<meta property="og:url" content="http://shalian123.github.io/2017/07/03/代理模式-代理追求者/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="之前在看设计模式时遇到了一些问题，一直没有时间来整理，现在终于研一课程全部结束了，因此回过头来整理一下。
-1.friend ostream&amp;amp; operator &amp;lt;&amp;lt;（ostream&amp;amp; out，const Money&amp;amp; x）是什么意思？答：对”&amp;lt;&amp;lt;”运算符的重载。一般我们用的”&amp;lt;&amp;lt;”只能输出整型、实型等普通类型。要想输出类的类型，则必须对”">
-<meta property="og:updated_time" content="2017-06-14T11:14:25.878Z">
+<meta property="og:description" content="代理模式：为其他对象提供一种代理以控制对这个对象的访问。代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。可以应用的场合：1、远程代理；2、虚拟代理；3安全代理；4、智能指引1.远中程代理为一个对象在不同地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。例子：WebService在.Net中的应用。当在应用程序中加入web引用，引用一个webse">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1499087323%281%29.png">
+<meta property="og:updated_time" content="2017-07-03T13:35:15.663Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++笔记之友元类和运算符重载">
-<meta name="twitter:description" content="之前在看设计模式时遇到了一些问题，一直没有时间来整理，现在终于研一课程全部结束了，因此回过头来整理一下。
-1.friend ostream&amp;amp; operator &amp;lt;&amp;lt;（ostream&amp;amp; out，const Money&amp;amp; x）是什么意思？答：对”&amp;lt;&amp;lt;”运算符的重载。一般我们用的”&amp;lt;&amp;lt;”只能输出整型、实型等普通类型。要想输出类的类型，则必须对”">
+<meta name="twitter:title" content="代理模式-代理追求者">
+<meta name="twitter:description" content="代理模式：为其他对象提供一种代理以控制对这个对象的访问。代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。可以应用的场合：1、远程代理；2、虚拟代理；3安全代理；4、智能指引1.远中程代理为一个对象在不同地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。例子：WebService在.Net中的应用。当在应用程序中加入web引用，引用一个webse">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/1499087323%281%29.png">
 
 
 
@@ -116,7 +115,7 @@
   };
 </script>
 
-  <title> c++笔记之友元类和运算符重载 | Wind </title>
+  <title> 代理模式-代理追求者 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +265,7 @@
             
             
               
-                c++笔记之友元类和运算符重载
+                代理模式-代理追求者
               
             
           </h1>
@@ -278,8 +277,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-14T18:59:00+08:00" content="2017-06-14">
-              2017-06-14
+            <time itemprop="dateCreated" datetime="2017-07-03T21:04:45+08:00" content="2017-07-03">
+              2017-07-03
             </time>
           </span>
 
@@ -292,8 +291,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/c-c/" itemprop="url" rel="index">
-                    <span itemprop="name">c/c++</span>
+                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">大话设计模式</span>
                   </a>
                 </span>
 
@@ -308,8 +307,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/06/14/c-笔记之友元类和运算符重载/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/c-笔记之友元类和运算符重载/" itemprop="commentsCount"></span>
+                <a href="/2017/07/03/代理模式-代理追求者/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/03/代理模式-代理追求者/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,13 +331,7 @@
       
 
       
-        <p>之前在看设计模式时遇到了一些问题，一直没有时间来整理，现在终于研一课程全部结束了，因此回过头来整理一下。</p>
-<p>1.friend ostream&amp; operator &lt;&lt;（ostream&amp; out，const Money&amp; x）是什么意思？<br>答：对”&lt;&lt;”运算符的重载。<br><strong>一般我们用的”&lt;&lt;”只能输出整型、实型等普通类型</strong>。<br>要<strong>想输出类的类型，则必须对”&lt;&lt;”进行重载</strong>，<strong>其中一个参数为类类型对象</strong>。<br>为了<strong>方便对对象内部数据的操</strong>作，设置为friend友元函数。<br>为了能达到cout&lt;&lt;对象&lt;&lt;对象&lt;&lt;endl;的连续输出对象的效果，<strong>设置返回类型为引用</strong>。</p>
-<p><strong>参数</strong>：第一个为输出流对象。第二个为要输出的对象（<strong>为了防止产生临时对象、提高程序的效率，将参数设置为引用类型，但引用类型又不想让它改变实参的值，所以设置为const</strong>）。<br>例子：<br>friend ostream&amp; operator&lt;&lt;(ostream&amp; o,const Person&amp; p)（<strong>输出运算符重载</strong>）<br>{<br> o&lt;&lt;”名字”&lt;&lt;p.name&lt;&lt;”年龄”&lt;&lt;p.age&lt;&lt;”身高”&lt;&lt;p.height&lt;&lt;”体重”&lt;&lt;p.weight&lt;&lt;”.\n”;<br> return o;<br>}</p>
-<p>friend istream&amp; operator&lt;&lt;(istream&amp; i, Person&amp; p)（<strong>输入运算符重载</strong>）<br>{<br>i&gt;&gt;p.name&gt;&gt;p.age&gt;&gt;p.height&gt;&gt;p.weight;<br> return i;<br>}</p>
-<p>2.friend关键字<br>c++中有个friend关键字，它能让被修饰的对象冲破本class的封装特性，从而能够访问本class的私有对象。<br>简单来讲，就是：<br>•    如果你在A类中，申明了函数func()是你的friend，那么func()就可以使用A类的所有成员变量，无论它在什么地方定义的。<br>•    如果你在A类中，申明了B类是你的friend，那么B类中的方法就可以访问A类的所有成员变量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class A &#123;</div><div class="line">public:</div><div class="line">    A() &#123;</div><div class="line">        password = 1111;</div><div class="line">        birthday = 808;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~A() &#123; &#125;</div><div class="line"></div><div class="line">    friend int func(A a); // 向c++表示，int func(A a)是我的朋友，所以它可以使用我的所有东西。</div><div class="line">    friend class B;       // 向c++表示，class B是我的朋友，所以它可以使用我的所有东西。</div><div class="line"></div><div class="line">private:</div><div class="line">    int password;</div><div class="line">    int birthday;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int func(A a) &#123;</div><div class="line">    cout &lt;&lt; a.password &lt;&lt; &quot; and &quot; &lt;&lt; a.birthday &lt;&lt; endl; //可以访问</div><div class="line">    a.password = 1;                                      //甚至可以修改</div><div class="line">    cout &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B &#123;</div><div class="line">public:</div><div class="line">    B() &#123; &#125;</div><div class="line"></div><div class="line">    ~B() &#123; &#125;</div><div class="line">    // 因为在A类中已经声明了B类是它的朋友，所以B类中方法就可以访问A类的私有变量了</div><div class="line">    void show(A a) &#123;</div><div class="line">        cout &lt;&lt; &quot;your account is &quot; &lt;&lt; a.account &lt;&lt; &quot; and with pass: &quot; &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main() &#123;</div><div class="line"></div><div class="line">    A a;</div><div class="line">    func(a);</div><div class="line">    B b;</div><div class="line">    b.show(a);</div><div class="line">    system(&quot;pause&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>加上运算符重载：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class A &#123;</div><div class="line">public:</div><div class="line">    A() &#123;</div><div class="line">        password = 1111;</div><div class="line">        account = 808;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~A() &#123; &#125;</div><div class="line"></div><div class="line">    friend ostream&amp; operator &lt;&lt; (ostream &amp;os , A a);</div><div class="line"></div><div class="line">private:</div><div class="line">    int password;</div><div class="line">    int account;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ostream&amp; operator &lt;&lt; (ostream &amp;os , A a) &#123;</div><div class="line">    os &lt;&lt; &quot;your account is &quot; &lt;&lt; a.account &lt;&lt; &quot; and with pass: &quot; &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    return os;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main() &#123;</div><div class="line"></div><div class="line">    A a;</div><div class="line"></div><div class="line">    cout &lt;&lt; a;</div><div class="line"></div><div class="line">    system(&quot;pause&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>代理模式：为其他对象提供一种代理以控制对这个对象的访问。代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。可以应用的场合：1、远程代理；2、虚拟代理；3安全代理；4、智能指引<br>1.远中程代理<br>为一个对象在不同地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。例子：WebService在.Net中的应用。当在应用程序中加入web引用，引用一个webservice，此时会在项目中生成一个webreference的文件夹和一些文件，其实它们就是代理，使得客户端程序调用代理就可以解决远程访问的问题。<br>2.虚拟代理<br>根据需要创建开销很大的对象，通过他来存放实例化需要很长的时间的真实对象。比如打开一个很大的HTML网页，里面可能有很多的图片和文字，当你打开他时，看到的是所有汉子，但图片得一张张下载后才能看到，那些未打开得图片就是通过虚拟代理代替了真实得图片，此时代理存储了真实图片得路径和尺寸。<br>3.安全代理<br>用来控制真实对象访问时得权限。<br>4.智能指针<br><img src="http://ols4zt49w.bkt.clouddn.com/1499087323%281%29.png" alt=""><br>以追求MM为例，小A喜欢MM小C，但是小C不认识小A，但是认识小A的好哥们小B，于是小A就买了礼物让小B代理他送给小C，并转达他的爱意。此时小A就是RealSubject类，而小B就是Proxy类，他们共同继承Subject抽象接口类即礼物类，小A是真正的送礼物的，所以他必须实现这个抽象接口类。小B是代理者，他必须调用小A实现的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line"></div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class SchoolGirl</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	string name;</div><div class="line"></div><div class="line">public:</div><div class="line">	SchoolGirl( string&amp; na ) : name(na)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line">	string GetName()</div><div class="line">	&#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line">	void SetName(string&amp; na)</div><div class="line">	&#123;</div><div class="line">		name = na;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/* 代理接口 */</div><div class="line">class IGiveGift</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void GiveDolls() = 0;</div><div class="line">	virtual void GiveFlowers() = 0;</div><div class="line">	virtual void GiveChocolate() = 0;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">/* 追求者 */</div><div class="line">/* 让追求者去实现送礼物的接口 */</div><div class="line">class Pursuit : public IGiveGift</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	SchoolGirl mm;</div><div class="line"></div><div class="line">public:</div><div class="line">	Pursuit( SchoolGirl&amp; m ) : mm(m)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line">	virtual void GiveDolls()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你洋娃娃&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveFlowers()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你鲜花&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveChocolate()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你巧克力&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">/* 代理模式 */</div><div class="line">class Proxy : public IGiveGift</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	Pursuit* gg; /* 指向被代理对象的指针 */</div><div class="line"></div><div class="line">public:</div><div class="line">	Proxy( SchoolGirl&amp; mm )</div><div class="line">	&#123;</div><div class="line">		gg =  new Pursuit(mm);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	~Proxy()</div><div class="line">	&#123;</div><div class="line">		delete gg;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/* 在实现方法中调用追求者类的相关方法，因为真正送礼物的是追求者 */</div><div class="line">	virtual void GiveDolls()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveDolls();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveFlowers()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveFlowers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveChocolate()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveChocolate();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	string name = &quot;娇娇&quot;;</div><div class="line">	SchoolGirl sgirl(name);</div><div class="line"></div><div class="line">	Proxy daili( sgirl );</div><div class="line"></div><div class="line">	daili.GiveDolls();</div><div class="line">	daili.GiveFlowers();</div><div class="line">	daili.GiveChocolate();</div><div class="line"></div><div class="line">	return 0;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -360,7 +353,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/友元类，运算符重载/" rel="tag">#友元类，运算符重载</a>
+            <a href="/tags/c/" rel="tag">#c++</a>
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
           
         </div>
       
@@ -369,17 +364,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/14/多尺度Gabor滤波器提取彩色图像边缘/" rel="next" title="多尺度Gabor滤波器提取彩色图像边缘">
-                <i class="fa fa-chevron-left"></i> 多尺度Gabor滤波器提取彩色图像边缘
+              <a href="/2017/07/03/装饰模式-衣服穿着设计/" rel="next" title="装饰模式-衣服穿着设计">
+                <i class="fa fa-chevron-left"></i> 装饰模式-衣服穿着设计
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/14/简单工厂模式-c-实现/" rel="prev" title="简单工厂模式(c++实现)">
-                简单工厂模式(c++实现) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -394,10 +385,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/06/14/c-笔记之友元类和运算符重载/"
-     data-title="c++笔记之友元类和运算符重载"
+        <div class="ds-share flat" data-thread-key="2017/07/03/代理模式-代理追求者/"
+     data-title="代理模式-代理追求者"
      data-content=""
-     data-url="http://shalian123.github.io/2017/06/14/c-笔记之友元类和运算符重载/">
+     data-url="http://shalian123.github.io/2017/07/03/代理模式-代理追求者/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -427,8 +418,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/14/c-笔记之友元类和运算符重载/"
-           data-title="c++笔记之友元类和运算符重载" data-url="http://shalian123.github.io/2017/06/14/c-笔记之友元类和运算符重载/">
+      <div class="ds-thread" data-thread-key="2017/07/03/代理模式-代理追求者/"
+           data-title="代理模式-代理追求者" data-url="http://shalian123.github.io/2017/07/03/代理模式-代理追求者/">
       </div>
     
   </div>
