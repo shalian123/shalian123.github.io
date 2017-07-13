@@ -265,6 +265,129 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/" itemprop="url">
+                  QT窗口自适应大小显示图片及数据库存取图片
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-13T17:54:59+08:00" content="2017-07-13">
+              2017-07-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="Qt窗口自适应大小显示图片"><a href="#Qt窗口自适应大小显示图片" class="headerlink" title="Qt窗口自适应大小显示图片"></a>Qt窗口自适应大小显示图片</h5><p>实现思路也挺简单的，使用QLabel显示图片，把这个QLabel放在一个ScrollArea上面，这样图片过大的时候会自动的添加滚动条，最后窗体使用水平布局，这样ScrollArea的大小会随着窗口的大小自动改变。下面上代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">private:</div><div class="line">    Ui::MainWindow *ui;</div><div class="line">    QLabel *label ;</div></pre></td></tr></table></figure></p>
+<p>首先声明一个QLabel用于图片（<strong>ScrollArea在设计器上拖放到窗体上，并设置窗口的布局方式为水平布局</strong>）。<br>设置QLabel的pixmap，并设置QLabel的大小和图片一致，最后将该QLabel添加到ScrollArea上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">QImage *image=new QImage(&quot;C:/Users/hasee/Desktop/nfc-02/nfc/pics/changshi.png&quot;);</div><div class="line">ui-&gt;label_42-&gt;setGeometry(0,0,500,500);</div><div class="line">ui-&gt;label_42-&gt;setPixmap(QPixmap::fromImage(*image));</div><div class="line">    //label-&gt;setPixmap(QPixmap(&quot;E:/Qt_Program/Chrysanthemum.jpg&quot;));</div><div class="line">ui-&gt;label_42-&gt;resize(QSize(image-&gt;width(),image-&gt;height()));//设置QLabel的大小和图片一致</div><div class="line">ui-&gt;label_42-&gt;show();</div><div class="line">ui-&gt;label_42-&gt;setScaledContents(true);//自动适应布满整个label</div></pre></td></tr></table></figure></p>
+<p>效果如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/1499940207%281%29.png" alt=""></p>
+<h5 id="数据库sqlite中存取图片"><a href="#数据库sqlite中存取图片" class="headerlink" title="数据库sqlite中存取图片"></a>数据库sqlite中存取图片</h5><p>一般来说图片不会直接存在数据库里，都是存在文件里，然后将文件目录存到数据库，读取的话也只需读取它的目录，然后再将它显示出来。<br>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 创建一个数据库连接，使用“connection1”为连接名</div><div class="line">   QSqlDatabase db1 = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;, &quot;connection1&quot;);//可以省略第二个参数即连接名，创建默认连接</div><div class="line">   db1.setDatabaseName(&quot;my1.db&quot;);//数据库名</div><div class="line">   if (!db1.open()) &#123;</div><div class="line">       QMessageBox::critical(0, &quot;Cannot open database1&quot;,</div><div class="line">                             &quot;Unable to establish a database connection.&quot;, QMessageBox::Cancel);</div><div class="line">       return false;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   // 这里要指定连接</div><div class="line">   QSqlQuery query1(db1);</div><div class="line">   //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">   query1.exec(&quot;create table Measuring_point (id int primary key, &quot;</div><div class="line">               &quot;name varchar(20),&quot;</div><div class="line">               &quot;position varchar(20),&quot;</div><div class="line">               &quot;pressure varchar(20),&quot;</div><div class="line">               &quot;tempeture varchar(20),&quot;</div><div class="line">               &quot;medium varchar(20),&quot;</div><div class="line">               &quot;material varchar(20),&quot;</div><div class="line">               &quot;diameter varchar(20),&quot;</div><div class="line">               &quot;thickness varchar(20),&quot;</div><div class="line">               &quot;image_path varchar(100))&quot;);</div><div class="line"></div><div class="line">   query1.exec(&quot;insert into Measuring_point values(0,&apos;sha&apos;,&apos;lian&apos;,&apos;150MPa&apos;,&apos;20&apos;,&apos;无&apos;,&apos;无&apos;,&apos;12mm&apos;,&apos;14mm&apos;,&apos;C:/Users/hasee/Desktop/nfc-03/nfc/pics/changshi.jpg&apos;)&quot;);</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/03/代理模式-代理追求者/" itemprop="url">
                   代理模式-代理追求者
                 </a>
@@ -1364,128 +1487,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="url">
-                  linux输入登陆密码正确，闪回登陆界面，无法登陆
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-03T20:13:25+08:00" content="2017-06-03">
-              2017-06-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。</p>
-<h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><p>问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。<br><strong>注意：这里的主目录是你登陆的用户，不是root用户</strong><br><strong>说明：</strong>Xauthority，是<strong>startx</strong>脚本记录文件。Xserver启动时，读文件~/.Xauthority,读入对应其display 的记录。当一个需要显示的客户程序启动调用XOpenDisplay()也读这个文 件，并把找到的magic code 发送给 Xserver。当Xserver验证这个magic code正确以后，就同意连接啦。观察startx脚本也可以看到，每次startx 运行，都在调用xinit以前使用了xauth的add命令添加了一个新的记录到~/.Xauthority，用来这次运行X使用认证。(<strong>注意：一般sudo startx后就这样不能登陆了</strong>)</p>
-<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>1.在需要输入密码的登陆界面，按下ctrl+alt+F1组合键，进入tty1终端<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1496492971%281%29.png" alt=""><br>2.输入登陆ubuntu时的用户名和密码，在tty1终端出现登陆成功的提示，这里我的用户名是topeet，默认进入当前用户主目录（我的是/home/topeet）,可以用pwd命令查看，若不是，则切换至：<br>cd  或者<br>cd /home/topeet/ 注意：我这里的用户名是topeet,根据自己的实际情况更改。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493023%281.png" alt=""><br>3.执行命令，将Xauthority的拥有者改为用户topeet<br>$ sudo chown topeet:topeet .Xauthority<br>备注：本人的用户名为topeet，因此 chown后面跟了topeet:topeet若为其他用户名修改成相应的名称即可）<br>(我的用户和用户组都是topeet,如果你不知道可以用<code>more /etc/group</code>及<code>more /etc/passwd</code>查看)<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493060%281.png" alt=""><br>4.然后在终端提示符后输入：$ ls .Xauthority -l<br>正确无误后显示如下：-rw——- 1 topeet topeet 51  May 22 23:14 .Xauthority<br>此时拥有者已经变为用户。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493097%281.png" alt=""><br>5.按下ctrl + alt + F7切换回图形登陆界面登陆即可。<br><strong>易错点：</strong><br>一开始我是切换到root用户下修改.Xauthority文件的拥有者的，但是试了几次都没成功，在次特别强调按下ctrl+alt+F1组合键，进入tty1终端后登入你想登入的账户，而不是root用户。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1531,7 +1532,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1548,7 +1549,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

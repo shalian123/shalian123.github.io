@@ -265,6 +265,128 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="url">
+                  linux输入登陆密码正确，闪回登陆界面，无法登陆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-03T20:13:25+08:00" content="2017-06-03">
+              2017-06-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。</p>
+<h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><p>问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。<br><strong>注意：这里的主目录是你登陆的用户，不是root用户</strong><br><strong>说明：</strong>Xauthority，是<strong>startx</strong>脚本记录文件。Xserver启动时，读文件~/.Xauthority,读入对应其display 的记录。当一个需要显示的客户程序启动调用XOpenDisplay()也读这个文 件，并把找到的magic code 发送给 Xserver。当Xserver验证这个magic code正确以后，就同意连接啦。观察startx脚本也可以看到，每次startx 运行，都在调用xinit以前使用了xauth的add命令添加了一个新的记录到~/.Xauthority，用来这次运行X使用认证。(<strong>注意：一般sudo startx后就这样不能登陆了</strong>)</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>1.在需要输入密码的登陆界面，按下ctrl+alt+F1组合键，进入tty1终端<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1496492971%281%29.png" alt=""><br>2.输入登陆ubuntu时的用户名和密码，在tty1终端出现登陆成功的提示，这里我的用户名是topeet，默认进入当前用户主目录（我的是/home/topeet）,可以用pwd命令查看，若不是，则切换至：<br>cd  或者<br>cd /home/topeet/ 注意：我这里的用户名是topeet,根据自己的实际情况更改。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493023%281.png" alt=""><br>3.执行命令，将Xauthority的拥有者改为用户topeet<br>$ sudo chown topeet:topeet .Xauthority<br>备注：本人的用户名为topeet，因此 chown后面跟了topeet:topeet若为其他用户名修改成相应的名称即可）<br>(我的用户和用户组都是topeet,如果你不知道可以用<code>more /etc/group</code>及<code>more /etc/passwd</code>查看)<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493060%281.png" alt=""><br>4.然后在终端提示符后输入：$ ls .Xauthority -l<br>正确无误后显示如下：-rw——- 1 topeet topeet 51  May 22 23:14 .Xauthority<br>此时拥有者已经变为用户。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493097%281.png" alt=""><br>5.按下ctrl + alt + F7切换回图形登陆界面登陆即可。<br><strong>易错点：</strong><br>一开始我是切换到root用户下修改.Xauthority文件的拥有者的，但是试了几次都没成功，在次特别强调按下ctrl+alt+F1组合键，进入tty1终端后登入你想登入的账户，而不是root用户。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/02/逐行读写字符串数组到文本txt文件/" itemprop="url">
                   逐行读写字符串数组到文本txt文件
                 </a>
@@ -1447,131 +1569,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/11/文本流和数据流/" itemprop="url">
-                  文本流和数据流
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-11T20:26:08+08:00" content="2017-04-11">
-              2017-04-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/11/文本流和数据流/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/文本流和数据流/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。</p>
-<h5 id="二进制文件读写"><a href="#二进制文件读写" class="headerlink" title="二进制文件读写"></a>二进制文件读写</h5><p>QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 PC 上面写入的一个数据流，可以不经过任何处理，直接拿到运行了 Solaris 的 SPARC 机器上读取。由于数据流就是二进制流，因此我们也可以直接读写没有编码的二进制数据，例如图像、视频、音频等。<br>QDataStream既能够存取 C++ 基本类型，如 int、char、short 等，也可以存取复杂的数据类型，例如自定义的类。实际上QDataStream对于类的存储，是将复杂的类分割为很多基本单元实现的。结合QIODevice，QDataStream可以很方便地对文件、网络套接字等进行读写操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void MainWindow::fileFun()</div><div class="line">&#123;</div><div class="line">    QFile file(&quot;binary.dat&quot;);</div><div class="line">    file.open(QIODevice::WriteOnly | QIODevice::Truncate);</div><div class="line">    QDataStream out(&amp;file);                             //将数据序列化</div><div class="line">    out &lt;&lt; QString(tr(&quot;周何骏：&quot;));                      //字符串序列化</div><div class="line">    out &lt;&lt; QDate::fromString(&quot;1994/09/25&quot;, &quot;yyyy/MM/dd&quot;);</div><div class="line">    out &lt;&lt; (qint32)19;                                 	//整数序列化</div><div class="line">    file.close();</div><div class="line">    </div><div class="line">/***********************读***************/</div><div class="line">    file.setFileName(&quot;binary.dat&quot;);</div><div class="line">    if(!file.open(QIODevice::ReadOnly))</div><div class="line">    &#123;</div><div class="line">         qDebug()&lt;&lt; &quot;error!&quot;;</div><div class="line">         return;</div><div class="line">    &#125;</div><div class="line">    QDataStream in(&amp;file);                            	//从文件中读出数据</div><div class="line">    QString name;</div><div class="line">    QDate birthday;</div><div class="line">    qint32 age;</div><div class="line">    in &gt;&gt; name &gt;&gt; birthday &gt;&gt; age;                    	//获取字符串和整数</div><div class="line">    qDebug() &lt;&lt; name &lt;&lt; birthday &lt;&lt; age;</div><div class="line">    file.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>至此，我们介绍了有关QDataStream的相关内容。那么，既然QIODevice提供了read()、readLine()之类的函数，为什么还要有QDataStream呢？QDataStream同QIODevice有什么区别？区别在于，QDataStream提供流的形式，性能上一般比直接调用原始 API 更好一些。我们通过下面一段代码看看什么是流的形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">QFile file(&quot;file.dat&quot;);</div><div class="line">file.open(QIODevice::ReadWrite);</div><div class="line"></div><div class="line">QDataStream stream(&amp;file);</div><div class="line">QString str = &quot;the answer is 42&quot;;</div><div class="line">QString strout;</div><div class="line"></div><div class="line">stream &lt;&lt; str;</div><div class="line">file.flush();</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<p>在这段代码中，我们首先向文件中写入数据，紧接着把数据读出来。有什么问题吗？运行之后你会发现，strout实际是空的。为什么没有读取出来？我们不是已经添加了file.flush();语句吗？原因并不在于文件有没有写入，而是在于我们使用的是“流”。所谓流，就像水流一样，它的游标会随着输出向后移动。当使用&lt;&lt;操作符输出之后，流的游标已经到了最后，此时你再去读，当然什么也读不到了。所以你需要在输出之后重新把游标设置为 0 的位置才能够继续读取。具体代码片段如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stream &lt;&lt; str;</div><div class="line">stream.device()-&gt;seek(0);</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<h5 id="文本文件读写"><a href="#文本文件读写" class="headerlink" title="文本文件读写"></a>文本文件读写</h5><p>二进制文件比较小巧，却不是人可读的格式。而文本文件是一种人可读的文件。为了操作这种文件，我们需要使用QTextStream类。QTextStream和QDataStream的使用类似，只不过它是操作纯文本文件的。另外，像 XML、HTML 这种，虽然也是文本文件，可以由QTextStream生成，但 Qt 提供了更方便的 XML 操作类，这里就不包括这部分内容了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include &lt;QCoreApplication&gt;</div><div class="line">#include &lt;QFile&gt;</div><div class="line">#include &lt;QTextStream&gt;</div><div class="line">#include &lt;QDebug&gt;</div><div class="line">int main(int argc, char *argv[])</div><div class="line">&#123;</div><div class="line">    QCoreApplication a(argc, argv);</div><div class="line"></div><div class="line">    QFile data(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::WriteOnly|QFile::Truncate))</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        QTextStream out(&amp;data);</div><div class="line">        out.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        out&lt;&lt;QObject::tr(&quot;沙炼:&quot;)&lt;&lt;qSetFieldWidth(10)&lt;&lt;left&lt;&lt;10&lt;&lt;endl;//设置输出字宽10，左对齐</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">/**********将QTextStream（文本文件）写入的都出来**************/</div><div class="line">    data.setFileName(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::ReadOnly))</div><div class="line">    &#123;</div><div class="line">        QTextStream in (&amp;data);</div><div class="line">        in.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        QString str;</div><div class="line">        //int ans ;</div><div class="line">        in &gt;&gt; str ;</div><div class="line">        qDebug() &lt;&lt; str ;</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line">    return a.exec();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们在这里使用了QFile::WriteOnly | QIODevice::Truncate，也就是以只写并且覆盖已有内容的形式操作文件。注意，QIODevice::Truncate会直接将文件内容清空。<br><strong><em>注：默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用中文，需使用<br><code>stream.setCodec(&quot;UTF-8&quot;);</code><br>这样的函数进行设置。</em></strong><br>本文参考了：豆子的 QT学习之路2<br><a href="https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/</a><br><a href="https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/</a><br>以及电子版《QT5开发及实例》</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1617,7 +1614,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1634,7 +1631,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
