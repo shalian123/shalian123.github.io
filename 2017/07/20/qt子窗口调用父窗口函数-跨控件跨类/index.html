@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="二进制文件，文本文件，读写," />
+  <meta name="keywords" content="qt,窗体间传递," />
 
 
 
@@ -86,19 +86,16 @@
 
 
 
-<meta name="description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
-二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
+<meta name="description" content="在qt中有时需要窗体间传递数据，在这里我写了一个demo,主要的效果是：主窗体点击跳出一个子窗体，然后由子窗体控制在主窗体显示画图等。简要来说就是，子窗口中的一个按钮被点击了，父窗口上的一个slot函数响应这个点击。思路：1）在子窗口里面增加一个signal，在父窗口里面增加一个响应slot用于接收这个信号。2）子窗口的按钮slot函数中emit这个signal。3）在父窗口中把子窗口的这个sig">
 <meta property="og:type" content="article">
-<meta property="og:title" content="文本流和数据流">
-<meta property="og:url" content="http://shalian123.github.io/2017/04/11/文本流和数据流/index.html">
+<meta property="og:title" content="qt子窗口调用父窗口函数(跨控件跨类)">
+<meta property="og:url" content="http://shalian123.github.io/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
-二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
-<meta property="og:updated_time" content="2017-04-11T13:13:05.714Z">
+<meta property="og:description" content="在qt中有时需要窗体间传递数据，在这里我写了一个demo,主要的效果是：主窗体点击跳出一个子窗体，然后由子窗体控制在主窗体显示画图等。简要来说就是，子窗口中的一个按钮被点击了，父窗口上的一个slot函数响应这个点击。思路：1）在子窗口里面增加一个signal，在父窗口里面增加一个响应slot用于接收这个信号。2）子窗口的按钮slot函数中emit这个signal。3）在父窗口中把子窗口的这个sig">
+<meta property="og:updated_time" content="2017-07-20T09:49:48.713Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文本流和数据流">
-<meta name="twitter:description" content="QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。
-二进制文件读写QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 P">
+<meta name="twitter:title" content="qt子窗口调用父窗口函数(跨控件跨类)">
+<meta name="twitter:description" content="在qt中有时需要窗体间传递数据，在这里我写了一个demo,主要的效果是：主窗体点击跳出一个子窗体，然后由子窗体控制在主窗体显示画图等。简要来说就是，子窗口中的一个按钮被点击了，父窗口上的一个slot函数响应这个点击。思路：1）在子窗口里面增加一个signal，在父窗口里面增加一个响应slot用于接收这个信号。2）子窗口的按钮slot函数中emit这个signal。3）在父窗口中把子窗口的这个sig">
 
 
 
@@ -116,7 +113,7 @@
   };
 </script>
 
-  <title> 文本流和数据流 | Wind </title>
+  <title> qt子窗口调用父窗口函数(跨控件跨类) | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +263,7 @@
             
             
               
-                文本流和数据流
+                qt子窗口调用父窗口函数(跨控件跨类)
               
             
           </h1>
@@ -278,8 +275,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-11T20:26:08+08:00" content="2017-04-11">
-              2017-04-11
+            <time itemprop="dateCreated" datetime="2017-07-20T17:27:57+08:00" content="2017-07-20">
+              2017-07-20
             </time>
           </span>
 
@@ -308,8 +305,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/04/11/文本流和数据流/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/文本流和数据流/" itemprop="commentsCount"></span>
+                <a href="/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,12 +329,11 @@
       
 
       
-        <p>QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。</p>
-<h5 id="二进制文件读写"><a href="#二进制文件读写" class="headerlink" title="二进制文件读写"></a>二进制文件读写</h5><p>QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 PC 上面写入的一个数据流，可以不经过任何处理，直接拿到运行了 Solaris 的 SPARC 机器上读取。由于数据流就是二进制流，因此我们也可以直接读写没有编码的二进制数据，例如图像、视频、音频等。<br>QDataStream既能够存取 C++ 基本类型，如 int、char、short 等，也可以存取复杂的数据类型，例如自定义的类。实际上QDataStream对于类的存储，是将复杂的类分割为很多基本单元实现的。结合QIODevice，QDataStream可以很方便地对文件、网络套接字等进行读写操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void MainWindow::fileFun()</div><div class="line">&#123;</div><div class="line">    QFile file(&quot;binary.dat&quot;);</div><div class="line">    file.open(QIODevice::WriteOnly | QIODevice::Truncate);</div><div class="line">    QDataStream out(&amp;file);                             //将数据序列化</div><div class="line">    out &lt;&lt; QString(tr(&quot;周何骏：&quot;));                      //字符串序列化</div><div class="line">    out &lt;&lt; QDate::fromString(&quot;1994/09/25&quot;, &quot;yyyy/MM/dd&quot;);</div><div class="line">    out &lt;&lt; (qint32)19;                                 	//整数序列化</div><div class="line">    file.close();</div><div class="line">    </div><div class="line">/***********************读***************/</div><div class="line">    file.setFileName(&quot;binary.dat&quot;);</div><div class="line">    if(!file.open(QIODevice::ReadOnly))</div><div class="line">    &#123;</div><div class="line">         qDebug()&lt;&lt; &quot;error!&quot;;</div><div class="line">         return;</div><div class="line">    &#125;</div><div class="line">    QDataStream in(&amp;file);                            	//从文件中读出数据</div><div class="line">    QString name;</div><div class="line">    QDate birthday;</div><div class="line">    qint32 age;</div><div class="line">    in &gt;&gt; name &gt;&gt; birthday &gt;&gt; age;                    	//获取字符串和整数</div><div class="line">    qDebug() &lt;&lt; name &lt;&lt; birthday &lt;&lt; age;</div><div class="line">    file.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>至此，我们介绍了有关QDataStream的相关内容。那么，既然QIODevice提供了read()、readLine()之类的函数，为什么还要有QDataStream呢？QDataStream同QIODevice有什么区别？区别在于，QDataStream提供流的形式，性能上一般比直接调用原始 API 更好一些。我们通过下面一段代码看看什么是流的形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">QFile file(&quot;file.dat&quot;);</div><div class="line">file.open(QIODevice::ReadWrite);</div><div class="line"></div><div class="line">QDataStream stream(&amp;file);</div><div class="line">QString str = &quot;the answer is 42&quot;;</div><div class="line">QString strout;</div><div class="line"></div><div class="line">stream &lt;&lt; str;</div><div class="line">file.flush();</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<p>在这段代码中，我们首先向文件中写入数据，紧接着把数据读出来。有什么问题吗？运行之后你会发现，strout实际是空的。为什么没有读取出来？我们不是已经添加了file.flush();语句吗？原因并不在于文件有没有写入，而是在于我们使用的是“流”。所谓流，就像水流一样，它的游标会随着输出向后移动。当使用&lt;&lt;操作符输出之后，流的游标已经到了最后，此时你再去读，当然什么也读不到了。所以你需要在输出之后重新把游标设置为 0 的位置才能够继续读取。具体代码片段如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stream &lt;&lt; str;</div><div class="line">stream.device()-&gt;seek(0);</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<h5 id="文本文件读写"><a href="#文本文件读写" class="headerlink" title="文本文件读写"></a>文本文件读写</h5><p>二进制文件比较小巧，却不是人可读的格式。而文本文件是一种人可读的文件。为了操作这种文件，我们需要使用QTextStream类。QTextStream和QDataStream的使用类似，只不过它是操作纯文本文件的。另外，像 XML、HTML 这种，虽然也是文本文件，可以由QTextStream生成，但 Qt 提供了更方便的 XML 操作类，这里就不包括这部分内容了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include &lt;QCoreApplication&gt;</div><div class="line">#include &lt;QFile&gt;</div><div class="line">#include &lt;QTextStream&gt;</div><div class="line">#include &lt;QDebug&gt;</div><div class="line">int main(int argc, char *argv[])</div><div class="line">&#123;</div><div class="line">    QCoreApplication a(argc, argv);</div><div class="line"></div><div class="line">    QFile data(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::WriteOnly|QFile::Truncate))</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        QTextStream out(&amp;data);</div><div class="line">        out.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        out&lt;&lt;QObject::tr(&quot;沙炼:&quot;)&lt;&lt;qSetFieldWidth(10)&lt;&lt;left&lt;&lt;10&lt;&lt;endl;//设置输出字宽10，左对齐</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">/**********将QTextStream（文本文件）写入的都出来**************/</div><div class="line">    data.setFileName(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::ReadOnly))</div><div class="line">    &#123;</div><div class="line">        QTextStream in (&amp;data);</div><div class="line">        in.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        QString str;</div><div class="line">        //int ans ;</div><div class="line">        in &gt;&gt; str ;</div><div class="line">        qDebug() &lt;&lt; str ;</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line">    return a.exec();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们在这里使用了QFile::WriteOnly | QIODevice::Truncate，也就是以只写并且覆盖已有内容的形式操作文件。注意，QIODevice::Truncate会直接将文件内容清空。<br><strong><em>注：默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用中文，需使用<br><code>stream.setCodec(&quot;UTF-8&quot;);</code><br>这样的函数进行设置。</em></strong><br>本文参考了：豆子的 QT学习之路2<br><a href="https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/</a><br><a href="https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/</a><br>以及电子版《QT5开发及实例》</p>
+        <p>在qt中有时需要窗体间传递数据，在这里我写了一个demo,主要的效果是：主窗体点击跳出一个子窗体，然后由子窗体控制在主窗体显示画图等。简要来说就是，<strong>子窗口中的一个按钮被点击了，父窗口上的一个slot函数响应这个点击。</strong><br>思路：<br>1）在子窗口里面增加一个signal，在父窗口里面增加一个响应slot用于接收这个信号。<br>2）子窗口的按钮slot函数中emit这个signal。<br>3）在父窗口中把子窗口的这个signal连到自己的响应slot。<br>下面是子窗体的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">  //dialog_mea.h</div><div class="line">#ifndef DIALOG_MEA_H</div><div class="line">#define DIALOG_MEA_H</div><div class="line"></div><div class="line">#include &lt;QDialog&gt;</div><div class="line"></div><div class="line">namespace Ui &#123;</div><div class="line">class Dialog_mea;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Dialog_mea : public QDialog</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line"></div><div class="line">public:</div><div class="line">    explicit Dialog_mea(QWidget *parent = 0);</div><div class="line">    ~Dialog_mea();</div><div class="line"></div><div class="line"></div><div class="line">signals:</div><div class="line"></div><div class="line">    void Dialog_meaEvent();//子窗体添加的信号</div><div class="line"></div><div class="line">protected slots:</div><div class="line"></div><div class="line">    void Button_clicked();</div><div class="line"></div><div class="line">private:</div><div class="line">    Ui::Dialog_mea *ui;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // DIALOG_MEA_H</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">      //dialog_mea.c</div><div class="line">#include &quot;dialog_mea.h&quot;</div><div class="line">#include &quot;ui_dialog_mea.h&quot;</div><div class="line"></div><div class="line">Dialog_mea::Dialog_mea(QWidget *parent) :</div><div class="line">    QDialog(parent),</div><div class="line">    ui(new Ui::Dialog_mea)</div><div class="line">&#123;</div><div class="line">    ui-&gt;setupUi(this);</div><div class="line">    connect(ui-&gt;pushButton,SIGNAL(clicked()),this,SLOT(Button_clicked()));</div><div class="line">&#125;</div><div class="line"></div><div class="line">Dialog_mea::~Dialog_mea()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line">void Dialog_mea::Button_clicked()</div><div class="line">&#123;</div><div class="line">    emit Dialog_meaEvent();//发射信号</div><div class="line">    this-&gt;close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面是主窗体的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">  //widget.h文件</div><div class="line">#ifndef WIDGET_H</div><div class="line">#define WIDGET_H</div><div class="line"></div><div class="line">#include &lt;QWidget&gt;</div><div class="line">#include &quot;dialog_mea.h&quot;</div><div class="line">#include &quot;paintline.h&quot;</div><div class="line">#include &lt;QHBoxLayout&gt;</div><div class="line">namespace Ui &#123;</div><div class="line">class Widget;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Widget : public QWidget</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line"></div><div class="line">public:</div><div class="line">    explicit Widget(QWidget *parent = 0);</div><div class="line">    ~Widget();</div><div class="line">protected slots:</div><div class="line">    void SonWindowEventClicked() ;</div><div class="line">private slots:</div><div class="line"></div><div class="line">    void on_pushButton_clicked();</div><div class="line"></div><div class="line">private:</div><div class="line">    Ui::Widget *ui;</div><div class="line">    Dialog_mea dialog2;</div><div class="line">    paintline *pp;</div><div class="line">    QHBoxLayout  *layout;</div><div class="line">    Dialog_mea *ww;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // WIDGET_H</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"> //widget.c文件</div><div class="line">#include &quot;widget.h&quot;</div><div class="line">#include &quot;ui_widget.h&quot;</div><div class="line"></div><div class="line">Widget::Widget(QWidget *parent) :</div><div class="line">    QWidget(parent),</div><div class="line">    ui(new Ui::Widget)</div><div class="line">&#123;</div><div class="line">    ui-&gt;setupUi(this);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">Widget::~Widget()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    dialog2.show();</div><div class="line">    connect(&amp;dialog2,SIGNAL(Dialog_meaEvent()),this,SLOT(SonWindowEventClicked()));</div><div class="line">&#125;</div><div class="line">void Widget::SonWindowEventClicked()//主窗体响应子窗体信号</div><div class="line">&#123;</div><div class="line">    pp = new paintline();</div><div class="line">    layout = new QHBoxLayout();</div><div class="line">    layout-&gt;addWidget(pp);</div><div class="line">    ui-&gt;widget-&gt;setLayout(layout);</div><div class="line">    pp-&gt;show();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>关于上面代码中涉及到的paintline类等，参考我上一篇的文章。<a href="http://shalian.site/2017/07/19/QT%E4%B8%AD%E4%BD%BF%E7%94%A8QPainter%E5%9C%A8%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%9A%84%E5%AD%90%E6%8E%A7%E4%BB%B6%E9%87%8C%E7%94%BB%E5%9B%BE/" target="_blank" rel="external">QT中使用QPainter在主窗口的子控件里画图</a><br>最后附上几篇讲的不错的帖子：<br><a href="http://blog.csdn.net/shihoongbo/article/details/48681979" target="_blank" rel="external">【Qt】窗体间传递数据（跨控件跨类），三种情况与处理方法 </a><br><a href="http://blog.csdn.net/guo503604087/article/details/48826025" target="_blank" rel="external">qt子窗口调用父窗口的函数</a><br><a href="https://zhidao.baidu.com/question/2078605278997086108.html" target="_blank" rel="external">https://zhidao.baidu.com/question/2078605278997086108.html</a></p>
 
       
     </div>
@@ -359,7 +355,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/二进制文件，文本文件，读写/" rel="tag">#二进制文件，文本文件，读写</a>
+            <a href="/tags/qt/" rel="tag">#qt</a>
+          
+            <a href="/tags/窗体间传递/" rel="tag">#窗体间传递</a>
           
         </div>
       
@@ -368,17 +366,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/10/linux并发服务器/" rel="next" title="linux并发服务器">
-                <i class="fa fa-chevron-left"></i> linux并发服务器
+              <a href="/2017/07/19/QT中使用QPainter在主窗口的子控件里画图/" rel="next" title="QT中使用QPainter在主窗口的子控件里画图">
+                <i class="fa fa-chevron-left"></i> QT中使用QPainter在主窗口的子控件里画图
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/22/QT之json/" rel="prev" title="QT之json">
-                QT之json <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -393,10 +387,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/04/11/文本流和数据流/"
-     data-title="文本流和数据流"
+        <div class="ds-share flat" data-thread-key="2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/"
+     data-title="qt子窗口调用父窗口函数(跨控件跨类)"
      data-content=""
-     data-url="http://shalian123.github.io/2017/04/11/文本流和数据流/">
+     data-url="http://shalian123.github.io/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -426,8 +420,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/11/文本流和数据流/"
-           data-title="文本流和数据流" data-url="http://shalian123.github.io/2017/04/11/文本流和数据流/">
+      <div class="ds-thread" data-thread-key="2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/"
+           data-title="qt子窗口调用父窗口函数(跨控件跨类)" data-url="http://shalian123.github.io/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/">
       </div>
     
   </div>
@@ -576,7 +570,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#二进制文件读写"><span class="nav-number">1.</span> <span class="nav-text">二进制文件读写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文本文件读写"><span class="nav-number">2.</span> <span class="nav-text">文本文件读写</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>

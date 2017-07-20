@@ -265,6 +265,195 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/06/搭建web服务器并控制外设/" itemprop="url">
+                  搭建web服务器并控制外设
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-06T20:43:03+08:00" content="2017-03-06">
+              2017-03-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/06/搭建web服务器并控制外设/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/06/搭建web服务器并控制外设/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文主要分为两部分：web服务器的搭建、实现web对外设的控制</p>
+<h3 id="一、web服务器的搭建"><a href="#一、web服务器的搭建" class="headerlink" title="一、web服务器的搭建"></a>一、web服务器的搭建</h3><p>我们需要用到boa，boa 是一个小型的 web 服务器，可执行代码只有约 60KB，可以用于多种平台，它一个单任务 web 服务器，只能依次完成用户的请求，在嵌入式中比较常见。boa 的官方网站为www.boa.org，可以在上面下载最新版本的 boa，这里我们使用的是 boa-0.94.13.tar.gz。</p>
+<h4 id="第一步：boa的拷贝解压"><a href="#第一步：boa的拷贝解压" class="headerlink" title="第一步：boa的拷贝解压"></a>第一步：boa的拷贝解压</h4><p>-我们需要先将 boa-0.94.13.tar.gz kao’dao拷到我们的ubuntu系统中。（可以使用ssh）<br>-解压 tar -vxf boa-0.94.13.tar.gz<br>-cd boa-0.94.13</p>
+<h4 id="第二步：boa生成Makefile编译文件"><a href="#第二步：boa生成Makefile编译文件" class="headerlink" title="第二步：boa生成Makefile编译文件"></a>第二步：boa生成Makefile编译文件</h4><p>cd src<br>运行#./configure<br>当前目录下会生成Makefile编译文件 ，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/@4ETKSJIK67%60XU%7D7SV8I$%25E.png" alt=""></p>
+<h4 id="第三步：修改Makefile里面的两个参数"><a href="#第三步：修改Makefile里面的两个参数" class="headerlink" title="第三步：修改Makefile里面的两个参数"></a>第三步：修改Makefile里面的两个参数</h4><p>-vi Makefile（或者#vim Makefile）<br>-查找到有CC = gcc的行，在31行左右（可以使用vi编辑器的查找命令#/CC = gcc），替换为CC = arm-none-linux-gnueabi-gcc -static    即修改编译器<br>-查找到有CPP = gcc -E的行，在32行左右，替换为CPP = arm-none-linux-gnueabi-gcc -E -static<br>-保存退出<br>-输入make 开始编译</p>
+<h4 id="第四步：编译过程中会出现错误"><a href="#第四步：编译过程中会出现错误" class="headerlink" title="第四步：编译过程中会出现错误"></a>第四步：编译过程中会出现错误</h4><p>-vi compat.h<br>-查找到有#define TIMEZONE_OFFSET(foo) foo##-&gt;tm_gmtoff的行，在123行左右，替换为#define TIMEZONE_OFFSET(foo) foo-&gt;tm_gmtoff（即把#去掉）。<br>-保存退出<br>-继续编译</p>
+<h4 id="第五步：生成boa文件，给boa瘦身"><a href="#第五步：生成boa文件，给boa瘦身" class="headerlink" title="第五步：生成boa文件，给boa瘦身"></a>第五步：生成boa文件，给boa瘦身</h4><p>-ls查看boa是否生成<br>-ll boa查看其大小<br>-使用瘦身命令#arm-none-linux-gnueabi-strip boa</p>
+<h4 id="第六步：NFS系统文件处理"><a href="#第六步：NFS系统文件处理" class="headerlink" title="第六步：NFS系统文件处理"></a>第六步：NFS系统文件处理</h4><p>-拷贝编译生成的boa到NFS文件系统的bin目录下（这里根据自己实际设置的共享目录，具体参考我之前的文章）<br>-在NFS文件系统的etc目录下建立boa文件夹<br>-在NFS文件系统的目录下建立www文件夹<br>-在NFS文件系统的www目录下面建立文件夹cgi-bin目录</p>
+<h4 id="第七步：添加配置文件和用户组"><a href="#第七步：添加配置文件和用户组" class="headerlink" title="第七步：添加配置文件和用户组"></a>第七步：添加配置文件和用户组</h4><p>-拷贝boa-0.94.13目录下面默认的boa.conf到NFS文件系统的etc/boa中<br>-拷贝虚拟机下面/etc目录下的mime.types到NFS文件系统的etc目录下面（注意是主目录/etc）</p>
+<h4 id="第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步"><a href="#第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步" class="headerlink" title="第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步"></a>第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步</h4><p>-在NFS文件系统的etc目录下用命令#vi group命令建立group文件<br>-在group文件中添加 root:*:0:</p>
+<h4 id="第九步：修改配置文件boa-conf"><a href="#第九步：修改配置文件boa-conf" class="headerlink" title="第九步：修改配置文件boa.conf"></a>第九步：修改配置文件boa.conf</h4><p>-进到NFS文件系统的etc/boa目录，打开boa.conf文件#vi boa.conf<br>-查找到有Group nogroup的行，在50行左右，替换为Group root<br>-查找到有#ServerName www.your.org.here的行，在95行左右，替换为ServerName www.your.org.here<br>-查找到有DocumentRoot /var/www的行，在115行左右，替换为DocumentRoot /www（注意：这里的“/www”就是前面步骤我们使用mkdir创建的www目录）<br>-查找到有ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/的行，在194行左右，替换为ScriptAlias /cgi-bin/ /www/cgi-bin/ (此处的目录记住，后面需要跟它一致)</p>
+<h4 id="第十步：添加自动运行脚本，建立网页"><a href="#第十步：添加自动运行脚本，建立网页" class="headerlink" title="第十步：添加自动运行脚本，建立网页"></a>第十步：添加自动运行脚本，建立网页</h4><p>-打开etc/init.d/rcS文件，定位到最后一行<br>-添加boa &amp;到自动启动，保存退出，如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/F_%60RA%7DP%5B4%5DK1P40A%5BFD3FEU.png" alt=""><br>-进入到前面创建的www目录<br>-vi index.html命令建立index.html<br>-将我们的网页代码拷贝进index.html（网页代码可以自己写或改，也可以到网上找）<br><img src="http://ols4zt49w.bkt.clouddn.com/$4X%7B5EMT5@I3Y~D19A0%7DYHS.png" alt=""></p>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>至此，基于 boa 的 web 服务器就搭建完成了，上面我们创建的 index.html 是一个简单的 wen 网页，用于我们测试。现在启动我们的开发板（开发板是挂载 NFS 网络文件系统），开发板起来以后我们输入 ps 命令，可以看到 boa 程序在运行，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/UHG~HC6TS%25101U4C%28ADA%29@R.png" alt=""><br>-然后使用任意内网设备（注意在同一个网段，一般连在同一个路由），登录<a href="http://192.168.1.230" target="_blank" rel="external">http://192.168.1.230</a> 默认地址（此地址为开发板系统的ip），如果修改过则需要使用修改过的地址。结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/_PU_%299T%7DS5MAJQ%7BZP1K4E6N.png" alt=""></p>
+<h3 id="二、用web实现对外设控制"><a href="#二、用web实现对外设控制" class="headerlink" title="二、用web实现对外设控制"></a>二、用web实现对外设控制</h3><p>本文我们主要实现对开发板上的led和蜂鸣器实现开与关。我们需要了解CGI编程，并能对字符设备实现控制（至少知道对应设备节点目录和ioctl函数）<br><strong>CGI编程</strong><br>CGI（Common Gateway Interface）是外部应用扩展，应用程序与www服务器交互的一个标准接口。按照CGI标准编写的外部扩展应用程序可以处理客户端浏览器输入的数据，从而完成客户端与服务器的交互操作。而CGI规范就定义了web服务器如何向扩展应用程序发送消息，在收到扩展应用程序的信息后又如何进行处理等内容。通过CGI可以提供许多静态的HTM L网页无法实现的功能。比如搜索引擎、基于web的数据库访问等等。</p>
+<h4 id="第一步：替换index-html代码"><a href="#第一步：替换index-html代码" class="headerlink" title="第一步：替换index.html代码"></a>第一步：替换index.html代码</h4><p>-进入之前建立的www目录中，打开index.html<br>-拷贝新的程序代码到index.html中<br>注意：上面输入的是HTML格式的代码，主要是用到了通过表单向服务器提交信息，在表单里面指定了服务器端处理接收到信息的CGI程序是myled.cgi，这是在form表单的属性里设置的，代码是“form action=”/cgi-bin/myled.cgi” method=”get”，使用的传递数据的方式是get方法，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/34OLZLI3%7B6%5DM6%280UW7CL%5BOY.png" alt=""></p>
+<h4 id="第二步：CGI程序"><a href="#第二步：CGI程序" class="headerlink" title="第二步：CGI程序"></a>第二步：CGI程序</h4><p>-打开在etc/boa中的boa.conf文件<br>-查找ScriptAlias /cgi-bin/ /www/cgi-bin/，这是指定的CGI程序的存储目录</p>
+<h4 id="第三步：myled-c"><a href="#第三步：myled-c" class="headerlink" title="第三步：myled.c"></a>第三步：myled.c</h4><p>-进入www/cgi-bin目录（<strong>注意：跟etc/boa中的boa.conf文件中设置的CGI程序的存储目录一致</strong>）<br>-将myled.c拷贝进去（或创建myled.c,把代码拷进去也行）<br>-编译#arm-none-linux-gnueabi-gcc -o myled.cgi myled.c -static (<strong>注意：myled.cgi跟index.html中form表单里设置一致</strong>)<br>-修改权限#chmod 777 myled.cgi<br>此处附上本人移植buzzer（蜂鸣器）后的myled.c：</p>
+<blockquote>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main()
+{
+ char *data;
+ int leds[3] = {0, 0, 0};
+ long m, n;
+int exit=0,i,fd,fd1;
+printf(&quot;Content-Type:text/html;charset=gb2312\n\n&quot;);
+printf(&quot;&lt;html&gt;\n&quot;); 
+printf(&quot;&lt;body&gt;\n&quot;);
+printf(&quot;&lt;title&gt;iTOP-4412&lt;/title&gt; &quot;);
+printf(&quot;&lt;h3&gt;iTOP-4412&lt;/h3&gt; &quot;);
+data = getenv(&quot;QUERY_STRING&quot;);
+printf(&quot;&lt;p&gt;receive data:%s&lt;/p&gt;&quot;,data);
+while(*data != &apos;\0&apos;)
+{
+    if(*data==&apos;=&apos;)
+    switch(*(data+1))
+    {
+        case &apos;1&apos;:leds[0]=1;break;
+        case &apos;2&apos;:leds[1]=1;break;
+        case &apos;3&apos;:leds[2]=1;break;
+        default:exit=1;break;
+    }
+    if(exit == 1)
+        break;
+    data++;
+}
+fd=open(&quot;/dev/leds&quot;,0);
+fd1=open(&quot;/dev/buzzer_ctl&quot;,0);
+for(i=0;i&lt;2;i++)
+{
+    if(leds[i]==1)
+        printf(&quot;&lt;p&gt;%d\t&lt;/p&gt;&quot;,i+1);
+    ioctl(fd,leds[i],i);
+}
+  if(leds[2]==1) //buzzer
+    {
+        printf(&quot;&lt;p&gt;%d\t&lt;/p&gt;&quot;,3);
+        ioctl(fd1,leds[2],2);
+    }
+  if(leds[2]!=1)
+    {
+        ioctl(fd1,0,2);
+    }
+printf(&quot;&lt;/body&gt;\n&quot;);
+printf(&quot;&lt;/html&gt;\n&quot;);
+return 0;
+}
+</code></pre></blockquote>
+<h4 id="第四步：启动开发板，然后打开-PC-的浏览器（连内网的手机也行），输入开发板的-ip-地址"><a href="#第四步：启动开发板，然后打开-PC-的浏览器（连内网的手机也行），输入开发板的-ip-地址" class="headerlink" title="第四步：启动开发板，然后打开 PC 的浏览器（连内网的手机也行），输入开发板的 ip 地址"></a>第四步：启动开发板，然后打开 PC 的浏览器（连内网的手机也行），输入开发板的 ip 地址</h4><p>结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/T%28XCF%60M%7B@O$76%7BSI@8%29%5BHK7.png" alt=""><br>我们可以通过勾选右边的复选框，按提交实现控制led和蜂鸣器的开关。</p>
+<h5 id="最后，欢迎志同道合网友一起交流学习！"><a href="#最后，欢迎志同道合网友一起交流学习！" class="headerlink" title="最后，欢迎志同道合网友一起交流学习！"></a>最后，欢迎志同道合网友一起交流学习！</h5>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/03/搭建NFS/" itemprop="url">
                   搭建NFS及注意点
                 </a>
@@ -999,7 +1188,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">35</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1016,7 +1205,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
