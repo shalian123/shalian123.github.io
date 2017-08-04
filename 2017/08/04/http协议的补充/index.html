@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="qt,标签,新窗体,标题栏," />
+  <meta name="keywords" content="http," />
 
 
 
@@ -86,21 +86,22 @@
 
 
 
-<meta name="description" content="最近在帮导师公司做一个项目，需要用到QT开发，在此先做个小结吧，也算一天的收获吧。
-标签点击信号标签有时可能需要“点击”信号，但没有QLabel发出的“点击”信号。 通过设置“flat”属性，可以通过像一个标签一样使用QPushButton来轻松解决这个问题。(这个方法不错)但是，如果您需要QLabel对象的其他属性，则可以使用自定义QLabel的代码段来发出一个信号：“clicked”。 换句话">
+<meta name="description" content="http://www.cnblogs.com/ranyonsue/p/5984001.html在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的请求头部和请求数据是分开的。思路：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。
+一、首先我们了解一下我采取如此方案的原因：
+POST提交：把提交的数据放置在是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="QT小结(1)">
-<meta property="og:url" content="http://shalian123.github.io/2017/06/28/QT小结-1/index.html">
+<meta property="og:title" content="http协议的补充">
+<meta property="og:url" content="http://shalian123.github.io/2017/08/04/http协议的补充/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="最近在帮导师公司做一个项目，需要用到QT开发，在此先做个小结吧，也算一天的收获吧。
-标签点击信号标签有时可能需要“点击”信号，但没有QLabel发出的“点击”信号。 通过设置“flat”属性，可以通过像一个标签一样使用QPushButton来轻松解决这个问题。(这个方法不错)但是，如果您需要QLabel对象的其他属性，则可以使用自定义QLabel的代码段来发出一个信号：“clicked”。 换句话">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1498652235.png">
-<meta property="og:updated_time" content="2017-06-28T12:18:30.858Z">
+<meta property="og:description" content="http://www.cnblogs.com/ranyonsue/p/5984001.html在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的请求头部和请求数据是分开的。思路：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。
+一、首先我们了解一下我采取如此方案的原因：
+POST提交：把提交的数据放置在是">
+<meta property="og:updated_time" content="2017-08-04T07:20:38.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QT小结(1)">
-<meta name="twitter:description" content="最近在帮导师公司做一个项目，需要用到QT开发，在此先做个小结吧，也算一天的收获吧。
-标签点击信号标签有时可能需要“点击”信号，但没有QLabel发出的“点击”信号。 通过设置“flat”属性，可以通过像一个标签一样使用QPushButton来轻松解决这个问题。(这个方法不错)但是，如果您需要QLabel对象的其他属性，则可以使用自定义QLabel的代码段来发出一个信号：“clicked”。 换句话">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/1498652235.png">
+<meta name="twitter:title" content="http协议的补充">
+<meta name="twitter:description" content="http://www.cnblogs.com/ranyonsue/p/5984001.html在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的请求头部和请求数据是分开的。思路：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。
+一、首先我们了解一下我采取如此方案的原因：
+POST提交：把提交的数据放置在是">
 
 
 
@@ -118,7 +119,7 @@
   };
 </script>
 
-  <title> QT小结(1) | Wind </title>
+  <title> http协议的补充 | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +269,7 @@
             
             
               
-                QT小结(1)
+                http协议的补充
               
             
           </h1>
@@ -280,8 +281,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-28T19:32:50+08:00" content="2017-06-28">
-              2017-06-28
+            <time itemprop="dateCreated" datetime="2017-08-04T14:51:16+08:00" content="2017-08-04">
+              2017-08-04
             </time>
           </span>
 
@@ -294,8 +295,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
+                  <a href="/categories/网络编程/" itemprop="url" rel="index">
+                    <span itemprop="name">网络编程</span>
                   </a>
                 </span>
 
@@ -310,8 +311,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/06/28/QT小结-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/28/QT小结-1/" itemprop="commentsCount"></span>
+                <a href="/2017/08/04/http协议的补充/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/04/http协议的补充/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -334,15 +335,11 @@
       
 
       
-        <p>最近在帮导师公司做一个项目，需要用到QT开发，在此先做个小结吧，也算一天的收获吧。</p>
-<h5 id="标签点击信号"><a href="#标签点击信号" class="headerlink" title="标签点击信号"></a>标签点击信号</h5><p>标签有时可能需要“点击”信号，但没有QLabel发出的“点击”信号。 通过<strong>设置“flat”属性</strong>，可以通过像一个标签一样使用<strong>QPushButton</strong>来轻松解决这个问题。(这个方法不错)<br>但是，如果您需要QLabel对象的其他属性，则可以使用自定义QLabel的代码段来发出一个信号：“clicked”。 换句话说，一个可点击的QLabel！</p>
-<h6 id="1给label添加点击事件"><a href="#1给label添加点击事件" class="headerlink" title="1给label添加点击事件"></a>1给label添加点击事件</h6><p>Qt中原本的label是没有点击事件的，如果想添加点击事件的话，可以继承QLabel类并重载鼠标事件（比如mousePressedEvent），然后在鼠标事件中发送一个信号，具体如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">// clickedlabel.h</div><div class="line"></div><div class="line">#ifndef CLICKEDLABEL_H</div><div class="line">#define CLICKEDLABEL_H</div><div class="line"></div><div class="line">#include &lt;QWidget&gt;</div><div class="line">#include &lt;QLabel&gt;</div><div class="line"></div><div class="line">class ClickedLabel : public QLabel</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    ClickedLabel(QWidget *parent=0): QLabel(parent)&#123;&#125;</div><div class="line">    ~ClickedLabel() &#123;&#125;</div><div class="line">signals:</div><div class="line">    void clicked(ClickedLabel* click); // 点击信号</div><div class="line">protected:</div><div class="line">    void mouseReleaseEvent(QMouseEvent*); // 重载了鼠标释放事件</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // CLICKEDLABEL_H</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// clickedlabel.c</div><div class="line"></div><div class="line">#include &quot;clickedlabel.h&quot;</div><div class="line">void ClickedLabel::mouseReleaseEvent(QMouseEvent *)</div><div class="line">&#123;</div><div class="line">    emit clicked(this); // 在点击事件中发送信号</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里是最简单的例子，在label上获取鼠标点击事件，然后发送’clicked’信号，可以当鼠标释放的时候发送信号，这由开发这定义。<br><a href="http://wiki.qt.io/Clickable_QLabel" target="_blank" rel="external">http://wiki.qt.io/Clickable_QLabel</a><br>具体还可参考以下博客：<br>Qt:添加点击事件的Label并显示图片 <a href="http://www.cnblogs.com/whlook/p/6810346.html" target="_blank" rel="external">http://www.cnblogs.com/whlook/p/6810346.html</a><br><a href="http://blog.chinaunix.net/uid-25808509-id-1748991.html等。" target="_blank" rel="external">http://blog.chinaunix.net/uid-25808509-id-1748991.html等。</a></p>
-<h5 id="多窗口跳转"><a href="#多窗口跳转" class="headerlink" title="多窗口跳转"></a>多窗口跳转</h5><p>1.在主窗体设置一个按钮；<br>2.添加登入对话框；<br>  <strong>往项目中添加新文件</strong>，这里可以在编辑模式左侧的项目目录上右击，然后选择添加新文件菜单，如下图所示。当然也可以在文件菜单中进行添加。<strong>模板选择Qt分类中的Qt设计师界面类</strong>，然后界面模板选择Dialog withoutButtons，单击下一步进入类信息界面，这里将类名更改为LoginDlg（注意类名首字母一般大写）。如下图所示，下面的相关文件会自动改名。<br>  <strong>当完成后会自动跳转到设计模式</strong>，可以对新添加的对话框进行设计。我们向界面上拖入一个Push Button（按钮），可以<strong>右击转到槽</strong>，选择clicked（）信号，接着在对应的槽里编写关闭这个新窗口的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">  dialog_set.c文件</div><div class="line">#include &quot;dialog_set.h&quot;</div><div class="line">#include &quot;ui_dialog_set.h&quot;</div><div class="line"></div><div class="line">Dialog_set::Dialog_set(QWidget *parent) :</div><div class="line">    QDialog(parent),</div><div class="line">    ui(new Ui::Dialog_set)</div><div class="line">&#123;</div><div class="line">    ui-&gt;setupUi(this);</div><div class="line">    setWindowFlags(Qt::FramelessWindowHint);//去掉窗体的标题栏</div><div class="line">    //setAttribute(Qt::WA_TranslucentBackground);//背景透明</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">Dialog_set::~Dialog_set()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Dialog_set::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    this-&gt;close();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>3.在主窗体界面上设置的按钮的槽里显示新窗口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">在widget.cpp里</div><div class="line">void Widget::on_pushButton_5_clicked()</div><div class="line">&#123;</div><div class="line">    dialog1.show();</div><div class="line">    dialog1.exec();</div><div class="line">    this-&gt;show();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">在widget.h里</div><div class="line">private:</div><div class="line"> Dialog_set dialog1;//新对话框</div></pre></td></tr></table></figure>
-<h5 id="标题栏隐藏"><a href="#标题栏隐藏" class="headerlink" title="标题栏隐藏"></a>标题栏隐藏</h5><p><code>setWindowFlags(Qt::FramelessWindowHint);</code>//去掉窗体的标题栏<br><code>//setAttribute(Qt::WA_TranslucentBackground);</code>//背景透明<br><code>//setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);</code>//去掉边框，保留任务栏菜单<br>最后附上一天的成果图：<br><img src="http://ols4zt49w.bkt.clouddn.com/1498652235.png" alt=""></p>
+        <p><a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a><br>在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的<strong>请求头部</strong>和<strong>请求数据</strong>是分开的。<strong>思路</strong>：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。</p>
+<p>一、首先我们了解一下我采取如此方案的原因：</p>
+<p><strong>POST提交</strong>：把提交的数据放置在是HTTP包的包体中。<br><strong>GET提交</strong>，请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，多个参数用&amp;连接；例 如：login.action?name=hyddd&amp;password=idontknow&amp;verify=%E4%BD%A0 %E5%A5%BD。如果数据是英文字母/数字，原样发送，如果是空格，转换为+，如果是中文/其他字符，则直接把字符串用BASE64加密，得出如： %E4%BD%A0%E5%A5%BD，其中％XX中的XX为该符号以16进制表示的ASCII。<br><strong>因此，GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变。</strong></p>
+<p><strong>我们看看GET和POST的区别</strong><br>1.GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456. POST方法是把提交的数据放在HTTP包的Body中.<br><strong>2.GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制</strong>.<br>3.GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。<br>4.GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</p>
+<p>二、下面是部分代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">void Widget::on_pushButton_3_clicked()</div><div class="line">&#123;</div><div class="line"></div><div class="line">    QFile file(&quot;C:/Users/hasee/Desktop/shujv-ceshi/build-untitled-Desktop_QT_5_3-Debug/test.txt&quot;);</div><div class="line">    file.open(QIODevice::ReadWrite);</div><div class="line">    //int file_len =file.size();</div><div class="line">    //QByteArray fdata=file.readAll();</div><div class="line">    QString data =file.readAll();</div><div class="line">    qDebug()&lt;&lt;data;</div><div class="line">    QNetworkRequest request;</div><div class="line"></div><div class="line">    request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!uploadThicknessRecordString.action&quot;));</div><div class="line">   // request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!checkUser.action&quot;));</div><div class="line">    request.setHeader(QNetworkRequest::ContentTypeHeader,&quot;application/x-www-form-urlencoded&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept&quot;,&quot;text/html, application/xhtml+xml, */*&quot;);</div><div class="line">   // request.setRawHeader(&quot;Referer&quot;,&quot;http://localhost:8888/login&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept-Language&quot;,&quot;zh-CN&quot;);</div><div class="line">    request.setRawHeader(&quot;X-Requested-With&quot;,&quot;XMLHttpRequest&quot;);</div><div class="line">    request.setRawHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)&quot;);</div><div class="line">    request.setRawHeader(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);//窗体数据被编码为名称/值对。这是标准的编码格式</div><div class="line">    //request.setRawHeader(&quot;Content-Type&quot;, &quot;application/json&quot;);//如果是json格式访问则加,但是这里我以字符串来发送，将文本里的内容读取发送</div><div class="line">    request.setRawHeader(&quot;Accept-Encoding&quot;,&quot;gzip,deflate&quot;);</div><div class="line">    request.setRawHeader(&quot;Connection&quot;,&quot;Keep-Alive&quot;);</div><div class="line">    request.setRawHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);</div><div class="line"></div><div class="line">    QString postData;</div><div class="line">   // postData.append(&quot;pid=1332&amp;username=superuser&amp;password=admin&quot;);</div><div class="line">   // postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&#123;thicknessrecord:&apos;sha&apos;,a:12.21&#125;&quot;);</div><div class="line">    postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&quot;);</div><div class="line">    postData+=data;//将文件中的字符串拼接上</div><div class="line">    QByteArray postData1=postData.toLatin1();//很重要，要将请求数据编码,toUtf8()也行</div><div class="line">    request.setRawHeader(&quot;Content-Length&quot;,QString::number(postData1.length()).toLatin1());//在请求头部设置请求数据的长度</div><div class="line">    _uploadManager-&gt;post(request,postData1);//postData1是请求数据</div><div class="line">          qDebug()&lt;&lt;postData1;</div><div class="line">    connect( _uploadManager,SIGNAL(finished(QNetworkReply*)),SLOT(replyFinished(QNetworkReply*)));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -364,13 +361,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/qt/" rel="tag">#qt</a>
-          
-            <a href="/tags/标签/" rel="tag">#标签</a>
-          
-            <a href="/tags/新窗体/" rel="tag">#新窗体</a>
-          
-            <a href="/tags/标题栏/" rel="tag">#标题栏</a>
+            <a href="/tags/http/" rel="tag">#http</a>
           
         </div>
       
@@ -379,17 +370,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/27/简述如何将qt程序在arm开发板上运行起来/" rel="next" title="简述如何将qt程序在arm开发板上运行起来">
-                <i class="fa fa-chevron-left"></i> 简述如何将qt程序在arm开发板上运行起来
+              <a href="/2017/07/30/Qt数据库操作/" rel="next" title="Qt数据库操作">
+                <i class="fa fa-chevron-left"></i> Qt数据库操作
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/03/装饰模式-衣服穿着设计/" rel="prev" title="装饰模式-衣服穿着设计">
-                装饰模式-衣服穿着设计 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -404,10 +391,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/06/28/QT小结-1/"
-     data-title="QT小结(1)"
+        <div class="ds-share flat" data-thread-key="2017/08/04/http协议的补充/"
+     data-title="http协议的补充"
      data-content=""
-     data-url="http://shalian123.github.io/2017/06/28/QT小结-1/">
+     data-url="http://shalian123.github.io/2017/08/04/http协议的补充/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -437,8 +424,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/28/QT小结-1/"
-           data-title="QT小结(1)" data-url="http://shalian123.github.io/2017/06/28/QT小结-1/">
+      <div class="ds-thread" data-thread-key="2017/08/04/http协议的补充/"
+           data-title="http协议的补充" data-url="http://shalian123.github.io/2017/08/04/http协议的补充/">
       </div>
     
   </div>
@@ -587,7 +574,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#标签点击信号"><span class="nav-number">1.</span> <span class="nav-text">标签点击信号</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1给label添加点击事件"><span class="nav-number">1.1.</span> <span class="nav-text">1给label添加点击事件</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多窗口跳转"><span class="nav-number">2.</span> <span class="nav-text">多窗口跳转</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标题栏隐藏"><span class="nav-number">3.</span> <span class="nav-text">标题栏隐藏</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
