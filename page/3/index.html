@@ -265,6 +265,261 @@
             
               
                 
+                <a class="post-title-link" href="/2017/05/18/QT5-3-2连接Mysql老是失败！/" itemprop="url">
+                  QT5.3.2连接Mysql老是失败！
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-18T17:00:13+08:00" content="2017-05-18">
+              2017-05-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/18/QT5-3-2连接Mysql老是失败！/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/18/QT5-3-2连接Mysql老是失败！/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前在QT里一直用的文件型数据库sqlite,今天突然想试试在里面连接Mysql，结果却遇到了一个问题，问题如下：<br>在程序运行后，显示的驱动里明明有QMYSQL驱动，同时我也成功创建了一个mydata数据库，但是就是显示加载不了驱动。<br><img src="http://ols4zt49w.bkt.clouddn.com/1495098343%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1495098462%281%29.png" alt=""></p>
+<p>网上的解决方案很多，大概有：<br>1.需要自己编译驱动。（qmysql.dlll,qmysqld.dll已经存在）<br>2.将mysql目录下lib中的libmysql.dll考到Qt安装目录bin中。<br>3.将plugins\sqldrivers文件夹拷贝到工程目录及其目标文件中。<br>结果都是一个效果，无效！！！不能不说网上有的回答并不全面或者说是牛头不对马嘴，也因此坑了我一个下午，最终得已解决，在此为了避免你们遇到跟我一样得问题，我在这里总结一下：</p>
+<p>1.从Qt5.2版本开始，已经包含了MySQL驱动，不需要在手动编译了。你可以通过qDebug()&lt;&lt;QSqlDatabase::drivers()查看支持的驱动。</p>
+<p><strong>2.还有一个很重要的是32位的MySQL对应32位的Qt。</strong></p>
+<p>相信你们也发现了，解决方案很简单。由于<strong>我的版本是QT5.3,而且x86的，即32位的</strong>，虽然我的电脑是64位win10系统，但是在<strong>电脑上必须装32位的Mysq</strong>l。相信大家会有疑惑，64位的系统怎么能装32位的软件呢，但是奇葩的是竟然成功装上了，至少 mysql-5.5.27-win32.msi 可以。<br>接下来再将mysql目录下lib中的libmysql.dll考到Qt安装目录bin中。<br>在此编译运行，结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/1495100021%281%29.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/15/QT网络编程之FTP/" itemprop="url">
+                  QT网络编程之FTP
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-15T14:33:15+08:00" content="2017-05-15">
+              2017-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/15/QT网络编程之FTP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/15/QT网络编程之FTP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>FTP(文件传输协议)是一个主要用来<strong>浏览远程目录</strong>和<strong>传输文件</strong>的协议。FTP使用两个网络连接，一个用来发送命令，一个用来输出数据。FTP协议有一个状态，并且需要客户端在传输文件之前发送一些命令。FTP客户端建立一个连接，并且在整个会话期间<strong>一直保持打开</strong>。在每个会话期间可以发生多个传输。</p>
+<p><strong>注意：</strong>在QT5之前，为了方便网络编程，Qt 提供了 Network 模块。<strong>该模块包含了许多类</strong>，例如：<strong>QFtp类</strong> - <strong>能够更加轻松使用 FTP 协议进行网络编程</strong>。但是，从 Qt5.x 之后，Qt Network 发生了很大的变化，不再导出 QFtp 和 QUrlInfo 类，改用了 QNetworkAccessManager。</p>
+<p>在QT5中，使用 QNetworkAccessManager类实现FTP与前面的http应用十分相似，只需要在QUrl对象中设置好主机的地址，用户名，密码等，然后使用get()、put()等函数完成文件的获取和上传。<strong>注意：因为Qt5不再支持QFtp类,需要的话得重现编译.所以只能在根目录上传下载。如果想要实现其它功能，如：cd()改变服务器的工作目录到指定目录；list()列出ftp服务器上指定目录的内容，默认列出当前目录的内容；等，就只能用QFtp。</strong></p>
+<p>虽然在QT5中QFtp类被废除了，在QT5中不能直接使用该类，但是在<strong>QT5的兼容性扩展模块QtFtp中包含了支持Qt5的QFtp类。</strong><br>QFtp 类提供了一个 FTP 协议的客户端实现，具有以下特点：<br>1.<strong>非阻塞行为，QFtp异步工作</strong>。如果无法立即执行操作，函数仍将立即返回，并且该操作将被调度以供以后执行。调度操作的结果通过信号报告，这种方法依赖于事件循环操作。</p>
+<p>2.命令ID。可以调度的操作（也被称为“命令”）有：connectToHost()、login()、close()、list()、cd()、get()、put()、remove()、mkdir()、rmdir()、rename() 和 rawCommand()。<strong>当每一个命令被执行时，QFtp都会使用该命令ID发射commandStarted()和commandFinished()信号。</strong></p>
+<p>3.数据传输进度指示。当<strong>有数据传输时</strong>，QFtp会发射信号( <strong>QFtp::dataTransferProgress()</strong>,QNetworkReply::downloadProgress()和QNetworkReply::uploadProgress() ),可以关联这些信号到QProgressBar::setProgress()或者QProgressDialog::setProgresss()上。</p>
+<p>4.QIODevice支持。该类支持对QIODevice进行上传和下载。</p>
+<p>这里我主要采用第二种方法，即采用QFtp类。我挑重点讲：<br><strong>连接</strong><br>在此处可以直接在ui界面里初始化，然后添加信号槽。ui界面如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/34$LEQ9JRY3J5S~%5DCD08L14.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">// 连接按钮</div><div class="line">void MainWindow::on_connectButton_clicked()</div><div class="line">&#123;</div><div class="line">    ui-&gt;fileList-&gt;clear();</div><div class="line">    currentPath.clear();</div><div class="line">    isDirectory.clear();</div><div class="line">    ui-&gt;progressBar-&gt;setValue(0);</div><div class="line">    ui-&gt;progressBar_2-&gt;setValue(0);</div><div class="line">    ftp = new QFtp(this);</div><div class="line">    //每当一个命令被执行时，QFtp都会使用该命令ID发射commandStartedcommunity()和commandFinished()信号</div><div class="line">    connect(ftp, &amp;QFtp::commandStarted, this,</div><div class="line">            &amp;MainWindow::ftpCommandStarted);</div><div class="line">    connect(ftp, &amp;QFtp::commandFinished,</div><div class="line">            this, &amp;MainWindow::ftpCommandFinished);</div><div class="line"></div><div class="line">    //listInfo()信号在执行完list()命令时发射</div><div class="line">    connect(ftp, &amp;QFtp::listInfo, this, &amp;MainWindow::addToList);</div><div class="line"></div><div class="line">    //当有数据传输时，QFTP会发射信号（QFtp::dataTransferProgress(),QNetworkReply::downloadProgress()和QNetworkReply::uploadProgress()）</div><div class="line">   /* connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress);</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress_2);*/</div><div class="line"></div><div class="line">    QString ftpServer = ui-&gt;ftpServerLineEdit-&gt;text();</div><div class="line">    QString userName = ui-&gt;userNameLineEdit-&gt;text();</div><div class="line">    QString passWord = ui-&gt;passWordLineEdit-&gt;text();</div><div class="line">    ftp-&gt;connectToHost(ftpServer, 21);</div><div class="line">    ftp-&gt;login(userName, passWord);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然，也可以请求连接服务器，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">ftp = new QFtp(this);</div><div class="line"></div><div class="line">ftp-&gt;connectToHost(&quot;wscloudy.com&quot;);//指定端口连接到FTP服务器主机，默认端口号21</div><div class="line">ftp-&gt;login(&quot;user&quot;, &quot;8677&quot;);//指定用户名和密码登陆到FTP服务器</div><div class="line">ftp-&gt;get(&quot;sha.txt&quot;);//从服务器下载指定文件</div><div class="line">ftp-&gt;close();</div><div class="line">connect(ftp, &amp;QFtp::commandStarted,</div><div class="line">        this, &amp;MainWindow::ftpCommandStarted);</div><div class="line">connect(ftp, &amp;QFtp::commandFinished,</div><div class="line">        this, &amp;MainWindow::ftpCommandFinished);</div></pre></td></tr></table></figure></p>
+<p><strong>下载</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">void MainWindow::on_downloadButton_clicked()</div><div class="line">&#123;</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress);</div><div class="line">    // 注意：因为文件名称可能是中文，所以在使用get()函数前需要进行编码转换</div><div class="line">    QString fileName = ui-&gt;fileList-&gt;currentItem()-&gt;text(0);</div><div class="line">    QString name = QLatin1String(fileName.toUtf8());</div><div class="line">    file = new QFile(fileName);//根据要下载的文件的名称创建本地文件</div><div class="line">    if (!file-&gt;open(QIODevice::WriteOnly)) &#123;</div><div class="line">        delete file;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    ui-&gt;downloadButton-&gt;setEnabled(false);</div><div class="line">    ftp-&gt;get(name, file);//文件下载</div><div class="line">&#125;</div><div class="line">//下载进度更新</div><div class="line">void MainWindow::updateDataTransferProgress(qint64 readBytes,qint64 totalBytes)</div><div class="line">&#123;</div><div class="line">    ui-&gt;progressBar-&gt;setMaximum(totalBytes);</div><div class="line">    ui-&gt;progressBar-&gt;setValue(readBytes);</div><div class="line">   // ui-&gt;progressBar_2-&gt;setValue(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>上传</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//上传按钮</div><div class="line">void MainWindow::on_uploadButton_clicked()</div><div class="line">&#123;</div><div class="line">    connect(ftp, &amp;QFtp::dataTransferProgress,</div><div class="line">            this, &amp;MainWindow::updateDataTransferProgress_2);</div><div class="line"></div><div class="line">    file = new QFile (&quot;E:/ftpshare/shalian.txt&quot;);</div><div class="line">    ftp-&gt;put(file,&quot;shalian.txt&quot;); //将我电脑E盘下的文件上传至服务器</div><div class="line">    ui-&gt;uploadButton-&gt;setEnabled(false);</div><div class="line"></div><div class="line">&#125;</div><div class="line">//上传进度更新</div><div class="line">void MainWindow::updateDataTransferProgress_2(qint64 readBytes,qint64 totalBytes)</div><div class="line">&#123;</div><div class="line">    ui-&gt;progressBar_2-&gt;setMaximum(totalBytes);</div><div class="line">    ui-&gt;progressBar_2-&gt;setValue(readBytes);</div><div class="line">    //ui-&gt;progressBar-&gt;setValue(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>：一开始我在学校用自己的电脑配置搭建了一个ftp服务器，但是由于是校园局域网，外网进来需要路由允许穿越。(当然我可没法要求校园网络管理员实现)，因此借助了公司同事服务器上的ftp服务器，在他的路由上设置了允许我的穿进。<br>本文参考了：<br><a href="http://blog.csdn.net/liang19890820/article/details/53318906" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/53318906</a><br><a href="http://blog.csdn.net/liang19890820/article/details/53188182" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/53188182</a><br><a href="http://blog.csdn.net/sinat_29173167/article/details/54601643" target="_blank" rel="external">http://blog.csdn.net/sinat_29173167/article/details/54601643</a><br>欢迎一起讨论交流！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/05/15/c-动态申请二维数组并释放/" itemprop="url">
                   c++动态申请一维、二维数组并释放
                 </a>
@@ -1311,252 +1566,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="url">
-                  数据结构-堆和栈,静态和动态
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-23T21:58:20+08:00" content="2017-03-23">
-              2017-03-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/23/数据结构-堆和栈-静态和动态/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/23/数据结构-堆和栈-静态和动态/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="动态变量和静态变量的区别："><a href="#动态变量和静态变量的区别：" class="headerlink" title="动态变量和静态变量的区别："></a>动态变量和静态变量的区别：</h4><p>1、存储位置<br>动态变量：存储在内存出栈数据区<br>静态变量：存储在全局数据区（静态数据区）</p>
-<p>2、生命期<br>动态变量：根据你定义的位置确定，比如你在一个函数中定义的，那么超出该函数范围变量将失效<br>静态变量：程序结束时才释放</p>
-<p>3、作用域<br>动态变量：同样的要根据你定义的位置才能确定，和第二点的一样<br>静态变量：当前文件中有效<br>具体可以见下例：<br><img src="http://ols4zt49w.bkt.clouddn.com/LKRNFXD8X%5DRPKJ6L%29%5DL%60%5D5G.png" alt=""><br>一般标志位可定义成静态变量，每次给值后就不会变化了，除非再给它赋新值；不像动态变量每次重赋初值。</p>
-<h4 id="堆和栈的区分："><a href="#堆和栈的区分：" class="headerlink" title="堆和栈的区分："></a>堆和栈的区分：</h4><p>分配方式：<strong>堆都是动态分配的</strong>，没有静态分配的堆。<br>栈有2种分配方式：静态分配和动态分配。静态分配是编译器完成的，比如局部变量的分配。动态分配由alloca() ，alloca的函数返回的时候, 它分配的内存会自动释放，但是栈的动态分配和堆是不同的，<strong>堆需要手动释放</strong>。<br><strong><em>堆是通过new，malloc, calloc, realloc等来分配的内存，需要手动析构，栈由系统管理，无需人为处理。</em></strong></p>
-<h5 id="全局变量和静态变量存放在全局区（静态区）"><a href="#全局变量和静态变量存放在全局区（静态区）" class="headerlink" title="全局变量和静态变量存放在全局区（静态区）"></a>全局变量和静态变量存放在全局区（静态区）</h5><h5 id="new和malloc申请的在堆区"><a href="#new和malloc申请的在堆区" class="headerlink" title="new和malloc申请的在堆区"></a>new和malloc申请的在堆区</h5><h5 id="函数局部变量和函数的参数在栈区"><a href="#函数局部变量和函数的参数在栈区" class="headerlink" title="函数局部变量和函数的参数在栈区"></a>函数局部变量和函数的参数在栈区</h5>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/22/利用QT发布应用程序/" itemprop="url">
-                  利用QT发布应用程序
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-22T22:15:05+08:00" content="2017-03-22">
-              2017-03-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/22/利用QT发布应用程序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/22/利用QT发布应用程序/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。</p>
-<h4 id="1-设置程序图标，"><a href="#1-设置程序图标，" class="headerlink" title="1.设置程序图标，"></a>1.设置程序图标，</h4><p> 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法：<br> （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具或者到一些在线转换网站上制作。</p>
-<h4 id="2-编译release版本"><a href="#2-编译release版本" class="headerlink" title="2.编译release版本"></a>2.编译release版本</h4><h4 id="3-发布时一般有两种方式，静态编译和动态编译。"><a href="#3-发布时一般有两种方式，静态编译和动态编译。" class="headerlink" title="3.发布时一般有两种方式，静态编译和动态编译。"></a>3.发布时一般有两种方式，静态编译和动态编译。</h4><p>  静态编译虽然没有附加很多的.dll文件，但是库文件很大，更新版本不方便，每次升级都要重新分发所有内容。<br>  动态编译需要添加许多文件，在这里我一开始按照书上的方法做了，但是后来发现到别人pc上还是会提醒无法建立数据库(如果自己去复制dll，很可能丢三落四，导致exe在别的电脑里无法正常运行)。因此在这里我重点介绍另外一种简单的发布方法。</p>
-<h4 id="推荐使用官方的windeployqt。"><a href="#推荐使用官方的windeployqt。" class="headerlink" title="推荐使用官方的windeployqt。"></a>推荐使用官方的windeployqt。</h4><p>  (1)编译完成后，进入项目生成的release文件夹里，将exe复制到一个单独的文件夹（比如桌面上新建的qt），用于发布。<br>  (2)进入qt文件夹，按住shift，右击鼠标，打开命令窗口，然后使用 windeployqt 工具命令：比如windeployqt qt.exe<br>  (3)然后可以在 桌面:\qt 文件夹里看到 windeployqt 工具自动复制的插件文件夹和 dll文件、qm文件。这时候得到的就完整的 exe 程序发布集合，依赖关系都解决好了。<br>  附上我的程序界面：<br>  1.数据库登陆界面<br>  <img src="http://ols4zt49w.bkt.clouddn.com/%60%7B%28U1J%29WWY%60%5D%5BJCT%7D@06~YF.png" alt=""><br>  2.数据库界面<br>  <img src="http://ols4zt49w.bkt.clouddn.com/%5BX@QE%60%7D1DX%7B%60W%5D~O7R73SKQ.png" alt=""><br>总结：桌面图形窗口应用设计可以有很多种方法，qt主要应用在嵌入式行业，它的一大优势是支持跨平台，不仅支持pc（windows），linux，android等，也支持mac os x等平台，相信qt的应用及发展还是不错的，有兴趣的人可以一起交流学习。<br>（在程序发布解决过程中参考了<a href="http://m.blog.csdn.net/article/details?id=56848407）" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=56848407）</a><br>最后，附上我编写并发布的软件下载地址，有兴趣的可以下载查看：(<a href="http://ols4zt49w.bkt.clouddn.com/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip" target="_blank" rel="external">http://ols4zt49w.bkt.clouddn.com/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip</a>)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1602,7 +1611,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1619,7 +1628,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

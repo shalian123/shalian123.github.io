@@ -1,0 +1,745 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="QT,AM437X,跨平台," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：首先贴出我参考的以些资料：【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板Qt for ARM_Linux环境搭建-Qt5.7+">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT移植到am437x开发板">
+<meta property="og:url" content="http://shalian123.github.io/2017/08/23/QT移植到am437x开发板/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：首先贴出我参考的以些资料：【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板Qt for ARM_Linux环境搭建-Qt5.7+">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489195%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489408%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489027%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/881346359011543039.jpg">
+<meta property="og:updated_time" content="2017-08-23T12:10:16.205Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QT移植到am437x开发板">
+<meta name="twitter:description" content="最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：首先贴出我参考的以些资料：【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板Qt for ARM_Linux环境搭建-Qt5.7+">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> QT移植到am437x开发板 | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                QT移植到am437x开发板
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-23T18:42:00+08:00" content="2017-08-23">
+              2017-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/23/QT移植到am437x开发板/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/23/QT移植到am437x开发板/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：<br>首先贴出我参考的以些资料：<br><a href="http://bbs.elecfans.com/forum.php?mod=viewthread&amp;tid=905966&amp;extra=&amp;ordertype=2" target="_blank" rel="external">【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板</a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a><br><a href="http://www.cnblogs.com/topeet/p/5711957.html" target="_blank" rel="external">【转帖】嵌入式4412开发板QT5.7编译安装到arm </a><br><a href="http://www.cnblogs.com/t1029901995/p/6046600.html" target="_blank" rel="external">Qt5.7.0移植到4412 </a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a></p>
+<p>在移植的过程中遇到的问题：<br>1.linux下qt不能编译？<br>  解决：（1）权限的问题：工程代码需要权限；qtcreator也需要权 （2）linux下目录是‘/’（没有双杠，且左低右高）<br>2.移植的注意点：<br>  （1）如果是原生的ubuntu（刚装好的），移植前需要先安装x11的库，见下图：</p>
+<p>  <img src="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png" alt=""><br>  （2）安装跟板子配套的交叉编译工具链，注意：三星的4412是arm-none-linux-gnueabi-gcc，ti用的是arm-linux-gnueabihf，由于板子出厂固件中运行的是基于Qt5.7,因此我下载的也是跟5.7配套的交叉编译工具链<code>gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf.tar</code><br>  （3）修改交叉编译架构用到的信息：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489195%281%29.png" alt=""></p>
+<p>  （3）创建脚本文件用于生成Makefile文件时，要有<code>-no-iconv  \</code>, 否则字库会出问题。<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489408%281%29.png" alt=""></p>
+<p>  （4）在开发板上运行校正程序时出现No raw modules loaded<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">解决方法是把  tslib/etc目录下的ts.conf 的 &quot;#module_raw input&quot;的注释符号“＃”去掉。但记住不要在前面留有 空格 ，否则会出现错误Segmentation fault</div></pre></td></tr></table></figure></p>
+<p>  （5）程序运行起来，仍报错：<br>QIconvCodec::convertFromUnicode: using Latin-1 for conversion, iconv_open failed<br>QIconvCodec::convertToUnicode: using Latin-1 for conversion, iconv_open failed​<br>解决 ：下载 <a href="http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz" target="_blank" rel="external">http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz</a><br>                ./configure -prefix=$PWD/_install -host=arm-linux-gnueabihf<br>                make<br>                make install<br>                把_install/lib 下的preloadable_libiconv.so 拷到系统的/system/lib 下,<br>                export LD_PRELOAD=/system/lib/preloadable_libiconv.so</p>
+<p>   （6）在环境变量配置时，如果不想把板子自带的DT Demo覆盖掉，可以不配置QT_ROOT<br>   配置如下：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489027%281%29.png" alt=""></p>
+<p>   （7）要使板子支持中文，可以下载中文字库，放在ARM板的fonts目录下，这里我放在<code>/usr/share/fonts/ttf</code>下。此处我提供下载连接。<br>   <a href="http://ols4zt49w.bkt.clouddn.com/DroidSansFallback.ttf" target="_blank" rel="external">QT中文字库，直接放在ARM板的fonts目录下</a></p>
+<p>   （8）移植sqlite到arm板上，参考：<a href="http://www.cnblogs.com/lidabo/p/5851752.html" target="_blank" rel="external">http://www.cnblogs.com/lidabo/p/5851752.html</a></p>
+<p>最后，附上一张移植后的图片：<br><img src="http://ols4zt49w.bkt.clouddn.com/881346359011543039.jpg" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QT/" rel="tag">#QT</a>
+          
+            <a href="/tags/AM437X/" rel="tag">#AM437X</a>
+          
+            <a href="/tags/跨平台/" rel="tag">#跨平台</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/04/http协议的补充/" rel="next" title="http协议的补充">
+                <i class="fa fa-chevron-left"></i> http协议的补充
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/23/QT数据库操作2/" rel="prev" title="QT数据库操作2">
+                QT数据库操作2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/08/23/QT移植到am437x开发板/"
+     data-title="QT移植到am437x开发板"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/08/23/QT移植到am437x开发板/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/08/23/QT移植到am437x开发板/"
+           data-title="QT移植到am437x开发板" data-url="http://shalian123.github.io/2017/08/23/QT移植到am437x开发板/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
