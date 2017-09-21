@@ -515,7 +515,7 @@
               
                 
                 <a class="post-title-link" href="/2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/" itemprop="url">
-                  未命名
+                  海康威视2018秋招-嵌入式软件开发9.20
                 </a>
               
             
@@ -533,6 +533,25 @@
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/笔试面试/" itemprop="url" rel="index">
+                    <span itemprop="name">笔试面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -565,26 +584,12 @@
       
         
           
-            <hr>
-<p>title: 海康威视2018秋招-嵌入式软件开发9.20<br>date: 2017-09-20 16:33:57<br>tags: [嵌入式,笔试]<br>categories: 笔试面试</p>
-<hr>
-<p><strong>1.静态变量通常存储在进程哪个区？</strong><br>  答：静态变量和全局变量都存在全局区（静态区）。     new和malloc申请的在堆区。  函数局部变量和函数的参数在栈区。</p>
+            <p><strong>1.静态变量通常存储在进程哪个区？</strong><br>  答：静态变量和全局变量都存在全局区（静态区）。     new和malloc申请的在堆区。  函数局部变量和函数的参数在栈区。</p>
 <p>2.在软件生命周期中，能准确地确认软件系统必须做什么和必须具备哪些功能地阶段是：<strong>需求分析</strong>。</p>
 <p><strong>3.请用只包含一个表达式的宏定义，判断一个数是否是2的n次幂的数？</strong><br>  答：<strong> #define  S（n）（（n&amp;(n-1)）==0 ）</strong></p>
-<p><strong>4.在file.c文件中有如下函数</strong></p>
-<pre><code>#include&lt;stdio.h&gt;
-uint64_t get_square(uint64_t a)
-{
- return a*a;
-}
-</code></pre><p>在file.c文件中有如下代码，<br>注：file.c中没有包含get_square函数的声明；</p>
-<pre><code>void main()
-{
- uint64_t ret = 0;
- ret = get_square(1&lt;&lt;20);
- printf(&quot;ret = %#llx\n&quot;,ret);
-}
-</code></pre><p>结果输出多少？<br>%llx表示64位16进制数；左移20位的平方就是左移40位，4位二进制是一个16进制。就是16进制左移10位。即0x00000000001—–<strong>0x10000000000</strong>(答案)</p>
+<p><strong>4.在file.c文件中有如下函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line">uint64_t get_square(uint64_t a)</div><div class="line">&#123;</div><div class="line"> return a*a;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在file.c文件中有如下代码，<br>注：file.c中没有包含get_square函数的声明；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void main()</div><div class="line">&#123;</div><div class="line"> uint64_t ret = 0;</div><div class="line"> ret = get_square(1&lt;&lt;20);</div><div class="line"> printf(&quot;ret = %#llx\n&quot;,ret);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果输出多少？<br>%llx表示64位16进制数；左移20位的平方就是左移40位，4位二进制是一个16进制。就是16进制左移10位。即0x00000000001—–<strong>0x10000000000</strong>(答案)</p>
 <p><strong>5.请写出int变量v关于s(数值&gt;=1且为2的n次方)向上对齐的宏定义</strong><br> （如7关于4向上对齐为8，16关于8向上对齐后为16）<br> 答案： <code>#define ROUND_UP(v,s) ( ((v)+sizeof(s)-1)&amp;~(sizeof(s)-1) )</code><br>  具体解析参考 <a href="http://blog.csdn.net/duanlove/article/details/9948947" target="_blank" rel="external">http://blog.csdn.net/duanlove/article/details/9948947</a> //Linux socket.h 中 CMSG_ALIGN 宏定义的作用（字节对齐）</p>
 
           
