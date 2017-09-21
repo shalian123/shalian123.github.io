@@ -265,6 +265,380 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/14/多尺度Gabor滤波器提取彩色图像边缘/" itemprop="url">
+                  多尺度Gabor滤波器提取彩色图像边缘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-14T18:17:23+08:00" content="2017-06-14">
+              2017-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/14/多尺度Gabor滤波器提取彩色图像边缘/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/多尺度Gabor滤波器提取彩色图像边缘/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、-多尺度Gabor滤波算法的基本原理和实现思路"><a href="#一、-多尺度Gabor滤波算法的基本原理和实现思路" class="headerlink" title="一、    多尺度Gabor滤波算法的基本原理和实现思路"></a>一、    多尺度Gabor滤波算法的基本原理和实现思路</h4><p>由于Gabor特征对光照、姿态具有一定的鲁棒性，Gabor特征具有良好的空间局部性和方向选择性，可以很好的描述图像的纹理信息，因此许多算法都采用Gabor特征作为识别特征。<br>该算法仅对图像中部分关键特征点进行Gabor变换，并将这些特征点位置为顶点、以其Gabor变换系数为顶点属性、以其关键点位置关系为边属性的属性图，从而将问题转化为图匹配问题。通过合理的选择特征点的位置，弹性图可以很好地同时对关键局部特征及其它们之间的关系进行建模，从而既利用了图像亮度分布特征，又利用了结构信息。GWN方法从最佳描述的角度，通过一个优化过程完全自动地确定特征位置及其相应的小波参数，并最终用这些参数作为描述来进行人脸识别。但GWN是一种基于参数优化的建模方法，计算复杂度很高。GFC算法的基本思想是在粗略对齐图像的前提下，逐像素计算每个像素点的多方向、多尺度Gabor变换特征，形成Gabor特征的表示，然后进一步用Fisher判别分析法提取特征，为了解决逐像素Gabor特征维数过高的问题，Liu采用了简单的下采样处理方法。AdaGabor算法采用AdaBoost算法对高维Gabor特征进行选择的降维，该方法采用机器学习的方法更加客观地利用Gabor特征，从而能在有效降维的同时提高识别性能。<br>Gabor小波与人类视觉系统中简单细胞的视觉刺激响应非常相似。它在提取目标的局部空间和频率域信息方面具有良好的特性。虽然Gabor小波本身并不能构成正交基，但在特定参数下可构成紧框架。Gabor小波对于图像的边缘敏感，能够提供良好的方向选择和尺度选择特性，而且对于光照变化不敏感,能够提供对光照变化良好的适应性。上述特点使Gabor小波被广泛应用于视觉信息理解。二维Gabor小波变换[15]是在时频域进行信号分析处理的重要工具，其变换系数有着良好的视觉特性和生物学背景，因此被广泛应用于图像处理、模式识别等领域。与传统的傅立叶变换相比，Gabor小波变换具有良好的时频局部化特性。即非常容易地调整Gabor滤波器的方向、基频带宽及中心频率从而能够最好的兼顾信号在时空域和频域中的分辨能力；Gabor小波变换具有多分辨率特性即变焦能力。即采用多通道滤波技术，将一组具有不同时频域特性的Gabor小波应用于图像变换，每个通道都能够得到输入图像的某种局部特性，这样可以根据需要在不同粗细粒度上分析图像。此外，在特征提取方面，Gabor小波变换与其它方法相比：一方面其处理的数据量较少，能满足系统的实时性要求；另一方面，小波变换对光照变化不敏感，且能容忍一定程度的图像旋转和变形，当采用基于欧氏距离进行识别时，特征模式与待测特征不需要严格的对应，故能提高系统的鲁棒性。<br>无论从生物学的角度还是技术的角度，Gabor特征都有很大的优越性。Jones和Palmer的研究表明，在基本视觉皮层里的简单细胞的感受野局限在很小的空域范围内，并且高度结构化。Gabor变换所采用的核（Kernels）与哺乳动物视觉皮层简单细胞2D感受野剖面（Profile）非常相似，具有优良的空间局部性和方向选择性，能够抓住图像局部区域内多个方向的空间频率（尺度）和局部性结构特征。这样，Gabor分解可以看作一个对方向和尺度敏感的有方向性的显微镜。同时，二维Gabor函数也类似于增强边缘以及峰、谷、脊轮廓等底层图像特征，这相当于增强了被认为是面部关键部件的眼睛、鼻子、嘴巴等信息，同时也增强了诸于黑痣、酒窝、伤疤等局部特征从而使得在保留总体人脸信息的同时增强局部特性成为可能。<br>从图像处理的角度来看，Gabor特征有如下好处：<br>（1）Gabor核函数由于去掉了直流分量，因此对局部光照的变化不敏感，常常被用在要求对光照有适应性的场合；<br>（2）Gabor滤波结果可以反映图像不同尺度、不同方向上的灰度分布信息。一般说来，大尺度滤波可以反映全局性较强的信息，同时可以掩盖图像中噪声的影响；小尺度可以反映比较精细的局部结构，但容易受到噪声影响。<br>小波核函数在空域和频域上都有一定的局域性，这使得其对平移、拉伸、旋转和尺度变换都具有一定的鲁棒性。虽然平移变换对复向量的相位有一定影响，但在人脸识别这个问题中，平移对结果的影响是要考虑的，Gabor特征仍然具有很好的刻画特性。正是由于Gabor特征的这些特性，使得其在识别中得到了非常广泛的应用。</p>
+<p>二维Gabor函数：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497435908%281%29.png" alt=""></p>
+<p>v的取值决定了Gabor滤波的波长，u的取值表示Gabor核函数的方向，K表示总的方向数。参数 决定了高斯窗口的大小，这里取σ=pi/3(可调)。程序中取3个频率，即尺度（v=0, 1, 2），16个方向（即K=16，u＝0, 1, … ,15），共48个Gabor核函数。从而获得较好的小波表征和辨别效果。<br>   Gabor变换与Gabor内核卷积为：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497435962%281%29.png" alt=""><br>设的幅值和相位分别为组合不同尺度和方向的，构成图像在位置处的Gabor特征矢量。<br>定义Gabor特征和在不考虑相位差时的相似性为：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497435968%281%29.png" alt=""><br>在提取人脸图像的Gabor特征时，通常采用多个在不同尺度和方向上的Gabor滤波器组成滤波器组，并根据图像的特点和神经生理学的结论来选择参数。通常研究采用共包括8个方向和5个尺度的Gabor滤波器组，使滤波器的带宽约为1倍频程。(在此题中采用3尺度，16方向)<br>由于Gabor特征具有良好的空间局部性和方向选择性，而且对光照、姿态具有一定的鲁棒性，因此在人脸识别中获得了成功的应用。然而，大部分基于Gabor特征的人脸识别算法中,只应用了Gabor幅值信息，而没有应用相位信息，主要原因是Gabor相位信息随着空间位置呈周期性变化，而幅值的变化相对平滑而稳定。所以本论文将输入图像依次与滤波器组的各个滤波器进行卷积，并取其幅值作为输出，即<br><img src="http://ols4zt49w.bkt.clouddn.com/1497435977%281%29.png" alt=""><br>设通过40个滤波器得到Gabor特征的维数高达 ，计算量很大，且由于Gabor特征在相邻像素间是高度相关和冗余的，所以通常只需要稀疏的提取部分节点上的Gabor特征。</p>
+<h4 id="二、-自选示例图像，并说明选择原则"><a href="#二、-自选示例图像，并说明选择原则" class="headerlink" title="二、    自选示例图像，并说明选择原则"></a>二、    自选示例图像，并说明选择原则</h4><p>在这里，我选用了lena的图片，主要考虑到为了突出Gabor的优点，所以选了一张：局部光照的变化不敏感，有局部细节结构的图。<br><img src="http://ols4zt49w.bkt.clouddn.com/1497437101%281%29.png" alt=""></p>
+<h4 id="三、-所编写程序对示例图像的运算结果"><a href="#三、-所编写程序对示例图像的运算结果" class="headerlink" title="三、    所编写程序对示例图像的运算结果"></a>三、    所编写程序对示例图像的运算结果</h4><p>在这里，我采用的多尺度Gabor滤波器运行结果如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497436718%281%29.png" alt=""></p>
+<p>为了突出优点，通过比较其他不同算子。<br>主要比较prewitt算子和canny算子，比较结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497436859%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1497437029%281%29.png" alt=""></p>
+<h4 id="四、-基于运算结果，对比分析所编写程序的适用场合"><a href="#四、-基于运算结果，对比分析所编写程序的适用场合" class="headerlink" title="四、    基于运算结果，对比分析所编写程序的适用场合"></a>四、    基于运算结果，对比分析所编写程序的适用场合</h4><p>通过比较，不难发现：<br>Prewitt算子,检测方法对灰度渐变和噪声较多的图像处理效果较好。但边缘较宽，而且间断点多。<br>canny算法,虽然能检测到一定的弱边缘，间断点较少，但是对一些灰度变化较小的边缘没有检测到。（眼睛等）<br>Gabor算法,对图像的边缘检测对噪声具有更好的鲁棒性，边缘的断裂点更少，对边缘的检测更加准确。<br>因此：Gabor特征对光照、姿态具有一定的鲁棒性，Gabor小波对于图像的边缘敏感，能够提供良好的方向选择和尺度选择特性，而且对于光照变化不敏感,能够提供对光照变化良好的适应性。上述特点使Gabor小波被广泛应用于视觉信息理解。</p>
+<h4 id="五、-matlab程序清单及重要函数与语句的注释说明"><a href="#五、-matlab程序清单及重要函数与语句的注释说明" class="headerlink" title="五、    matlab程序清单及重要函数与语句的注释说明"></a>五、    matlab程序清单及重要函数与语句的注释说明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">I=imread(&apos;lena.bmp&apos;); </div><div class="line">I=rgb2gray(I);</div><div class="line"></div><div class="line">figure;</div><div class="line">imshow(I);</div><div class="line">[height width ]=size(I);</div><div class="line">J=zeros(height,width); %初始化</div><div class="line"></div><div class="line">%u=16;</div><div class="line">v=3; %尺度</div><div class="line">for u=0:15   %orientations 0-15  %方向</div><div class="line">   </div><div class="line"></div><div class="line">sigma = pi/3;%pi*sqrt(2^(-v/2-1));%pi*2;   %参数可调，此处采用π/3</div><div class="line">sigma_2 = sigma^2;</div><div class="line"></div><div class="line">kv = pi*2^(-v/2-1);</div><div class="line">phiu = u*pi/16; %采样方向</div><div class="line"></div><div class="line">sigma_rule = 3*sigma/kv;    %3 sigma rule</div><div class="line"></div><div class="line">kjx = kv*cos(phiu);</div><div class="line">kjy = kv*sin(phiu);</div><div class="line"></div><div class="line">for x = -sigma_rule:sigma_rule</div><div class="line">    for y = -sigma_rule:sigma_rule</div><div class="line">        gaussian_kernal = kv^2/sigma_2*exp(-kv^2*(x^2+y^2)/(2*sigma_2)); %gaussian kernal function</div><div class="line">        </div><div class="line">        if (abs(x)&lt;=sigma_rule &amp; abs(y)&lt;=sigma_rule)</div><div class="line">            gabor_real(x+sigma_rule+1,y+sigma_rule+1) = gaussian_kernal * (cos(kjx*x+kjy*y)-exp(-sigma_2/2));</div><div class="line">            gabor_imag(x+sigma_rule+1,y+sigma_rule+1) = gaussian_kernal * sin(kjx*x+kjy*y);</div><div class="line">        else</div><div class="line">            gabor_real(x+sigma_rule+1,y+sigma_rule+1) = 0;</div><div class="line">            gabor_imag(x+sigma_rule+1,y+sigma_rule+1) = 0;</div><div class="line">        end</div><div class="line"></div><div class="line">    end</div><div class="line">end</div><div class="line"></div><div class="line">Imgabout1 = conv2(I,double(gabor_imag),&apos;same&apos;);%返回相同大小的二维卷积的虚部</div><div class="line">Regabout1 = conv2(I,double(gabor_real),&apos;same&apos;);%实部</div><div class="line">gabout1 = Regabout1;</div><div class="line"></div><div class="line">     J=J+gabout1;</div><div class="line">    end</div><div class="line"></div><div class="line">J=J/16;</div><div class="line">for i=1:height</div><div class="line">    for j=1:width</div><div class="line">        if (J(i,j)&lt;-5)</div><div class="line">            J(i,j)=0;</div><div class="line">        else J(i,j)=1;</div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div><div class="line">G=[J-min(min(J))]*255/[max(max(J))-min(min(J))];  %归一化，再标准化</div><div class="line">G=uint8(G);</div><div class="line">figure,imshow(G);</div><div class="line"></div><div class="line">J=medfilt2(J); %使用默认的3×3邻域执行矩阵A的中值滤波。</div><div class="line">figure,imshow(J);</div></pre></td></tr></table></figure>
+<p>补充：后来有尝试了其他类似的图片，效果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/1497437341.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1497437353%281%29.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/06/linux下搭建qt编译环境常遇到的问题及解决/" itemprop="url">
+                  linux下搭建qt编译环境常遇到的问题及解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-06T18:49:14+08:00" content="2017-06-06">
+              2017-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/06/linux下搭建qt编译环境常遇到的问题及解决/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/06/linux下搭建qt编译环境常遇到的问题及解决/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>简要概括以下步骤：<br>一、下载QT版本以及gcc</p>
+<p>二、解压，安装，编译，这个网上教程很多，我是参考的迅为的开发板使用手册。<br><strong>这里重点是补充报错及修复:</strong><br>1.没有安装<strong>g++</strong>,  <strong>如果你是一开始安装新的linux系统定会有这样问题</strong>， 自己<code>apt-get install g++</code>处理下。</p>
+<p>2.没有相关的配置的库支持，可以用<code>apt-get isntall build-essential</code> 添加下载库支持</p>
+<p>3.运行qt时候会有报错：Qt编译错误“GL/gl.h:No such file or directory或者提示找不到GL等。<br><strong>解决</strong>：这是由于系统中没有安装OpenGL库导致的，于是在控制台中输入以下命令安装OpenGL库及其工具：<code>apt-get install libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev</code> 即可。</p>
+<p>三，注意配置下qt的编译器和qt版本。具体根据自己安装的目录来吧。<br>（一般在/usr/bin/<strong>g++</strong>）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="url">
+                  linux输入登陆密码正确，闪回登陆界面，无法登陆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-03T20:13:25+08:00" content="2017-06-03">
+              2017-06-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/linux输入登陆密码正确，闪回登陆界面，无法登陆/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近遇到一个头疼的问题，在登陆linux系统时输入密码正确，但却老是闪回登陆界面，无法登陆。我参考了网上的方法，却仍然发现走了一些弯路，主要网上有的解释太过简略或者有点局限，甚至还是错的。在此，我结合我解决的过程，主要做个总结。</p>
+<h5 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h5><p>问题的原因：主目录下的.Xauthority文件拥有者变成了root，从而以用户登陆的时候无法都取.Xauthority文件 。<br><strong>注意：这里的主目录是你登陆的用户，不是root用户</strong><br><strong>说明：</strong>Xauthority，是<strong>startx</strong>脚本记录文件。Xserver启动时，读文件~/.Xauthority,读入对应其display 的记录。当一个需要显示的客户程序启动调用XOpenDisplay()也读这个文 件，并把找到的magic code 发送给 Xserver。当Xserver验证这个magic code正确以后，就同意连接啦。观察startx脚本也可以看到，每次startx 运行，都在调用xinit以前使用了xauth的add命令添加了一个新的记录到~/.Xauthority，用来这次运行X使用认证。(<strong>注意：一般sudo startx后就这样不能登陆了</strong>)</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>1.在需要输入密码的登陆界面，按下ctrl+alt+F1组合键，进入tty1终端<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493167%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1496492971%281%29.png" alt=""><br>2.输入登陆ubuntu时的用户名和密码，在tty1终端出现登陆成功的提示，这里我的用户名是topeet，默认进入当前用户主目录（我的是/home/topeet）,可以用pwd命令查看，若不是，则切换至：<br>cd  或者<br>cd /home/topeet/ 注意：我这里的用户名是topeet,根据自己的实际情况更改。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493023%281.png" alt=""><br>3.执行命令，将Xauthority的拥有者改为用户topeet<br>$ sudo chown topeet:topeet .Xauthority<br>备注：本人的用户名为topeet，因此 chown后面跟了topeet:topeet若为其他用户名修改成相应的名称即可）<br>(我的用户和用户组都是topeet,如果你不知道可以用<code>more /etc/group</code>及<code>more /etc/passwd</code>查看)<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493060%281.png" alt=""><br>4.然后在终端提示符后输入：$ ls .Xauthority -l<br>正确无误后显示如下：-rw——- 1 topeet topeet 51  May 22 23:14 .Xauthority<br>此时拥有者已经变为用户。<br><img src="http://ols4zt49w.bkt.clouddn.com/1496493097%281.png" alt=""><br>5.按下ctrl + alt + F7切换回图形登陆界面登陆即可。<br><strong>易错点：</strong><br>一开始我是切换到root用户下修改.Xauthority文件的拥有者的，但是试了几次都没成功，在次特别强调按下ctrl+alt+F1组合键，进入tty1终端后登入你想登入的账户，而不是root用户。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/02/逐行读写字符串数组到文本txt文件/" itemprop="url">
                   逐行读写字符串数组到文本txt文件
                 </a>
@@ -1154,424 +1528,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/23/浅谈http之post与get的区别/" itemprop="url">
-                  浅谈http之post与get的区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-23T11:00:13+08:00" content="2017-04-23">
-              2017-04-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/网络编程/" itemprop="url" rel="index">
-                    <span itemprop="name">网络编程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/23/浅谈http之post与get的区别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/23/浅谈http之post与get的区别/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一、原理区别"><a href="#一、原理区别" class="headerlink" title="一、原理区别"></a>一、原理区别</h3><p>一般在浏览器中输入网址访问资源都是通过GET方式；在FORM提交中，可以通过Method指定提交方式为GET或者POST，默认为GET提交。<br>Http定义了与服务器交互的不同方法，最基本的方法有4种，分别是GET，POST，PUT，DELETE<br>URL全称是资源描述符，我们可以这样认 为：一个URL地址，它用于描述一个网络上的资源，而HTTP中的GET，POST，PUT，DELETE就对应着对这个资源的查 ，改 ，增 ，删 4个操作。<br>到这里，大家应该有个大概的了解了，<strong>GET一般用于获取/查询 资源信息，而POST一般用于更新 资源信息(个人认为这是GET和POST的本质区别，也是协议设计者的本意，其它区别都是具体表现形式的差异 )。</strong></p>
-<p><strong><em>根据 HTTP 规范，GET用于信息获取，而且应该是安全的和幂等的 。</em></strong><br>　　1.所谓安全的意味着该操作用于获取信息而非修改信息。换句话说，GET请求一般不应产生副作用。就是说，它仅仅是获取资源信息，就像数据库查询一样，不会修改，增加数据，不会影响资源的状态。<br>　　<strong><em>注意</em></strong>：这里安全的含义仅仅是指是非修改信息。<br>　　2.幂等的意味着对同一URL的多个请求应该返回同样的结果。这里我再解释一下幂等 这个概念：<br>　　幂等 （idempotent、idempotence）是一个数学或计算机学概念，常见于抽象代数中。<br>　　幂等有以下几种定义：<br>　　对于单目运算，如果一个运算对于在范围内的所有的一个数多次进行该运算所得的结果和进行一次该运算所得的结果是一样的，那么我们就称该运算是幂等的。比如绝对值运算就是一个例子，在实数集中，有abs(a) = abs(abs(a)) 。<br>　　对于双目运算，则要求当参与运算的两个值是等值的情况下，如果满足运算结果与参与运算的两个值相等，则称该运算幂等，如求两个数的最大值的函数，有在在实数集中幂等，即max(x,x)  =  x 。<br>看完上述解释后，应该可以理解GET幂等的含义了。<br>　　但在实际应用中，以上2条规定并没有这么严格。引用别人文章的例子：比如，新闻站点的头版不断更新。虽然第二次请求会返回不同的一批新闻，该操 作仍然被认为是安全的和幂等的，因为它总是返回当前的新闻。从根本上说，如果目标是当用户打开一个链接时，他可以确信从自身的角度来看没有改变资源即可。<br><strong><em>根据HTTP规范，POST表示可能修改变服务器上的资源的请求 。</em></strong>继续引用上面的例子：还是新闻以网站为例，读者对新闻发表自己的评论应该通过POST实现，因为在评论提交后站点的资源已经不同了，或者说资源被修改了。</p>
-<h3 id="二、表现形式差别"><a href="#二、表现形式差别" class="headerlink" title="二、表现形式差别"></a>二、表现形式差别</h3><p>搞清了两者的原理区别，我们再来看一下他们实际应用中的区别：<br>为了理解两者在传输过程中的不同，我们先看一下HTTP协议的格式：</p>
-<h4 id="HTTP请求："><a href="#HTTP请求：" class="headerlink" title="HTTP请求："></a><strong>HTTP请求：</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;request line&gt;</div><div class="line">&lt;headers&gt;</div><div class="line">&lt;blank line&gt;</div><div class="line">&lt;request-body&gt;</div></pre></td></tr></table></figure>
-<p>在HTTP请求中，第一行必须是一个请求行（request line），用来说明请求类型、要访问的资源以及使用的HTTP版本。紧接着是一个首部（header）小节，用来说明服务器要使用的附加信息。在首部之后是一个空行，再此之后可以添加任意的其他数据 [称之为主体（body）]。</p>
-<p><strong>GET与POST方法实例：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GET /books/?sex=man&amp;name=Professional HTTP/1.1</div><div class="line">Host: www.wrox.com</div><div class="line">User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)</div><div class="line">Gecko/20050225 Firefox/1.0.1</div><div class="line">Connection: Keep-Alive</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">POST / HTTP/1.1</div><div class="line">Host: www.wrox.com</div><div class="line">User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)</div><div class="line">Gecko/20050225 Firefox/1.0.1</div><div class="line">Content-Type: application/x-www-form-urlencoded</div><div class="line">Content-Length: 40</div><div class="line">Connection: Keep-Alive</div><div class="line"> （----此处空一行----）</div><div class="line">name=Professional%20Ajax&amp;publisher=Wiley</div></pre></td></tr></table></figure>
-<p>有了以上对HTTP请求的了解和示例，我们再来看<strong>两种提交方式的区别</strong>：<br>(1)<strong>GET提交</strong>，请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，多个参数用&amp;连接；例如：login.action?name=hyddd&amp;password=idontknow&amp;verify=%E4%BD%A0 %E5%A5%BD。如果数据是英文字母/数字，原样发送，如果是空格，转换为+，如果是中文/其他字符，则直接把字符串用BASE64加密，得出如： %E4%BD%A0%E5%A5%BD，其中％XX中的XX为该符号以16进制表示的ASCII。<br>　<strong>POST提交：</strong>把提交的数据放置在是HTTP包的包体中。上文示例中红色字体标明的就是实际的传输数据<br> <strong>因此，GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变</strong></p>
-<p> <strong>(2)传输数据的大小</strong><br><strong>首先声明：HTTP协议没有对传输的数据大小进行限制，HTTP协议规范也没有对URL长度进行限制。</strong><br>而在实际开发中存在的限制主要有：<br><strong>GET:特定浏览器和服务器对URL长度有限制</strong>，例如IE对URL长度的限制是2083字节(2K+35)。对于其他浏览器，如Netscape、FireFox等，理论上没有长度限制，其限制取决于操作系统的支持。<br><strong>因此对于GET提交时，传输数据就会受到URL长度的限制。</strong><br>POST:由于不是通过URL传值，理论上数据不受限。但实际各个WEB服务器会规定对post提交数据大小进行限制，Apache、IIS6都有各自的配置。</p>
-<p> <strong>(3)安全性：</strong><br>.POST的安全性要比GET的安全性高。<strong>注意：这里所说的安全性和上面GET提到的“安全”不是同个概念。上面“安全”的含义仅仅是不作数据修改，而这 里安全的含义是真正的Security的含义，比如：通过GET提交数据，用户名和密码将明文出现在URL上，因为(1)登录页面有可能被浏览器缓存， (2)其他人查看浏览器的历史纪录，那么别人就可以拿到你的账号和密码了，除此之外，使用GET提交数据还可能会造成Cross-site request forgery攻击</strong></p>
-<p><strong>(4)Http get,post,soap协议都是在http上运行的</strong></p>
-<p>1）get：请求参数是作为一个key/value对的序列（查询字符串）附加到URL上的查询字符串的长度受到web浏览器和web服务器的限制（如IE最多支持2048个字符），不适合传输大型数据集同时，它很不安全。<br>2）post：请求参数是在http标题的一个不同部分（名为entity body）传输的，这一部分用来传输表单信息，因此必须将Content-type设置为:application/x-www-form-urlencoded。post设计用来支持web窗体上的用户字段，其参数也是作为key/value对传输。但是：它不支持复杂数据类型，因为post没有定义传输数据结构的语义和规则。<br>3）soap：是http post的一个专用版本，遵循一种特殊的xml消息格式，Content-type设置为: text/xml   ，任何数据都可以xml化。</p>
-<h4 id="HTTP响应"><a href="#HTTP响应" class="headerlink" title="HTTP响应"></a>HTTP响应</h4><p>1．HTTP响应格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;status line&gt;</div><div class="line">&lt;headers&gt;</div><div class="line">&lt;blank line&gt;</div><div class="line">[&lt;response-body&gt;]</div></pre></td></tr></table></figure></p>
-<p>在响应中唯一真正的区别在于第一行中用状态信息代替了请求信息。状态行（status line）通过提供一个状态码来说明所请求的资源情况。</p>
-<p>HTTP响应实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Date: Sat, 31 Dec 2005 23:59:59 GMT</div><div class="line">Content-Type: text/html;charset=ISO-8859-1</div><div class="line">Content-Length: 122</div><div class="line">＜html＞</div><div class="line">＜head＞</div><div class="line">＜title＞Wrox Homepage＜/title＞</div><div class="line">＜/head＞</div><div class="line">＜body＞</div><div class="line">＜!-- body goes here --＞</div><div class="line">＜/body＞</div><div class="line">＜/html＞</div></pre></td></tr></table></figure>
-<p>2．最常用的状态码有：</p>
-<p>◆200 (OK): 找到了该资源，并且一切正常。<br>◆304 (NOT MODIFIED): 该资源在上次请求之后没有任何修改。这通常用于浏览器的缓存机制。<br>◆401 (UNAUTHORIZED): 客户端无权访问该资源。这通常会使得浏览器要求用户输入用户名和密码，以登录到服务器。<br>◆403 (FORBIDDEN): 客户端未能获得授权。这通常是在401之后输入了不正确的用户名或密码。<br>◆404 (NOT FOUND): 在指定的位置不存在所申请的资源。</p>
-<h3 id="三、完整例子"><a href="#三、完整例子" class="headerlink" title="三、完整例子"></a>三、完整例子</h3><p><strong>HTTP GET </strong></p>
-<p>发送</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GET /DEMOWebServices2.8/Service.asmx/CancelOrder?UserID=string&amp;PWD=string&amp;OrderConfirmation=string HTTP/1.1</div><div class="line">Host: api.efxnow.com</div></pre></td></tr></table></figure>
-<p>回复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Content-Type: text/xml; charset=utf-8</div><div class="line">Content-Length: length</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;objPlaceOrderResponse xmlns=&quot;https://api.efxnow.com/webservices2.3&quot;&gt;</div><div class="line">&lt;Success&gt;boolean&lt;/Success&gt;</div><div class="line">&lt;ErrorDescription&gt;string&lt;/ErrorDescription&gt;</div><div class="line">&lt;ErrorNumber&gt;int&lt;/ErrorNumber&gt;</div><div class="line">&lt;CustomerOrderReference&gt;long&lt;/CustomerOrderReference&gt;</div><div class="line">&lt;OrderConfirmation&gt;string&lt;/OrderConfirmation&gt;</div><div class="line">&lt;CustomerDealRef&gt;string&lt;/CustomerDealRef&gt;</div><div class="line">&lt;/objPlaceOrderResponse&gt;</div></pre></td></tr></table></figure>
-<p><strong><br>HTTP POST </strong></p>
-<p>发送</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /DEMOWebServices2.8/Service.asmx/CancelOrder HTTP/1.1</div><div class="line">Host: api.efxnow.com</div><div class="line">Content-Type: application/x-www-form-urlencoded</div><div class="line">Content-Length: length</div><div class="line"></div><div class="line">UserID=string&amp;PWD=string&amp;OrderConfirmation=string</div></pre></td></tr></table></figure>
-<p>回复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Content-Type: text/xml; charset=utf-8</div><div class="line">Content-Length: length</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;objPlaceOrderResponse xmlns=&quot;https://api.efxnow.com/webservices2.3&quot;&gt;</div><div class="line">&lt;Success&gt;boolean&lt;/Success&gt;</div><div class="line">&lt;ErrorDescription&gt;string&lt;/ErrorDescription&gt;</div><div class="line">&lt;ErrorNumber&gt;int&lt;/ErrorNumber&gt;</div><div class="line">&lt;CustomerOrderReference&gt;long&lt;/CustomerOrderReference&gt;</div><div class="line">&lt;OrderConfirmation&gt;string&lt;/OrderConfirmation&gt;</div><div class="line">&lt;CustomerDealRef&gt;string&lt;/CustomerDealRef&gt;</div><div class="line">&lt;/objPlaceOrderResponse&gt;</div></pre></td></tr></table></figure>
-<p><strong>SOAP 1.2 </strong></p>
-<p>发送</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST /DEMOWebServices2.8/Service.asmx HTTP/1.1</div><div class="line">Host: api.efxnow.com</div><div class="line">Content-Type: application/soap+xml; charset=utf-8</div><div class="line">Content-Length: length</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;soap12:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:soap12=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;</div><div class="line">&lt;soap12:Body&gt;</div><div class="line">    &lt;CancelOrder xmlns=&quot;https://api.efxnow.com/webservices2.3&quot;&gt;</div><div class="line">      &lt;UserID&gt;string&lt;/UserID&gt;</div><div class="line">      &lt;PWD&gt;string&lt;/PWD&gt;</div><div class="line">      &lt;OrderConfirmation&gt;string&lt;/OrderConfirmation&gt;</div><div class="line">    &lt;/CancelOrder&gt;</div><div class="line">&lt;/soap12:Body&gt;</div><div class="line">&lt;/soap12:Envelope&gt;</div></pre></td></tr></table></figure>
-<p>回复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Content-Type: application/soap+xml; charset=utf-8</div><div class="line">Content-Length: length</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;soap12:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:soap12=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;</div><div class="line">&lt;soap12:Body&gt;</div><div class="line">    &lt;CancelOrderResponse xmlns=&quot;https://api.efxnow.com/webservices2.3&quot;&gt;</div><div class="line">      &lt;CancelOrderResult&gt;</div><div class="line">        &lt;Success&gt;boolean&lt;/Success&gt;</div><div class="line">        &lt;ErrorDescription&gt;string&lt;/ErrorDescription&gt;</div><div class="line">        &lt;ErrorNumber&gt;int&lt;/ErrorNumber&gt;</div><div class="line">        &lt;CustomerOrderReference&gt;long&lt;/CustomerOrderReference&gt;</div><div class="line">        &lt;OrderConfirmation&gt;string&lt;/OrderConfirmation&gt;</div><div class="line">        &lt;CustomerDealRef&gt;string&lt;/CustomerDealRef&gt;</div><div class="line">      &lt;/CancelOrderResult&gt;</div><div class="line">    &lt;/CancelOrderResponse&gt;</div><div class="line">&lt;/soap12:Body&gt;</div><div class="line">&lt;/soap12:Envelope&gt;</div></pre></td></tr></table></figure>
-<p>注：本文参考借鉴了：<br>Qt之高级网络操作（HTTP/FTP快速上手） <a href="http://blog.csdn.net/liang19890820/article/details/52535755" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/52535755</a><br>HTTP POST GET 本质区别详解 <a href="http://blog.csdn.net/mingzznet/article/details/9328153" target="_blank" rel="external">http://blog.csdn.net/mingzznet/article/details/9328153</a><br>关于http协议，一篇就够了<br><a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/22/QT之json/" itemprop="url">
-                  QT之json
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-22T11:01:10+08:00" content="2017-04-22">
-              2017-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/22/QT之json/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/22/QT之json/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>关于 Qt 中对 JSON 的生成与解析，Qt5 以前的版本，可以使用 QJson 库，需要单独下载、编译，才能使用。到了 Qt5，提供了专门的 QJsonDocument 及其相关类来读和写 JSON 文档。<br>QJson 是一个基于 Qt 的第三方库，适用于 Qt4 和 Qt5 两个版本。不过，如果你的应用仅仅需要考虑兼容 Qt5，其实已经有了内置的处理函数。Qt5 新增加了处理 JSON 的类，与 XML 类库类似，均以 QJson 开头，在 QtCore 模块中，不需要额外引入其它模块。Qt5 新增加六个相关类：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">QJsonArray                  封装 JSON 数组</div><div class="line">QJsonDocument               读写 JSON 文档。</div><div class="line">QJsonObject                 封装 JSON 对象</div><div class="line">QJsonObject::iterator       用于遍历QJsonObject的 STL 风格的非 const 遍历器</div><div class="line">QJsonParseError             报告 JSON 处理过程中出现的错误</div><div class="line">QJsonValue                  封装 JSON 值</div></pre></td></tr></table></figure></p>
-<p><strong>QJsonDocument</strong><br>一个 JSON 文档可以使用 QJsonDocument::fromJson() 从基于文本的表示转化为 QJsonDocument， toJson() 则可以反向转化为文本。解析器非常快且高效，并将 JSON 转换为 Qt 使用的二进制表示。<br>如果要查询一个 JSON 文档是否包含一个数组或一个对象，使用 isArray() 和 isObject()。包含在文档中的数组或对象可以使用 array() 或 object() 检索，然后读取或操作。也可以使用 fromBinaryData() 或 fromRawData() 从存储的二进制表示创建来 JSON 文档。<br><strong>QJsonArray</strong><br>QJsonArray 类封装了一个 JSON 数组。<br>JSON 数组是值的列表。列表可以被操作，通过从数组中插入和删除 QJsonValue 。<br>一个 QJsonArray 可以和一个 QVariantList 相互转换。可以使用 size() 来查询条目的数量，通过 insert() 在指定索引处插入值，removeAt() 来删除指定索引的值。<br><strong>QJsonObject</strong><br>QJsonObject 类封装了一个 JSON 对象。<br>一个 JSON 对象是一个“key/value 对”列表，key 是独一无二的字符串，value 由一个 QJsonValue 表示。<br>一个 QJsonObject 可以和一个 QVariantMap 相互转换。可以使用 size() 来查询“key/value 对”的数量，通过 insert() 插入“key/value 对”， remove() 删除指定的 key。<br><strong>QJsonValue</strong><br>QJsonValue 类封装了一个值。<br>JSON 中的值有 6 种基本数据类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bool（QJsonValue::Bool）</div><div class="line">double（QJsonValue::Double）</div><div class="line">string（QJsonValue::String）</div><div class="line">array（QJsonValue::Array）</div><div class="line">object（QJsonValue::Object）</div><div class="line">null（QJsonValue::Null）</div></pre></td></tr></table></figure></p>
-<p>一个值可以由任何上述数据类型表示。此外，QJsonValue 有一个特殊的标记来表示未定义的值，可以使用 isUndefined() 查询。<br>值的类型可以通过 type() 或 isBool()、isString() 等访问函数查询。同样地，值可以通过 toBool()、toString() 等函数转化成相应的存储类型。<br><strong>QJsonParseError</strong><br>QJsonParseError 类用于在 JSON 解析中报告错误。<br>枚举 QJsonParseError::ParseError：<br>该枚举描述 JSON 文档在解析过程中所发生的错误类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">常量                                      值                       描述</div><div class="line">QJsonParseError::NoError                  0                     未发生错误</div><div class="line">QJsonParseError::UnterminatedObject       1                对象不正确地终止以右花括号结束</div><div class="line">QJsonParseError::MissingNameSeparator     2                   分隔不同项的逗号丢失</div><div class="line">QJsonParseError::UnterminatedArray        3                数组不正确地终止以右中括号结束</div><div class="line">QJsonParseError::MissingValueSeparator    4               对象中分割 key/value 的冒号丢失</div><div class="line">QJsonParseError::IllegalValue             5                      值是非法的</div><div class="line">QJsonParseError::TerminationByNumber      6                在解析数字时，输入流结束</div><div class="line">QJsonParseError::IllegalNumber            7                    数字格式不正确</div><div class="line">QJsonParseError::IllegalEscapeSequence    8               在输入时，发生一个非法转义序列</div><div class="line">QJsonParseError::IllegalUTF8String        9               在输入时，发生一个非法 UTF8 序列</div><div class="line">QJsonParseError::UnterminatedString       10                  字符串不是以引号结束</div><div class="line">QJsonParseError::MissingObject            11              一个对象是预期的，但是不能被发现</div><div class="line">QJsonParseError::DeepNesting              12              对解析器来说，JSON 文档嵌套太深</div><div class="line">QJsonParseError::DocumentTooLarge         13              对解析器来说，JSON 文档太大</div><div class="line">QJsonParseError::GarbageAtEnd             14              解析的文档在末尾处包含额外的乱码</div></pre></td></tr></table></figure></p>
-<h4 id="一个简单的-JSON-对象："><a href="#一个简单的-JSON-对象：" class="headerlink" title="一个简单的 JSON 对象："></a><strong>一个简单的 JSON 对象：</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;Cross Platform&quot;: true,</div><div class="line">    &quot;From&quot;: 1991,</div><div class="line">    &quot;Name&quot;: &quot;Qt&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>生成</strong>比较简单，由于是一个对象，只需要用 QJsonObject 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 构建 JSON 对象</div><div class="line">QJsonObject json;</div><div class="line">json.insert(&quot;Name&quot;, &quot;Qt&quot;);</div><div class="line">json.insert(&quot;From&quot;, 1991);</div><div class="line">json.insert(&quot;Cross Platform&quot;, true);</div><div class="line"></div><div class="line">// 构建 JSON 文档</div><div class="line">QJsonDocument document;</div><div class="line">document.setObject(json);</div><div class="line">QByteArray byteArray = document.toJson(QJsonDocument::Compact);</div><div class="line">QString strJson(byteArray);</div><div class="line"></div><div class="line">qDebug() &lt;&lt; strJson;</div></pre></td></tr></table></figure></p>
-<p><strong>解析如下</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">QJsonParseError jsonError;</div><div class="line">QJsonDocument doucment = QJsonDocument::fromJson(byteArray, &amp;jsonError);  // 转化为 JSON 文档</div><div class="line">if (!doucment.isNull() &amp;&amp; (jsonError.error == QJsonParseError::NoError)) &#123;  // 解析未发生错误</div><div class="line">    if (doucment.isObject()) &#123; // JSON 文档为对象</div><div class="line">        QJsonObject object = doucment.object();  // 转化为对象</div><div class="line">        if (object.contains(&quot;Name&quot;)) &#123;  // 包含指定的 key</div><div class="line">            QJsonValue value = object.value(&quot;Name&quot;);  // 获取指定 key 对应的 value</div><div class="line">            if (value.isString()) &#123;  // 判断 value 是否为字符串</div><div class="line">                QString strName = value.toString();  // 将 value 转化为字符串</div><div class="line">                qDebug() &lt;&lt; &quot;Name : &quot; &lt;&lt; strName;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;From&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;From&quot;);</div><div class="line">            if (value.isDouble()) &#123;</div><div class="line">                int nFrom = value.toVariant().toInt();</div><div class="line">                qDebug() &lt;&lt; &quot;From : &quot; &lt;&lt; nFrom;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;Cross Platform&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;Cross Platform&quot;);</div><div class="line">            if (value.isBool()) &#123;</div><div class="line">                bool bCrossPlatform = value.toBool();</div><div class="line">                qDebug() &lt;&lt; &quot;CrossPlatform : &quot; &lt;&lt; bCrossPlatform;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="简单的-JSON-数组"><a href="#简单的-JSON-数组" class="headerlink" title="简单的 JSON 数组"></a><strong>简单的 JSON 数组</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">    &quot;Qt&quot;,</div><div class="line">    5.7,</div><div class="line">    true</div><div class="line">]</div></pre></td></tr></table></figure>
-<p><strong>生成</strong>比较简单，由于是一个数组，只需要用 QJsonArray 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 构建 JSON 数组</div><div class="line">QJsonArray json;</div><div class="line">json.append(&quot;Qt&quot;);</div><div class="line">json.append(5.7);</div><div class="line">json.append(true);</div><div class="line"></div><div class="line">// 构建 JSON 文档</div><div class="line">QJsonDocument document;</div><div class="line">document.setArray(json);</div><div class="line">QByteArray byteArray = document.toJson(QJsonDocument::Compact);</div><div class="line">QString strJson(byteArray);</div><div class="line"></div><div class="line">qDebug() &lt;&lt; strJson;</div></pre></td></tr></table></figure></p>
-<p>需要注意的是，和上面不同的是，这里使用的是 QJsonDocument 的 setArray() 函数，因为是数组。<br><strong>解析如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">QJsonParseError jsonError;</div><div class="line">QJsonDocument doucment = QJsonDocument::fromJson(byteArray, &amp;jsonError);  // 转化为 JSON 文档</div><div class="line">if (!doucment.isNull() &amp;&amp; (jsonError.error == QJsonParseError::NoError)) &#123; // 解析未发生错误</div><div class="line">    if (doucment.isArray()) &#123; // JSON 文档为数组</div><div class="line">        QJsonArray array = doucment.array();  // 转化为数组</div><div class="line">        int nSize = array.size();  // 获取数组大小</div><div class="line">        for (int i = 0; i &lt; nSize; ++i) &#123;  // 遍历数组</div><div class="line">            QJsonValue value = array.at(i);</div><div class="line">            if (value.type() == QJsonValue::String) &#123;</div><div class="line">                QString strName = value.toString();</div><div class="line">                qDebug() &lt;&lt; strName;</div><div class="line">            &#125;</div><div class="line">            if (value.type() == QJsonValue::Double) &#123;</div><div class="line">                double dVersion = value.toDouble();</div><div class="line">                qDebug() &lt;&lt; dVersion;</div><div class="line">            &#125;</div><div class="line">            if (value.type() == QJsonValue::Bool) &#123;</div><div class="line">                bool bCrossPlatform  = value.toBool();</div><div class="line">                qDebug() &lt;&lt; bCrossPlatform;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>和 JSON 对象类似，在遍历数组时，获取每个 value，首先需要判断 value 的类型（和 is <em>**</em>() 函数类似，这里根据 type() 函数返回的枚举值来判断），然后再进行相应的转换。</p>
-<h4 id="复杂的-JSON"><a href="#复杂的-JSON" class="headerlink" title="复杂的 JSON"></a>复杂的 JSON</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;Company&quot;: &quot;Digia&quot;,</div><div class="line">    &quot;From&quot;: 1991,</div><div class="line">    &quot;Name&quot;: &quot;Qt&quot;,</div><div class="line">    &quot;Page&quot;: &#123;</div><div class="line">        &quot;Developers&quot;: &quot;https://www.qt.io/developers/&quot;,</div><div class="line">        &quot;Download&quot;: &quot;https://www.qt.io/download/&quot;,</div><div class="line">        &quot;Home&quot;: &quot;https://www.qt.io/&quot;</div><div class="line">    &#125;,</div><div class="line">    &quot;Version&quot;: [</div><div class="line">        4.8,</div><div class="line">        5.2,</div><div class="line">        5.7</div><div class="line">    ]</div></pre></td></tr></table></figure>
-<p>包含了一个拥有五个“key/value 对”的对象，values 中的两个（Company、Name）是字符串，一个（From）是数字，一个（Page）是对象，一个（Version）是数组。<br>要生成这样一个复杂的 JSON 文档，需要分别构造对象和数组，然后将它们拼接起来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">// 构建 Json 数组 - Version</div><div class="line">QJsonArray versionArray;</div><div class="line">versionArray.append(4.8);</div><div class="line">versionArray.append(5.2);</div><div class="line">versionArray.append(5.7);</div><div class="line"></div><div class="line">// 构建 Json 对象 - Page</div><div class="line">QJsonObject pageObject;</div><div class="line">pageObject.insert(&quot;Home&quot;, &quot;https://www.qt.io/&quot;);</div><div class="line">pageObject.insert(&quot;Download&quot;, &quot;https://www.qt.io/download/&quot;);</div><div class="line">pageObject.insert(&quot;Developers&quot;, &quot;https://www.qt.io/developers/&quot;);</div><div class="line"></div><div class="line">// 构建 Json 对象</div><div class="line">QJsonObject json;</div><div class="line">json.insert(&quot;Name&quot;, &quot;Qt&quot;);</div><div class="line">json.insert(&quot;Company&quot;, &quot;Digia&quot;);</div><div class="line">json.insert(&quot;From&quot;, 1991);</div><div class="line">json.insert(&quot;Version&quot;, QJsonValue(versionArray));</div><div class="line">json.insert(&quot;Page&quot;, QJsonValue(pageObject));</div><div class="line"></div><div class="line">// 构建 Json 文档</div><div class="line">QJsonDocument document;</div><div class="line">document.setObject(json);</div><div class="line">QByteArray byteArray = document.toJson(QJsonDocument::Compact);</div><div class="line">QString strJson(byteArray);</div><div class="line"></div><div class="line">qDebug() &lt;&lt; strJson;</div></pre></td></tr></table></figure></p>
-<p>解析部分其实并没有看起来这么复杂，只要一步步搞明白对应的类型，然后进行相应转化即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">QJsonParseError jsonError;</div><div class="line">QJsonDocument doucment = QJsonDocument::fromJson(byteArray, &amp;jsonError);  // 转化为 JSON 文档</div><div class="line">if (!doucment.isNull() &amp;&amp; (jsonError.error == QJsonParseError::NoError)) &#123;  // 解析未发生错误</div><div class="line">    if (doucment.isObject()) &#123;  // JSON 文档为对象</div><div class="line">        QJsonObject object = doucment.object();  // 转化为对象</div><div class="line">        if (object.contains(&quot;Name&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;Name&quot;);</div><div class="line">            if (value.isString()) &#123;</div><div class="line">                QString strName = value.toString();</div><div class="line">                qDebug() &lt;&lt; &quot;Name : &quot; &lt;&lt; strName;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;Company&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;Company&quot;);</div><div class="line">            if (value.isString()) &#123;</div><div class="line">                QString strCompany = value.toString();</div><div class="line">                qDebug() &lt;&lt; &quot;Company : &quot; &lt;&lt; strCompany;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;From&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;From&quot;);</div><div class="line">            if (value.isDouble()) &#123;</div><div class="line">                int nFrom = value.toVariant().toInt();</div><div class="line">                qDebug() &lt;&lt; &quot;From : &quot; &lt;&lt; nFrom;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;Version&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;Version&quot;);</div><div class="line">            if (value.isArray()) &#123;  // Version 的 value 是数组</div><div class="line">                QJsonArray array = value.toArray();</div><div class="line">                int nSize = array.size();</div><div class="line">                for (int i = 0; i &lt; nSize; ++i) &#123;</div><div class="line">                    QJsonValue value = array.at(i);</div><div class="line">                    if (value.isDouble()) &#123;</div><div class="line">                        double dVersion = value.toDouble();</div><div class="line">                        qDebug() &lt;&lt; &quot;Version : &quot; &lt;&lt; dVersion;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (object.contains(&quot;Page&quot;)) &#123;</div><div class="line">            QJsonValue value = object.value(&quot;Page&quot;);</div><div class="line">            if (value.isObject()) &#123;  // Page 的 value 是对象</div><div class="line">                QJsonObject obj = value.toObject();</div><div class="line">                if (obj.contains(&quot;Home&quot;)) &#123;</div><div class="line">                    QJsonValue value = obj.value(&quot;Home&quot;);</div><div class="line">                    if (value.isString()) &#123;</div><div class="line">                        QString strHome = value.toString();</div><div class="line">                        qDebug() &lt;&lt; &quot;Home : &quot; &lt;&lt; strHome;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                if (obj.contains(&quot;Download&quot;)) &#123;</div><div class="line">                    QJsonValue value = obj.value(&quot;Download&quot;);</div><div class="line">                    if (value.isString()) &#123;</div><div class="line">                        QString strDownload = value.toString();</div><div class="line">                        qDebug() &lt;&lt; &quot;Download : &quot; &lt;&lt; strDownload;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                if (obj.contains(&quot;Developers&quot;)) &#123;</div><div class="line">                    QJsonValue value = obj.value(&quot;Developers&quot;);</div><div class="line">                    if (value.isString()) &#123;</div><div class="line">                        QString strDevelopers = value.toString();</div><div class="line">                        qDebug() &lt;&lt; &quot;Developers : &quot; &lt;&lt; strDevelopers;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>基本的用法就这些，比较简单，细节很关键，建议在处理的过程中启用严格模式，例如：先通过 QJsonParseError::NoError 判断转化 JSON 文档无误，再进行解析。在解析过程中，先判断 QJsonValue 是否为对应的类型如 isObject()，再通过 toObject() 转化。<br>注：本文参考了一去二三里的博客</p>
-<blockquote>
-<p>   Qt之JSON生成与解析 <a href="http://blog.csdn.net/liang19890820/article/details/52767153" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/52767153</a></p>
-</blockquote>
-<p>至于QT的读写文件操作 与 如何以JSON和二进制格式来保存和加载一个简单的游戏</p>
-<blockquote>
-<p>Qt5对Json的读写总结浅析 <a href="http://blog.csdn.net/zp1352472310/article/details/40741875" target="_blank" rel="external">http://blog.csdn.net/zp1352472310/article/details/40741875</a><br>Qt之JSON保存与读取 <a href="http://blog.csdn.net/liang19890820/article/details/52797245" target="_blank" rel="external">http://blog.csdn.net/liang19890820/article/details/52797245</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/11/文本流和数据流/" itemprop="url">
-                  文本流和数据流
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-11T20:26:08+08:00" content="2017-04-11">
-              2017-04-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/11/文本流和数据流/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/11/文本流和数据流/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>QIODevice提供了read()、readLine()等基本的操作。同时，Qt 还提供了更高一级的操作：用于二进制的流QDataStream和用于文本流的QTextStream。</p>
-<h5 id="二进制文件读写"><a href="#二进制文件读写" class="headerlink" title="二进制文件读写"></a>二进制文件读写</h5><p>QDataStream提供了基于QIODevice的二进制数据的序列化。数据流是一种二进制流，这种流完全不依赖于底层操作系统、CPU 或者字节顺序（大端或小端）。例如，在安装了Windows 平台的 PC 上面写入的一个数据流，可以不经过任何处理，直接拿到运行了 Solaris 的 SPARC 机器上读取。由于数据流就是二进制流，因此我们也可以直接读写没有编码的二进制数据，例如图像、视频、音频等。<br>QDataStream既能够存取 C++ 基本类型，如 int、char、short 等，也可以存取复杂的数据类型，例如自定义的类。实际上QDataStream对于类的存储，是将复杂的类分割为很多基本单元实现的。结合QIODevice，QDataStream可以很方便地对文件、网络套接字等进行读写操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void MainWindow::fileFun()</div><div class="line">&#123;</div><div class="line">    QFile file(&quot;binary.dat&quot;);</div><div class="line">    file.open(QIODevice::WriteOnly | QIODevice::Truncate);</div><div class="line">    QDataStream out(&amp;file);                             //将数据序列化</div><div class="line">    out &lt;&lt; QString(tr(&quot;周何骏：&quot;));                      //字符串序列化</div><div class="line">    out &lt;&lt; QDate::fromString(&quot;1994/09/25&quot;, &quot;yyyy/MM/dd&quot;);</div><div class="line">    out &lt;&lt; (qint32)19;                                 	//整数序列化</div><div class="line">    file.close();</div><div class="line">    </div><div class="line">/***********************读***************/</div><div class="line">    file.setFileName(&quot;binary.dat&quot;);</div><div class="line">    if(!file.open(QIODevice::ReadOnly))</div><div class="line">    &#123;</div><div class="line">         qDebug()&lt;&lt; &quot;error!&quot;;</div><div class="line">         return;</div><div class="line">    &#125;</div><div class="line">    QDataStream in(&amp;file);                            	//从文件中读出数据</div><div class="line">    QString name;</div><div class="line">    QDate birthday;</div><div class="line">    qint32 age;</div><div class="line">    in &gt;&gt; name &gt;&gt; birthday &gt;&gt; age;                    	//获取字符串和整数</div><div class="line">    qDebug() &lt;&lt; name &lt;&lt; birthday &lt;&lt; age;</div><div class="line">    file.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>至此，我们介绍了有关QDataStream的相关内容。那么，既然QIODevice提供了read()、readLine()之类的函数，为什么还要有QDataStream呢？QDataStream同QIODevice有什么区别？区别在于，QDataStream提供流的形式，性能上一般比直接调用原始 API 更好一些。我们通过下面一段代码看看什么是流的形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">QFile file(&quot;file.dat&quot;);</div><div class="line">file.open(QIODevice::ReadWrite);</div><div class="line"></div><div class="line">QDataStream stream(&amp;file);</div><div class="line">QString str = &quot;the answer is 42&quot;;</div><div class="line">QString strout;</div><div class="line"></div><div class="line">stream &lt;&lt; str;</div><div class="line">file.flush();</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<p>在这段代码中，我们首先向文件中写入数据，紧接着把数据读出来。有什么问题吗？运行之后你会发现，strout实际是空的。为什么没有读取出来？我们不是已经添加了file.flush();语句吗？原因并不在于文件有没有写入，而是在于我们使用的是“流”。所谓流，就像水流一样，它的游标会随着输出向后移动。当使用&lt;&lt;操作符输出之后，流的游标已经到了最后，此时你再去读，当然什么也读不到了。所以你需要在输出之后重新把游标设置为 0 的位置才能够继续读取。具体代码片段如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stream &lt;&lt; str;</div><div class="line">stream.device()-&gt;seek(0);</div><div class="line">stream &gt;&gt; strout;</div></pre></td></tr></table></figure></p>
-<h5 id="文本文件读写"><a href="#文本文件读写" class="headerlink" title="文本文件读写"></a>文本文件读写</h5><p>二进制文件比较小巧，却不是人可读的格式。而文本文件是一种人可读的文件。为了操作这种文件，我们需要使用QTextStream类。QTextStream和QDataStream的使用类似，只不过它是操作纯文本文件的。另外，像 XML、HTML 这种，虽然也是文本文件，可以由QTextStream生成，但 Qt 提供了更方便的 XML 操作类，这里就不包括这部分内容了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include &lt;QCoreApplication&gt;</div><div class="line">#include &lt;QFile&gt;</div><div class="line">#include &lt;QTextStream&gt;</div><div class="line">#include &lt;QDebug&gt;</div><div class="line">int main(int argc, char *argv[])</div><div class="line">&#123;</div><div class="line">    QCoreApplication a(argc, argv);</div><div class="line"></div><div class="line">    QFile data(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::WriteOnly|QFile::Truncate))</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        QTextStream out(&amp;data);</div><div class="line">        out.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        out&lt;&lt;QObject::tr(&quot;沙炼:&quot;)&lt;&lt;qSetFieldWidth(10)&lt;&lt;left&lt;&lt;10&lt;&lt;endl;//设置输出字宽10，左对齐</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">/**********将QTextStream（文本文件）写入的都出来**************/</div><div class="line">    data.setFileName(&quot;data.txt&quot;);</div><div class="line">    if(data.open(QFile::ReadOnly))</div><div class="line">    &#123;</div><div class="line">        QTextStream in (&amp;data);</div><div class="line">        in.setCodec(&quot;UTF-8&quot;);//默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用另外的编码</div><div class="line">        QString str;</div><div class="line">        //int ans ;</div><div class="line">        in &gt;&gt; str ;</div><div class="line">        qDebug() &lt;&lt; str ;</div><div class="line">        data.close();</div><div class="line">    &#125;</div><div class="line">    return a.exec();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们在这里使用了QFile::WriteOnly | QIODevice::Truncate，也就是以只写并且覆盖已有内容的形式操作文件。注意，QIODevice::Truncate会直接将文件内容清空。<br><strong><em>注：默认情况下，QTextStream的编码格式是 Unicode，如果我们需要使用中文，需使用<br><code>stream.setCodec(&quot;UTF-8&quot;);</code><br>这样的函数进行设置。</em></strong><br>本文参考了：豆子的 QT学习之路2<br><a href="https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-text-file-io/</a><br><a href="https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/" target="_blank" rel="external">https://www.devbean.net/2013/01/qt-study-road-2-binary-file-io/</a><br>以及电子版《QT5开发及实例》</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1617,7 +1573,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1634,7 +1590,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

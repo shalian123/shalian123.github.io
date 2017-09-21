@@ -265,6 +265,664 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/06/搭建web服务器并控制外设/" itemprop="url">
+                  搭建web服务器并控制外设
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-06T20:43:03+08:00" content="2017-03-06">
+              2017-03-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/06/搭建web服务器并控制外设/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/06/搭建web服务器并控制外设/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文主要分为两部分：web服务器的搭建、实现web对外设的控制</p>
+<h3 id="一、web服务器的搭建"><a href="#一、web服务器的搭建" class="headerlink" title="一、web服务器的搭建"></a>一、web服务器的搭建</h3><p>我们需要用到boa，boa 是一个小型的 web 服务器，可执行代码只有约 60KB，可以用于多种平台，它一个单任务 web 服务器，只能依次完成用户的请求，在嵌入式中比较常见。boa 的官方网站为www.boa.org，可以在上面下载最新版本的 boa，这里我们使用的是 boa-0.94.13.tar.gz。</p>
+<h4 id="第一步：boa的拷贝解压"><a href="#第一步：boa的拷贝解压" class="headerlink" title="第一步：boa的拷贝解压"></a>第一步：boa的拷贝解压</h4><p>-我们需要先将 boa-0.94.13.tar.gz kao’dao拷到我们的ubuntu系统中。（可以使用ssh）<br>-解压 tar -vxf boa-0.94.13.tar.gz<br>-cd boa-0.94.13</p>
+<h4 id="第二步：boa生成Makefile编译文件"><a href="#第二步：boa生成Makefile编译文件" class="headerlink" title="第二步：boa生成Makefile编译文件"></a>第二步：boa生成Makefile编译文件</h4><p>cd src<br>运行#./configure<br>当前目录下会生成Makefile编译文件 ，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/@4ETKSJIK67%60XU%7D7SV8I$%25E.png" alt=""></p>
+<h4 id="第三步：修改Makefile里面的两个参数"><a href="#第三步：修改Makefile里面的两个参数" class="headerlink" title="第三步：修改Makefile里面的两个参数"></a>第三步：修改Makefile里面的两个参数</h4><p>-vi Makefile（或者#vim Makefile）<br>-查找到有CC = gcc的行，在31行左右（可以使用vi编辑器的查找命令#/CC = gcc），替换为CC = arm-none-linux-gnueabi-gcc -static    即修改编译器<br>-查找到有CPP = gcc -E的行，在32行左右，替换为CPP = arm-none-linux-gnueabi-gcc -E -static<br>-保存退出<br>-输入make 开始编译</p>
+<h4 id="第四步：编译过程中会出现错误"><a href="#第四步：编译过程中会出现错误" class="headerlink" title="第四步：编译过程中会出现错误"></a>第四步：编译过程中会出现错误</h4><p>-vi compat.h<br>-查找到有#define TIMEZONE_OFFSET(foo) foo##-&gt;tm_gmtoff的行，在123行左右，替换为#define TIMEZONE_OFFSET(foo) foo-&gt;tm_gmtoff（即把#去掉）。<br>-保存退出<br>-继续编译</p>
+<h4 id="第五步：生成boa文件，给boa瘦身"><a href="#第五步：生成boa文件，给boa瘦身" class="headerlink" title="第五步：生成boa文件，给boa瘦身"></a>第五步：生成boa文件，给boa瘦身</h4><p>-ls查看boa是否生成<br>-ll boa查看其大小<br>-使用瘦身命令#arm-none-linux-gnueabi-strip boa</p>
+<h4 id="第六步：NFS系统文件处理"><a href="#第六步：NFS系统文件处理" class="headerlink" title="第六步：NFS系统文件处理"></a>第六步：NFS系统文件处理</h4><p>-拷贝编译生成的boa到NFS文件系统的bin目录下（这里根据自己实际设置的共享目录，具体参考我之前的文章）<br>-在NFS文件系统的etc目录下建立boa文件夹<br>-在NFS文件系统的目录下建立www文件夹<br>-在NFS文件系统的www目录下面建立文件夹cgi-bin目录</p>
+<h4 id="第七步：添加配置文件和用户组"><a href="#第七步：添加配置文件和用户组" class="headerlink" title="第七步：添加配置文件和用户组"></a>第七步：添加配置文件和用户组</h4><p>-拷贝boa-0.94.13目录下面默认的boa.conf到NFS文件系统的etc/boa中<br>-拷贝虚拟机下面/etc目录下的mime.types到NFS文件系统的etc目录下面（注意是主目录/etc）</p>
+<h4 id="第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步"><a href="#第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步" class="headerlink" title="第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步"></a>第八步：用户组，如果使用的是QT裁剪过来的则不需要执行这一步</h4><p>-在NFS文件系统的etc目录下用命令#vi group命令建立group文件<br>-在group文件中添加 root:*:0:</p>
+<h4 id="第九步：修改配置文件boa-conf"><a href="#第九步：修改配置文件boa-conf" class="headerlink" title="第九步：修改配置文件boa.conf"></a>第九步：修改配置文件boa.conf</h4><p>-进到NFS文件系统的etc/boa目录，打开boa.conf文件#vi boa.conf<br>-查找到有Group nogroup的行，在50行左右，替换为Group root<br>-查找到有#ServerName www.your.org.here的行，在95行左右，替换为ServerName www.your.org.here<br>-查找到有DocumentRoot /var/www的行，在115行左右，替换为DocumentRoot /www（注意：这里的“/www”就是前面步骤我们使用mkdir创建的www目录）<br>-查找到有ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/的行，在194行左右，替换为ScriptAlias /cgi-bin/ /www/cgi-bin/ (此处的目录记住，后面需要跟它一致)</p>
+<h4 id="第十步：添加自动运行脚本，建立网页"><a href="#第十步：添加自动运行脚本，建立网页" class="headerlink" title="第十步：添加自动运行脚本，建立网页"></a>第十步：添加自动运行脚本，建立网页</h4><p>-打开etc/init.d/rcS文件，定位到最后一行<br>-添加boa &amp;到自动启动，保存退出，如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/F_%60RA%7DP%5B4%5DK1P40A%5BFD3FEU.png" alt=""><br>-进入到前面创建的www目录<br>-vi index.html命令建立index.html<br>-将我们的网页代码拷贝进index.html（网页代码可以自己写或改，也可以到网上找）<br><img src="http://ols4zt49w.bkt.clouddn.com/$4X%7B5EMT5@I3Y~D19A0%7DYHS.png" alt=""></p>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>至此，基于 boa 的 web 服务器就搭建完成了，上面我们创建的 index.html 是一个简单的 wen 网页，用于我们测试。现在启动我们的开发板（开发板是挂载 NFS 网络文件系统），开发板起来以后我们输入 ps 命令，可以看到 boa 程序在运行，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/UHG~HC6TS%25101U4C%28ADA%29@R.png" alt=""><br>-然后使用任意内网设备（注意在同一个网段，一般连在同一个路由），登录<a href="http://192.168.1.230" target="_blank" rel="external">http://192.168.1.230</a> 默认地址（此地址为开发板系统的ip），如果修改过则需要使用修改过的地址。结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/_PU_%299T%7DS5MAJQ%7BZP1K4E6N.png" alt=""></p>
+<h3 id="二、用web实现对外设控制"><a href="#二、用web实现对外设控制" class="headerlink" title="二、用web实现对外设控制"></a>二、用web实现对外设控制</h3><p>本文我们主要实现对开发板上的led和蜂鸣器实现开与关。我们需要了解CGI编程，并能对字符设备实现控制（至少知道对应设备节点目录和ioctl函数）<br><strong>CGI编程</strong><br>CGI（Common Gateway Interface）是外部应用扩展，应用程序与www服务器交互的一个标准接口。按照CGI标准编写的外部扩展应用程序可以处理客户端浏览器输入的数据，从而完成客户端与服务器的交互操作。而CGI规范就定义了web服务器如何向扩展应用程序发送消息，在收到扩展应用程序的信息后又如何进行处理等内容。通过CGI可以提供许多静态的HTM L网页无法实现的功能。比如搜索引擎、基于web的数据库访问等等。</p>
+<h4 id="第一步：替换index-html代码"><a href="#第一步：替换index-html代码" class="headerlink" title="第一步：替换index.html代码"></a>第一步：替换index.html代码</h4><p>-进入之前建立的www目录中，打开index.html<br>-拷贝新的程序代码到index.html中<br>注意：上面输入的是HTML格式的代码，主要是用到了通过表单向服务器提交信息，在表单里面指定了服务器端处理接收到信息的CGI程序是myled.cgi，这是在form表单的属性里设置的，代码是“form action=”/cgi-bin/myled.cgi” method=”get”，使用的传递数据的方式是get方法，如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/34OLZLI3%7B6%5DM6%280UW7CL%5BOY.png" alt=""></p>
+<h4 id="第二步：CGI程序"><a href="#第二步：CGI程序" class="headerlink" title="第二步：CGI程序"></a>第二步：CGI程序</h4><p>-打开在etc/boa中的boa.conf文件<br>-查找ScriptAlias /cgi-bin/ /www/cgi-bin/，这是指定的CGI程序的存储目录</p>
+<h4 id="第三步：myled-c"><a href="#第三步：myled-c" class="headerlink" title="第三步：myled.c"></a>第三步：myled.c</h4><p>-进入www/cgi-bin目录（<strong>注意：跟etc/boa中的boa.conf文件中设置的CGI程序的存储目录一致</strong>）<br>-将myled.c拷贝进去（或创建myled.c,把代码拷进去也行）<br>-编译#arm-none-linux-gnueabi-gcc -o myled.cgi myled.c -static (<strong>注意：myled.cgi跟index.html中form表单里设置一致</strong>)<br>-修改权限#chmod 777 myled.cgi<br>此处附上本人移植buzzer（蜂鸣器）后的myled.c：</p>
+<blockquote>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main()
+{
+ char *data;
+ int leds[3] = {0, 0, 0};
+ long m, n;
+int exit=0,i,fd,fd1;
+printf(&quot;Content-Type:text/html;charset=gb2312\n\n&quot;);
+printf(&quot;&lt;html&gt;\n&quot;); 
+printf(&quot;&lt;body&gt;\n&quot;);
+printf(&quot;&lt;title&gt;iTOP-4412&lt;/title&gt; &quot;);
+printf(&quot;&lt;h3&gt;iTOP-4412&lt;/h3&gt; &quot;);
+data = getenv(&quot;QUERY_STRING&quot;);
+printf(&quot;&lt;p&gt;receive data:%s&lt;/p&gt;&quot;,data);
+while(*data != &apos;\0&apos;)
+{
+    if(*data==&apos;=&apos;)
+    switch(*(data+1))
+    {
+        case &apos;1&apos;:leds[0]=1;break;
+        case &apos;2&apos;:leds[1]=1;break;
+        case &apos;3&apos;:leds[2]=1;break;
+        default:exit=1;break;
+    }
+    if(exit == 1)
+        break;
+    data++;
+}
+fd=open(&quot;/dev/leds&quot;,0);
+fd1=open(&quot;/dev/buzzer_ctl&quot;,0);
+for(i=0;i&lt;2;i++)
+{
+    if(leds[i]==1)
+        printf(&quot;&lt;p&gt;%d\t&lt;/p&gt;&quot;,i+1);
+    ioctl(fd,leds[i],i);
+}
+  if(leds[2]==1) //buzzer
+    {
+        printf(&quot;&lt;p&gt;%d\t&lt;/p&gt;&quot;,3);
+        ioctl(fd1,leds[2],2);
+    }
+  if(leds[2]!=1)
+    {
+        ioctl(fd1,0,2);
+    }
+printf(&quot;&lt;/body&gt;\n&quot;);
+printf(&quot;&lt;/html&gt;\n&quot;);
+return 0;
+}
+</code></pre></blockquote>
+<h4 id="第四步：启动开发板，然后打开-PC-的浏览器（连内网的手机也行），输入开发板的-ip-地址"><a href="#第四步：启动开发板，然后打开-PC-的浏览器（连内网的手机也行），输入开发板的-ip-地址" class="headerlink" title="第四步：启动开发板，然后打开 PC 的浏览器（连内网的手机也行），输入开发板的 ip 地址"></a>第四步：启动开发板，然后打开 PC 的浏览器（连内网的手机也行），输入开发板的 ip 地址</h4><p>结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/T%28XCF%60M%7B@O$76%7BSI@8%29%5BHK7.png" alt=""><br>我们可以通过勾选右边的复选框，按提交实现控制led和蜂鸣器的开关。</p>
+<h5 id="最后，欢迎志同道合网友一起交流学习！"><a href="#最后，欢迎志同道合网友一起交流学习！" class="headerlink" title="最后，欢迎志同道合网友一起交流学习！"></a>最后，欢迎志同道合网友一起交流学习！</h5>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/03/搭建NFS/" itemprop="url">
+                  搭建NFS及注意点
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-03T15:39:14+08:00" content="2017-03-03">
+              2017-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/03/搭建NFS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/03/搭建NFS/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NFS 服务，我们可以实现在线调试文件系统或应用程序，而不用像传统的方式生成文件系统镜像，然后烧写到板子的 eMMC 里，在启动开发板。通过 NFS 服务可以提高我们的调试效率。</p>
+<hr>
+<p>如果是 Android 或者 Qt 的文件系统就太大了，启动速度慢，这么做也就没有什么意义了。但是最小 linux 文件相对其它操作系统小很多，所以使用网络文件系统，可以方便的用户调试。</p>
+<hr>
+<h3 id="一、服务器端的搭建"><a href="#一、服务器端的搭建" class="headerlink" title="一、服务器端的搭建"></a>一、服务器端的搭建</h3><p>实现 NFS，我们需要一个主机作为 NFS 服务器，可以选择我们的虚拟机 Ubuntu 作为主机。首先我们需要在虚拟机的 Ubuntu 上安装Ubuntu NFS 服务，这是一个软件包，我们可以使用 apt 命令下载。</p>
+<blockquote>
+<p> apt-get install nfs-kernel-server<br> 安装 Ubuntu NFS 服务</p>
+</blockquote>
+<p>接下来需要配置/etc/exports</p>
+<blockquote>
+<p>vi /etc/exports</p>
+</blockquote>
+<p>在/etc/export 文件的最后一行添加：<br>/home/minilinux/system/ *(rw,sync,no_root_squash)，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png" alt=""><br>接下来重启 portmap 服务</p>
+<blockquote>
+<p>/etc/init.d/portmap restart</p>
+</blockquote>
+<p>然后重启 nfs 服务</p>
+<blockquote>
+<p>/etc/init.d/nfs-kernel-server restart</p>
+</blockquote>
+<p>至此，NFS服务器端搭建完成。</p>
+<h3 id="二、将板中的最小系统挂载到NFS"><a href="#二、将板中的最小系统挂载到NFS" class="headerlink" title="二、将板中的最小系统挂载到NFS"></a>二、将板中的最小系统挂载到NFS</h3><p>1.先把 linux 最小文件系统放到虚拟机 Ubuntu 的挂载目录下（此处我采用的是/home/minilinux/system） 目录下。（<strong>注意：此处的文件系统必须为板子里烧录的最小系统。</strong>）<br>2.实现 nfs 文件系统我们需要修改 linux 最小文件系统的 etc/init.d/ifconfig-eth0 文件，<br>vi命令打开并修改为如下图结果：<br><img src="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png" alt=""><br>改完保存并退出！</p>
+<h4 id="3-配置内核"><a href="#3-配置内核" class="headerlink" title="3.配置内核"></a>3.配置内核</h4><p>此处我们需要用到内核源码，打开内核源码，输入 cp config_for_linux .config 命令生成支持 linux 最小文件系统的内核配<br>置文件。（<strong>注意此处 .config前有一个空格</strong>）。然后输入 make menuconfig 命令进入 linux 配置界面。具体配置网上很多，此处只挑重点说：<br>在Boot options 配置界面里，我们需要在 Default kernel command 里面输入：</p>
+<blockquote>
+<p>root=/dev/nfs rw nfsroot=192.168.1.103:/home/minilinux/system<br>ip=192.168.1.230:192.168.1.103:192.168.1.1:255.255.255.0:iTOP:eth0:off<br>rootfstype=ext4 init=/linuxrc console=ttySAC2,115200</p>
+</blockquote>
+<p><strong><br>第一句表示挂载的nfs服务器 ip是192.168.1.103，挂载的目录是/home/minilinux/system， （注意：/home/minilinux/是前面我们搭建 nfs 服务器设置的）。<br>第二句里第一个 ip192.168.1.230 是我们开发板的 ip 地址，第二个 ip192.168.1.103 是 nfd 服务器的 ip，第三个ip192.168.1.1 是开发板的网关，255.255.255.0 是子网掩码，iTOP 是开发主机的名字（一般无关紧要，可以随便填写），eth0 是网卡设备的名称。
+</strong></p>
+<h4 id="4-待配置完内核后，重新编译内核"><a href="#4-待配置完内核后，重新编译内核" class="headerlink" title="4.待配置完内核后，重新编译内核"></a>4.待配置完内核后，重新编译内核</h4><blockquote>
+<p>make zImage</p>
+</blockquote>
+<p>5.将新生成的内核烧写到开发板，然后重启开发板，就可以使用 NFS 文件系统了。</p>
+<h3 id="三、注意点"><a href="#三、注意点" class="headerlink" title="三、注意点"></a>三、注意点</h3><p>1.这里编译zImage时，要注意用的是前面我们做的最小linux系统（板子里烧录的是我们对应编译生成的系统镜像，这两者得对应）,通过NFS挂载它。<br>2.在测试行x86 的服务器与板子上的客户端是否连通时，要将虚拟机的网络配置改为桥接模式。（之前我没有路由器，因此将它设置成了自定义模式中的VMnet8（NAT）,在调试网络通信socket及tftp文件传输和NFS时都应将它改为桥接模式。）<br>3.在NFS调试时，因为路由器网络设置成了动态ip，所以有时ubuntu重启会导致它的ip变了，此时会导致板子启动不了（一直卡在启动内核那），这时我们有两种解决方法：一、将ubuntu设置成静态ip   二、将配置内核里的ip改了，重新编译zImage，然后重新烧写到板中。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/25/linux-fifo/" itemprop="url">
+                  测试linux-fifo
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-25T20:19:17+08:00" content="2017-02-25">
+              2017-02-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/25/linux-fifo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/25/linux-fifo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="linux进程间通信之有名管道fifo"><a href="#linux进程间通信之有名管道fifo" class="headerlink" title="linux进程间通信之有名管道fifo"></a>linux进程间通信之有名管道fifo</h1><p>本文通过具体的实例带你深入了解进程通信里的有名管道通信</p>
+<h2 id="一、硬件工具"><a href="#一、硬件工具" class="headerlink" title="一、硬件工具"></a>一、硬件工具</h2><p>一块已经烧录最小系统进去的开发板<br>pc机<br>U盘或TF卡或NFS</p>
+<h2 id="二、软件工具"><a href="#二、软件工具" class="headerlink" title="二、软件工具"></a>二、软件工具</h2><p>ubuntu及虚拟机<br>交叉编译器（此处采用的是Arm-2009q3）<br>编辑器（此处采用的是notepad）<br>超级终端<br>vim编辑器</p>
+<h2 id="三、读本文前得了解的知识"><a href="#三、读本文前得了解的知识" class="headerlink" title="三、读本文前得了解的知识"></a>三、读本文前得了解的知识</h2><p>交叉编译，文件函数的操作（open，write，read等），对linux进程的了解，fork函数 mkfifo函数等。具体还有疑问可以在评论中一起交流。</p>
+<h2 id="四、有名管道-fifo"><a href="#四、有名管道-fifo" class="headerlink" title="四、有名管道 fifo"></a>四、有名管道 fifo</h2><p>有名管道可以实现无亲缘关系的通信（无名管道只能用于有亲缘进程之间的通信）。有名管道实现进程间通信的速度很快，同时遵行先进先出原则。</p>
+<blockquote>
+<p>man 3 mkfifo</p>
+</blockquote>
+<p>我们可以看到如下图mkfifo函数得用法：<br><img src="http://ols4zt49w.bkt.clouddn.com/mkfifo.png" alt="mkfifo"></p>
+<p>为了更好的体验有名管道得通信，我们首先编写creatc.c测试mkfifo函数。</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+
+void filecopy(FILE *,char *);
+
+int main(void)
+{
+FILE *fp1;
+long int i = 100000;
+char buf[] = &quot;I want to study Linux!\n&quot;;
+char *file1 = &quot;data.txt&quot;;
+
+printf(&quot;begin!\n&quot;);
+
+if((fp1 = fopen(file1,&quot;a+&quot;)) == NULL ){ //fopen返回值为FILE的指针
+ //“a+”：Open for reading and appending (writing at end  of  file).
+ //The file is created if it does not exist
+        printf(&quot;can&apos;t open %s\n&quot;,file1);
+}
+while(i--)
+filecopy(fp1,buf);//调用 filecopy 将数据写入 file1 文件中
+
+fclose(fp1);
+
+printf(&quot;over!\n&quot;);
+
+return 0;
+}
+
+void filecopy(FILE *ifp,char *buf)
+{
+char c;
+int i,j;
+j = 0;
+i = strlen(buf)-1;    
+while(i--){
+    putc(buf[j],ifp);//int putc(int c, FILE *stream);
+                     //writes the character c, cast to an unsigned char, to stream
+    j++;
+}
+putc(&apos;\n&apos;,ifp);
+}
+</code></pre><p>紧接着编写简单的writepipe.c测试对有名管道得写</p>
+<pre><code>#include &lt;unistd.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &lt;fcntl.h&gt;  
+#include &lt;limits.h&gt;  //PIPE_BUF
+#include &lt;sys/types.h&gt;  
+#include &lt;sys/stat.h&gt;  
+#include &lt;stdio.h&gt;  
+#include &lt;string.h&gt;  
+
+int main()  
+{  
+const char *fifo_name = &quot;my_fifo&quot;;
+char *file1 = &quot;data.txt&quot;;    
+int pipe_fd = -1;  
+int data_fd = -1;  
+int res = 0;  
+const int open_mode = O_WRONLY;  
+int bytes_sent = 0;  
+char buffer[PIPE_BUF + 1];  //最后\0
+
+if(access(fifo_name, F_OK) == -1)  //检验权限函数，看文件是否存在
+{  
+    //管道文件不存在  
+    //创建命名管道  
+    res = mkfifo(fifo_name, 0777);  
+    if(res != 0)  
+    {  
+        fprintf(stderr, &quot;Could not create fifo %s\n&quot;, fifo_name);  
+        exit(EXIT_FAILURE);  
+    }  
+}  
+
+printf(&quot;Process %d opening FIFO O_WRONLY\n&quot;, getpid()); 
+
+//以只写阻塞方式打开FIFO文件，  
+pipe_fd = open(fifo_name, open_mode);
+
+//以只读方式打开数据文件  
+data_fd = open(file1, O_RDONLY);  
+printf(&quot;Process %d result %d\n&quot;, getpid(), pipe_fd);  
+
+if(pipe_fd != -1)  //打开FIFO文件成功
+{  
+    int bytes_read = 0;  
+    //向数据文件读取数据  
+    bytes_read = read(data_fd, buffer, PIPE_BUF);  
+    buffer[bytes_read] = &apos;\0&apos;;  
+    while(bytes_read &gt; 0)  
+    {  
+        //向FIFO文件写数据  
+        res = write(pipe_fd, buffer, bytes_read);  
+        if(res == -1)  
+        {  
+            fprintf(stderr, &quot;Write error on pipe\n&quot;);  
+            exit(EXIT_FAILURE);  
+        }  
+        //累加写的字节数，并继续读取数据  
+        bytes_sent += res;  
+        bytes_read = read(data_fd, buffer, PIPE_BUF);  
+        buffer[bytes_read] = &apos;\0&apos;;  
+    }  
+    close(pipe_fd);  
+    close(data_fd);  
+}  
+else  
+    exit(EXIT_FAILURE);  
+
+printf(&quot;Process %d finished\n&quot;, getpid());  
+exit(EXIT_SUCCESS);  
+} 
+</code></pre><p>最后编写readpipe.c测试对有名管道得读</p>
+<pre><code>#include &lt;unistd.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &lt;stdio.h&gt;  
+#include &lt;fcntl.h&gt;  
+#include &lt;sys/types.h&gt;  
+#include &lt;sys/stat.h&gt;  
+#include &lt;limits.h&gt;  
+#include &lt;string.h&gt;  
+
+int main()  
+{  
+const char *fifo_name = &quot;my_fifo&quot;;  
+int pipe_fd = -1;  
+int data_fd = -1;  
+int res = 0;  
+int open_mode = O_RDONLY;  
+char buffer[PIPE_BUF + 1];  
+int bytes_read = 0;  
+int bytes_write = 0;  
+//清空缓冲数组  
+memset(buffer, &apos;\0&apos;, sizeof(buffer));  
+
+printf(&quot;Process %d opening FIFO O_RDONLY\n&quot;, getpid()); 
+
+//以只读阻塞方式打开管道文件，注意与fifowrite.c文件中的FIFO同名  
+pipe_fd = open(fifo_name, open_mode);  
+//以只写方式创建保存数据的文件  
+data_fd = open(&quot;DataFormFIFO.txt&quot;, O_WRONLY|O_CREAT, 0644);  
+printf(&quot;Process %d result %d\n&quot;,getpid(), pipe_fd);  
+
+if(pipe_fd != -1)  
+{  
+    do  
+    {  
+        //读取FIFO中的数据，并把它保存在文件DataFormFIFO.txt文件中  
+        res = read(pipe_fd, buffer, PIPE_BUF);  
+        bytes_write = write(data_fd, buffer, res);  
+        bytes_read += res;  
+    }while(res &gt; 0);  
+    close(pipe_fd);  
+    close(data_fd);  
+}  
+else  
+    exit(EXIT_FAILURE);  
+
+printf(&quot;Process %d finished, %d bytes read\n&quot;, getpid(), bytes_read);  
+exit(EXIT_SUCCESS);  
+} 
+</code></pre><p>待三个测试文件创建完成，接下来便是编译运行测试：</p>
+<blockquote>
+<p>arm-none-linux-gnueabi-gcc -o creatc creatc.c -static<br>arm-none-linux-gnueabi-gcc -o writepipe writepipe.c -static<br>arm-none-linux-gnueabi-gcc -o readpipe readpipe.c -static</p>
+</blockquote>
+<p>这里介绍 U 盘拷贝代码的方法，也可以编译进文件系统或者使用 NFS 文件系统等。</p>
+<blockquote>
+<p>mount /dev/sda1 /mnt/udisk/<br>加载U盘<br>./mnt/udisk/creatc<br>运行完会创建文本文件</p>
+</blockquote>
+<p>我们可以在终端里 ls 一下，会发现如下图多了data.txt文本：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png" alt=""><br>打开data.txt文本，里面是重复的“I want to study Linux!”，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png" alt=""></p>
+<blockquote>
+<p>使用命令./mnt/udisk/writepipe &amp;<br>后台运行管道写的程序，将data.txt文本中的数据写入管道</p>
+</blockquote>
+<p>我们可以使用linux命令jobs查看程序是否在运行<br><img src="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png" alt=""><br>此时ls,可以看到 my_fifo 管道被创立了。</p>
+<blockquote>
+<p>最后，运行time ./mnt/udisk/readpipe<br>运行并计时从管道读数据需要多长时间</p>
+</blockquote>
+<p><img src="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png" alt=""><br>如上图，共花费0.26s，jobs一下，程序早已运行结束。</p>
+<blockquote>
+<p>ls -la</p>
+</blockquote>
+<p><img src="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png" alt=""><br>可见整个数据量接近2.3M，传输速度接近10M/S.<br>综上，有名管道 fifo 给文件系统提供一个路径，这个路径和管道关联，只要知道这个管道路径，<br>就可以进行文件访问。且传输速度很快。</p>
+<h2 id="五、注意点"><a href="#五、注意点" class="headerlink" title="五、注意点"></a>五、注意点</h2><p>access(const char *pathname,int mode),检测权限函数，具体用法可man access查询一下。<br>PIPE_BUF,在linux中，它的大小是4096bytes,可man 7 pipe 查询。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/21/为啥会搭建博客/" itemprop="url">
                   为什么要搭建博客
                 </a>
@@ -530,7 +1188,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -547,7 +1205,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
