@@ -265,6 +265,129 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/30/Qt数据库操作/" itemprop="url">
+                  Qt数据库操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-30T17:17:33+08:00" content="2017-07-30">
+              2017-07-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/30/Qt数据库操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/30/Qt数据库操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在公司的项目涉及到用QT来操作数据库，在qt里自带了一个小型本地型的数据库sqlite，一般在移动设备或嵌入式设备中经常使用，但是公司服务器端用的是<strong>oracle数据库</strong>，这就需要实现两种数据库的交互。在此我采用的方案是，服务器端提供相关<strong>接口</strong>，然后在软件中通过<strong>http</strong>协议<strong>获取一些json数据</strong>，通过<strong>解析</strong>再将它们<strong>写入</strong>软件自带的<strong>sqlite数据库</strong>。</p>
+<h5 id="数据库的建立"><a href="#数据库的建立" class="headerlink" title="数据库的建立"></a>数据库的建立</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">#ifndef COLLECTION_H</div><div class="line">#define COLLECTION_H</div><div class="line">#include &lt;QMessageBox&gt;</div><div class="line">#include &lt;QSqlDatabase&gt;</div><div class="line">#include &lt;QSqlQuery&gt;</div><div class="line"></div><div class="line">static bool createConnection()</div><div class="line">&#123;</div><div class="line">    // 创建一个数据库连接，使用“connection1”为连接名</div><div class="line">    QSqlDatabase db1 = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;, &quot;connection1&quot;);//可以省略第二个参数即连接名，创建默认连接</div><div class="line">    db1.setDatabaseName(&quot;my1.db&quot;);//数据库名</div><div class="line">    if (!db1.open()) &#123;</div><div class="line">        QMessageBox::critical(0, &quot;Cannot open database1&quot;,</div><div class="line">                              &quot;Unable to establish a database connection.&quot;, QMessageBox::Cancel);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 这里要指定连接</div><div class="line">    QSqlQuery query1(db1);</div><div class="line">    //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">    query1.exec(&quot;create table Measuring_point (id int primary key, &quot;</div><div class="line">                &quot;pointpart varchar(100),&quot;</div><div class="line">                &quot;pressure number(10,3),&quot;</div><div class="line">                &quot;tempeture number(10,3),&quot;</div><div class="line">                &quot;medium varchar(100),&quot;</div><div class="line">                &quot;material varchar(100),&quot;</div><div class="line">                &quot;originthickness number(10),&quot;</div><div class="line">                &quot;outerdiameter number(10),&quot;</div><div class="line">                &quot;deviceid number(19),&quot;</div><div class="line">                &quot;devicename varchar(100),&quot;</div><div class="line">                &quot;orgseq varchar(30),&quot;</div><div class="line">                &quot;equipid number(19),&quot;</div><div class="line">                &quot;equipcode varchar(100),&quot;</div><div class="line">                &quot;equipname varchar(100),&quot;</div><div class="line">                &quot;partual varchar(200))&quot;);</div><div class="line"></div><div class="line">   // query1.exec(&quot;insert into Measuring_point values(0,&apos;sha&apos;,&apos;lian&apos;,&apos;150MPa&apos;,&apos;20&apos;,&apos;无&apos;,&apos;无&apos;,&apos;12mm&apos;,&apos;14mm&apos;,&apos;C:/Users/hasee/Desktop/nfc-04/nfc/pics/changshi.png&apos;)&quot;);</div><div class="line"></div><div class="line"></div><div class="line">    QSqlQuery query2(db1);</div><div class="line">    //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">    query2.exec(&quot;create table ThicknessRecord (pointid int primary key, &quot;</div><div class="line">                &quot;checkdate date(100),&quot;</div><div class="line">                &quot;value number(10,2))&quot;);</div><div class="line"></div><div class="line"></div><div class="line">    return true;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#endif // COLLECTION_H</div></pre></td></tr></table></figure>
+<h5 id="http访问"><a href="#http访问" class="headerlink" title="http访问"></a>http访问</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">//发送请求</div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    manage = new QNetworkAccessManager(this);</div><div class="line">    manage1= new QNetworkAccessManager(this);</div><div class="line">    QNetworkRequest network_request;</div><div class="line">    QNetworkRequest network_request1;</div><div class="line"></div><div class="line">    /*设置发送数据*/</div><div class="line"></div><div class="line">   //QString cityName = &quot;杭州&quot;;</div><div class="line"></div><div class="line">  // network_request.setUrl(QUrl(&quot;http://apis.haoservice.com/weather?cityname=%E6%9D%AD%E5%B7%9E&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;));</div><div class="line"></div><div class="line">   /* 注意：当url里有中文或空格之类的，需要用一些在线转码工具进行url编码，这里纠结了很久*/</div><div class="line"></div><div class="line">  //验证用户</div><div class="line"> // network_request.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!checkUser.action?pid=1349&amp;username=superuser&amp;password=admin&quot;));</div><div class="line"></div><div class="line"> //下载测点信息</div><div class="line">    network_request.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!downloadMeasurePoint.action?token=306d848a21164e23a4ce33a051b6dde7&amp;pnum=6&quot;));</div><div class="line"></div><div class="line">    //下载测厚记录</div><div class="line">  //  network_request1.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!downloadThicknessRecord.action?token=306d848a21164e23a4ce33a051b6dde7&quot;));</div><div class="line">    /*发送get网络请求*/</div><div class="line">    manage-&gt;get(network_request);</div><div class="line">   // manage1-&gt;get(network_request1);</div><div class="line">    /*建立connect，replyFinished为自定义槽函数，获取api发回来的天气信息（Jason）格式*/</div><div class="line">    connect(manage,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line">  //  connect(manage1,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="json解析及插入数据库"><a href="#json解析及插入数据库" class="headerlink" title="json解析及插入数据库"></a>json解析及插入数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">//获取传回的数据</div><div class="line">void Widget::getReplyFinished(QNetworkReply *reply)</div><div class="line">&#123;</div><div class="line">    if(reply-&gt;error()!= QNetworkReply::NoError)</div><div class="line">       qDebug() &lt;&lt; QStringLiteral(&quot;响应失败&quot;);</div><div class="line"></div><div class="line">    QByteArray bytes = reply-&gt;readAll();</div><div class="line">    QJsonParseError jsonError;</div><div class="line">    QJsonDocument document = QJsonDocument::fromJson(bytes,&amp;jsonError);//转化为json文档</div><div class="line">    if (jsonError.error != QJsonParseError::NoError) &#123;</div><div class="line">            qDebug() &lt;&lt; QStringLiteral(&quot;解析Json失败&quot;);//此处可以验证是否获取到天气信息（json格式）</div><div class="line">            //qDebug() &lt;&lt; bytes;//如果API响应的不是json格式的数据，则不用解析，直接输出</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    QJsonObject data = document.object();//转化为对象，传回的整体是一个对象</div><div class="line">    //QJsonArray data = document.array();  // 转化为数组</div><div class="line">    qDebug() &lt;&lt; &quot;测点信息：&quot; &lt;&lt; data;</div><div class="line">    qDebug()&lt;&lt;&quot;result:&quot;;</div><div class="line">    getMeasurePointInfo(data);//获取测点信息</div><div class="line">   // getMeasureRecordInfo(data);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获取测点result信息，进一步解析json</div><div class="line">void Widget::getMeasurePointInfo(QJsonObject data)</div><div class="line">&#123;</div><div class="line">    if (data.contains(&quot;result&quot;))</div><div class="line">    &#123;</div><div class="line">     QJsonValue value = data.value(&quot;result&quot;);</div><div class="line">     if(value.isArray())&#123;    //result是数组</div><div class="line">        QJsonArray array = value.toArray();</div><div class="line">        int nSize = array.size();  // 获取数组大小</div><div class="line">        MeasurePointInfo pointInfo;</div><div class="line">        //QStringList todayInfoList;//在文本框里显示</div><div class="line">        QSqlDatabase db1 = QSqlDatabase::database(&quot;connection1&quot;);//database（）静态函数，通过指定链接名来获取相应的数据库连接</div><div class="line">        QSqlQuery query1(db1);</div><div class="line">        for (int i = 0; i &lt; nSize; ++i) &#123;  // 遍历数组</div><div class="line">               if(array.at(i).isObject())&#123;  //数组里面又是对象</div><div class="line">                   QJsonObject object =array.at(i).toObject();</div><div class="line">                   pointInfo.orgseq = object.value(&quot;orgseq&quot;).toString();//装置序列</div><div class="line">                   pointInfo.pointpart = object.value(&quot;pointpart&quot;).toString();//测点部位</div><div class="line">                   pointInfo.equipname = object.value(&quot;equipname&quot;).toString();//设备名称</div><div class="line">                   pointInfo.deviceid = object.value(&quot;deviceid&quot;).toString();//装置id</div><div class="line">                   pointInfo.originthickness = object.value(&quot;originthickness&quot;).toDouble();//公称壁厚</div><div class="line">                   pointInfo.equipcode = object.value(&quot;equipcode&quot;).toString();//设备编号</div><div class="line">                   pointInfo.equipid = object.value(&quot;equipid&quot;).toInt();       //设备id</div><div class="line">                   pointInfo.parturl = object.value(&quot;parturl&quot;).toString();  //部位图</div><div class="line">                   pointInfo.id = object.value(&quot;id&quot;).toInt();                 //测点id</div><div class="line">                   qDebug() &lt;&lt; &quot;getMeasurePointInfo:\n&quot; &lt;&lt;pointInfo.orgseq&lt;&lt; pointInfo.pointpart &lt;&lt; pointInfo.equipname &lt;&lt; pointInfo.deviceid &lt;&lt; pointInfo.originthickness</div><div class="line">                           &lt;&lt;pointInfo.equipcode&lt;&lt;pointInfo.equipid&lt;&lt;pointInfo.parturl&lt;&lt;pointInfo.id;</div><div class="line">                 &#125;</div><div class="line">               //插入数据</div><div class="line">               query1.prepare(&quot;insert into Measuring_point values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)&quot;);//位置绑定</div><div class="line">               query1.bindValue(0,pointInfo.id);</div><div class="line">               query1.bindValue(1,pointInfo.pointpart);</div><div class="line">               query1.bindValue(10,pointInfo.orgseq);</div><div class="line">               query1.bindValue(13,pointInfo.equipname);</div><div class="line">               query1.bindValue(8,pointInfo.deviceid);</div><div class="line">               query1.bindValue(6,pointInfo.originthickness);</div><div class="line">               query1.bindValue(12,pointInfo.equipcode);</div><div class="line">               query1.bindValue(11,pointInfo.equipid);</div><div class="line">               query1.bindValue(14,pointInfo.parturl);</div><div class="line">               query1.exec();</div><div class="line"></div><div class="line">               //更新数据</div><div class="line"></div><div class="line">               /*query1.clear();</div><div class="line">               query1.prepare(QString(&quot;update pointpart=?,orgseq=?,&quot;</div><div class="line">                                      &quot;equipname=?,deviceid=?,&quot;</div><div class="line">                                      &quot;originthickness=?,equipcode=?,&quot;</div><div class="line">                                      &quot;equipid=?,partural=? where id=%1&quot;).arg(pointInfo.id));</div><div class="line">               query1.bindValue(1,pointInfo.pointpart);</div><div class="line">               query1.bindValue(10,pointInfo.orgseq);</div><div class="line">               query1.bindValue(13,pointInfo.equipname);</div><div class="line">               query1.bindValue(8,pointInfo.deviceid);</div><div class="line">               query1.bindValue(6,pointInfo.originthickness);</div><div class="line">               query1.bindValue(12,pointInfo.equipcode);</div><div class="line">               query1.bindValue(11,pointInfo.equipid);</div><div class="line">               query1.bindValue(14,pointInfo.partural);</div><div class="line">               query1.exec();</div><div class="line">              */</div><div class="line">            &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="将数据库的数据在tablewidget显示"><a href="#将数据库的数据在tablewidget显示" class="headerlink" title="将数据库的数据在tablewidget显示"></a>将数据库的数据在tablewidget显示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">if (createConnection()) //连接成功</div><div class="line">&#123;</div><div class="line">   // 使用QSqlQuery查询连接1的整张表，先要使用连接名获取该连接</div><div class="line">   QSqlDatabase db1 = QSqlDatabase::database(&quot;connection1&quot;);//database（）静态函数，通过指定链接名来获取相应的数据库连接</div><div class="line">   QSqlQuery query1(db1);</div><div class="line">   qDebug() &lt;&lt; &quot;connection1:&quot;;</div><div class="line">   //query1.exec(&quot;select * from Measuring_point&quot;);</div><div class="line">   query1.exec(&quot;select id,pointpart,originthickness from Measuring_point&quot;);</div><div class="line">   query1.last();</div><div class="line">   int nRow=query1.at()+1;</div><div class="line">   query1.first();</div><div class="line">   //tableWidget-&gt;setColumnCount(nRow);</div><div class="line">   //while(query1.next())//这边不能再有了，因为会影响到for循环的query1.next()</div><div class="line">   //&#123;</div><div class="line">       //qDebug() &lt;&lt; &quot;ok&quot;;</div><div class="line">      // qDebug() &lt;&lt; query1.value(0).toInt() &lt;&lt; query1.value(1).toString();</div><div class="line">   //&#125;</div><div class="line"></div><div class="line">   tableWidget = new QTableWidget(this);</div><div class="line">   QStringList header;</div><div class="line">   header&lt;&lt;&quot;设备管理&quot;&lt;&lt;&quot;测点部位&quot; &lt;&lt;&quot;公称壁厚(mm)&quot; &lt;&lt;&quot;测量壁厚(mm)&quot;</div><div class="line">        &lt;&lt;&quot;测量时间&quot;&lt;&lt;&quot;测量提示&quot;&lt;&lt;&quot;关联状态&quot;&lt;&lt;&quot;更多&quot;;</div><div class="line">   tableWidget-&gt;setRowCount(nRow);//一定要有行和列</div><div class="line">   tableWidget-&gt;setColumnCount(8);</div><div class="line">   tableWidget-&gt;setHorizontalHeaderLabels(header);</div><div class="line">   /*QPalette pll = tableWidget-&gt;palette();</div><div class="line">   pll.setBrush(QPalette::Base,QBrush(QColor(255,255,255,0)));</div><div class="line">   tableWidget-&gt;setPalette(pll);  //和QTextEdit一样，都可以使用样式表QPalette来修改它的背景颜色和背景图片，这里我们把刷子设置为全透明的，就可以是透明的</div><div class="line">  */</div><div class="line">   ui-&gt;manageLayout-&gt;addWidget(tableWidget);</div><div class="line">  // tableWidget-&gt;show();</div><div class="line"></div><div class="line">             /************第一行的数据******************/</div><div class="line">   tableWidget-&gt;setItem(0,0,new QTableWidgetItem(query1.value(0).toString()));</div><div class="line">   tableWidget-&gt;setItem(0,1,new QTableWidgetItem(query1.value(1).toString()));</div><div class="line">   tableWidget-&gt;setItem(0,2,new QTableWidgetItem(query1.value(2).toString()));</div><div class="line"></div><div class="line">   /********************将数据在table widget显示************************/</div><div class="line">   for(int i=1;query1.next();i++)&#123;</div><div class="line"></div><div class="line">       tableWidget-&gt;setItem(i,0,new QTableWidgetItem(query1.value(0).toString()));</div><div class="line">       tableWidget-&gt;setItem(i,1,new QTableWidgetItem(query1.value(1).toString()));</div><div class="line">       tableWidget-&gt;setItem(i,2,new QTableWidgetItem(query1.value(2).toString()));</div><div class="line"></div><div class="line">       QCheckBox* checkBoxSeclect = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxInsert = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxUpdate = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxDelect = new QCheckBox();</div><div class="line">       tableWidget-&gt;setCellWidget(i,3,checkBoxSeclect);</div><div class="line">       tableWidget-&gt;setCellWidget(i,4,checkBoxInsert);</div><div class="line">       tableWidget-&gt;setCellWidget(i,5,checkBoxUpdate);</div><div class="line">       tableWidget-&gt;setCellWidget(i,6,checkBoxDelect);</div><div class="line">       qDebug() &lt;&lt; &quot;ok&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   tableWidget-&gt;show();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/23/短路非短路与/" itemprop="url">
                   短路非短路与
                 </a>
@@ -1367,126 +1490,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/14/简单工厂模式-c-实现/" itemprop="url">
-                  简单工厂模式(c++实现)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-14T19:20:45+08:00" content="2017-06-14">
-              2017-06-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">大话设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/14/简单工厂模式-c-实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/简单工厂模式-c-实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>面向对象设计有封装、继承与多态三大特性。<br>多态的实现可以采用：虚函数，抽象类，模板等来实现。<br>用简单工厂模式设计一个计算器：<br>这里<strong>我采用的是虚函数的重载</strong>，也可以用抽象类来实现的：让计算数据和过程与显示结果分开体现了封装的特性；为了程序的可扩展性，比如以后要加入开根号的运算而不去重写整个类，<strong>可以将每个操作符单独作为一个类</strong>，他们都继承共同的父类——<strong>抽象类：Operation类</strong>，这里体现了<strong>继承</strong>和<strong>多态</strong>的特性。<br>如何让计算器知道该用哪个操作符的类呢，这里用到了“简单工厂模式”，也就是，<strong>到底要实例化哪个操作符类</strong>，应该考虑<strong>用一个单独的类来做这个创造实例的过程，这就是工厂。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line">#include&lt;exception&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">//Operation运算类  </div><div class="line">class Operation</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	double _numberA;</div><div class="line">	double _numberB;</div><div class="line"></div><div class="line">public:</div><div class="line">	Operation()&#123;&#125;//构造函数，可以不用自己定义</div><div class="line">	Operation(double numA, double numb) :_numberA(numA), _numberB(numb)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line">	virtual double GetResult()</div><div class="line">	&#123;</div><div class="line">		double result = 0;</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">	void set_numberA(double numA)</div><div class="line">	&#123;</div><div class="line">		_numberA = numA;</div><div class="line">	&#125;</div><div class="line">	void set_numberB(double numB)</div><div class="line">	&#123;</div><div class="line">		_numberB = numB;</div><div class="line">	&#125;</div><div class="line">	double get_numberA()</div><div class="line">	&#123;</div><div class="line">		return _numberA;</div><div class="line">	&#125;</div><div class="line">	double get_numberB()</div><div class="line">	&#123;</div><div class="line">		return _numberB;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">//加减乘除类  </div><div class="line">class OperationAdd :public Operation      //默认的是私有继承</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	OperationAdd()&#123;&#125;</div><div class="line">	OperationAdd(double numA, double numB) :Operation(numA, numB)&#123;&#125;</div><div class="line">	double GetResult()</div><div class="line">	&#123;</div><div class="line">		double result = 0;</div><div class="line">		result = get_numberA() + get_numberB();</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">class OperationSub :public Operation</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	OperationSub()&#123;&#125;</div><div class="line">	OperationSub(double numA, double numB) :Operation(numA, numB)&#123;&#125;</div><div class="line">	double GetResult()</div><div class="line">	&#123;</div><div class="line">		double result = 0;</div><div class="line">		result = get_numberA() - get_numberB();</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class OperationMul : public Operation</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	OperationMul()&#123;&#125;</div><div class="line">	OperationMul(double numA, double numB) :Operation(numA, numB)&#123;&#125;</div><div class="line">	double GetResult()</div><div class="line">	&#123;</div><div class="line">		double result = 0;</div><div class="line">		result = get_numberA() * get_numberB();</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class OperationDiv :public Operation</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	OperationDiv()&#123;&#125;</div><div class="line">	OperationDiv(double numA, double numB) :Operation(numA, numB)&#123;&#125;</div><div class="line">	double GetResult()</div><div class="line">	&#123;</div><div class="line">		double result = 0;</div><div class="line"></div><div class="line">		if (get_numberB() == 0)&#123;</div><div class="line">			throw new exception(&quot;除数不能为零&quot;);</div><div class="line">		&#125;</div><div class="line">		result = get_numberA() / get_numberB();</div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">//简单运算工厂类  </div><div class="line">class OperationFactory</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Operation *createOperate(char operate)</div><div class="line">	&#123;</div><div class="line">		Operation *oper = NULL;</div><div class="line">		switch (operate)&#123;</div><div class="line">		case &apos;+&apos;:</div><div class="line">			oper = new OperationAdd();</div><div class="line">			break;</div><div class="line">		case &apos;-&apos;:</div><div class="line">			oper = new OperationSub();</div><div class="line">			break;</div><div class="line">		case &apos;*&apos;:</div><div class="line">			oper = new OperationMul();</div><div class="line">			break;</div><div class="line">		case &apos;/&apos;:</div><div class="line">			oper = new OperationDiv();</div><div class="line">			break;</div><div class="line">		&#125;</div><div class="line">		return oper;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	Operation *oper=NULL;</div><div class="line">	OperationFactory operFactory;</div><div class="line">	double numA, numB;</div><div class="line">	char operate;</div><div class="line">	cout &lt;&lt; &quot;请输入第一个数字&quot; &lt;&lt; endl;</div><div class="line">	cin &gt;&gt; numA;</div><div class="line">	cout &lt;&lt; &quot;请输入第二个数字&quot; &lt;&lt; endl;</div><div class="line">	cin &gt;&gt; numB;</div><div class="line">	cout &lt;&lt; &quot;请输入操作符&quot; &lt;&lt; endl;</div><div class="line">	cin &gt;&gt; operate;</div><div class="line">	oper = operFactory.createOperate(operate);</div><div class="line">	oper-&gt;set_numberA(numA);</div><div class="line">	oper-&gt;set_numberB(numB);</div><div class="line">	double result = oper-&gt;GetResult();</div><div class="line">	delete oper;</div><div class="line">	cout &lt;&lt; &quot;result=&quot; &lt;&lt; result &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1532,7 +1535,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1549,7 +1552,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
