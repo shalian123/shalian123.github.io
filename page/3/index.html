@@ -265,6 +265,132 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/14/c-笔记之友元类和运算符重载/" itemprop="url">
+                  c++笔记之友元类和运算符重载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-14T18:59:00+08:00" content="2017-06-14">
+              2017-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/14/c-笔记之友元类和运算符重载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/c-笔记之友元类和运算符重载/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前在看设计模式时遇到了一些问题，一直没有时间来整理，现在终于研一课程全部结束了，因此回过头来整理一下。</p>
+<p>1.friend ostream&amp; operator &lt;&lt;（ostream&amp; out，const Money&amp; x）是什么意思？<br>答：对”&lt;&lt;”运算符的重载。<br><strong>一般我们用的”&lt;&lt;”只能输出整型、实型等普通类型</strong>。<br>要<strong>想输出类的类型，则必须对”&lt;&lt;”进行重载</strong>，<strong>其中一个参数为类类型对象</strong>。<br>为了<strong>方便对对象内部数据的操</strong>作，设置为friend友元函数。<br>为了能达到cout&lt;&lt;对象&lt;&lt;对象&lt;&lt;endl;的连续输出对象的效果，<strong>设置返回类型为引用</strong>。</p>
+<p><strong>参数</strong>：第一个为输出流对象。第二个为要输出的对象（<strong>为了防止产生临时对象、提高程序的效率，将参数设置为引用类型，但引用类型又不想让它改变实参的值，所以设置为const</strong>）。<br>例子：<br>friend ostream&amp; operator&lt;&lt;(ostream&amp; o,const Person&amp; p)（<strong>输出运算符重载</strong>）<br>{<br> o&lt;&lt;”名字”&lt;&lt;p.name&lt;&lt;”年龄”&lt;&lt;p.age&lt;&lt;”身高”&lt;&lt;p.height&lt;&lt;”体重”&lt;&lt;p.weight&lt;&lt;”.\n”;<br> return o;<br>}</p>
+<p>friend istream&amp; operator&lt;&lt;(istream&amp; i, Person&amp; p)（<strong>输入运算符重载</strong>）<br>{<br>i&gt;&gt;p.name&gt;&gt;p.age&gt;&gt;p.height&gt;&gt;p.weight;<br> return i;<br>}</p>
+<p>2.friend关键字<br>c++中有个friend关键字，它能让被修饰的对象冲破本class的封装特性，从而能够访问本class的私有对象。<br>简单来讲，就是：<br>•    如果你在A类中，申明了函数func()是你的friend，那么func()就可以使用A类的所有成员变量，无论它在什么地方定义的。<br>•    如果你在A类中，申明了B类是你的friend，那么B类中的方法就可以访问A类的所有成员变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class A &#123;</div><div class="line">public:</div><div class="line">    A() &#123;</div><div class="line">        password = 1111;</div><div class="line">        birthday = 808;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~A() &#123; &#125;</div><div class="line"></div><div class="line">    friend int func(A a); // 向c++表示，int func(A a)是我的朋友，所以它可以使用我的所有东西。</div><div class="line">    friend class B;       // 向c++表示，class B是我的朋友，所以它可以使用我的所有东西。</div><div class="line"></div><div class="line">private:</div><div class="line">    int password;</div><div class="line">    int birthday;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int func(A a) &#123;</div><div class="line">    cout &lt;&lt; a.password &lt;&lt; &quot; and &quot; &lt;&lt; a.birthday &lt;&lt; endl; //可以访问</div><div class="line">    a.password = 1;                                      //甚至可以修改</div><div class="line">    cout &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B &#123;</div><div class="line">public:</div><div class="line">    B() &#123; &#125;</div><div class="line"></div><div class="line">    ~B() &#123; &#125;</div><div class="line">    // 因为在A类中已经声明了B类是它的朋友，所以B类中方法就可以访问A类的私有变量了</div><div class="line">    void show(A a) &#123;</div><div class="line">        cout &lt;&lt; &quot;your account is &quot; &lt;&lt; a.account &lt;&lt; &quot; and with pass: &quot; &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main() &#123;</div><div class="line"></div><div class="line">    A a;</div><div class="line">    func(a);</div><div class="line">    B b;</div><div class="line">    b.show(a);</div><div class="line">    system(&quot;pause&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>加上运算符重载：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#include&lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class A &#123;</div><div class="line">public:</div><div class="line">    A() &#123;</div><div class="line">        password = 1111;</div><div class="line">        account = 808;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~A() &#123; &#125;</div><div class="line"></div><div class="line">    friend ostream&amp; operator &lt;&lt; (ostream &amp;os , A a);</div><div class="line"></div><div class="line">private:</div><div class="line">    int password;</div><div class="line">    int account;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ostream&amp; operator &lt;&lt; (ostream &amp;os , A a) &#123;</div><div class="line">    os &lt;&lt; &quot;your account is &quot; &lt;&lt; a.account &lt;&lt; &quot; and with pass: &quot; &lt;&lt; a.password &lt;&lt; endl;</div><div class="line">    return os;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main() &#123;</div><div class="line"></div><div class="line">    A a;</div><div class="line"></div><div class="line">    cout &lt;&lt; a;</div><div class="line"></div><div class="line">    system(&quot;pause&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/14/多尺度Gabor滤波器提取彩色图像边缘/" itemprop="url">
                   多尺度Gabor滤波器提取彩色图像边缘
                 </a>
@@ -1400,134 +1526,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/23/QT之http网络编程，json访问应答/" itemprop="url">
-                  QT之http网络编程，json访问应答
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-04-23T11:02:46+08:00" content="2017-04-23">
-              2017-04-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/04/23/QT之http网络编程，json访问应答/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/23/QT之http网络编程，json访问应答/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>结合前面两篇文章《浅谈http之post与get的区别》和《QT之json》，本文重点尝试了如何在qt中通过http协议json格式请求和响应服务器的json格式，并解析。<br>本文的重点是客户端的编写，服务器用的是一个简易的http本地服务器。<br>服务器端的响应程序如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void HttpServer::onRequest(HttpRequest* req, HttpResponse* resp)</div><div class="line">&#123;</div><div class="line">	//实现你的响应代码</div><div class="line">	QString reply  = tr(&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Rokh Server Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;hello!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;);</div><div class="line">    resp-&gt;setHeader(&quot;Content-Type&quot;, &quot;text/html&quot;);</div><div class="line">    resp-&gt;setHeader(&quot;Content-Type&quot;,&quot;application/json&quot;);</div><div class="line">	resp-&gt;setStatus(200);</div><div class="line"></div><div class="line">    resp-&gt;end(QString(&quot;&#123;&quot;</div><div class="line">                      &quot;\&quot;name\&quot;:\&quot;QT\&quot;,&quot;</div><div class="line">                      &quot;\&quot;version\&quot;:5,&quot;</div><div class="line">                      &quot;\&quot;windows\&quot;:true&quot;</div><div class="line">                      &quot;&#125;&quot;)</div><div class="line"></div><div class="line">);</div><div class="line">    //resp-&gt;end(QString(&quot;Test ok!&quot;));</div><div class="line">	return;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>客户端的程序：在mainwindow.cpp中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line"> &#123;</div><div class="line">    QNetworkRequest req;//构造一个请求</div><div class="line">    req.setUrl(QUrl(&quot;http://localhost:58890/post&quot;));</div><div class="line">    req.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(&quot;application/json&quot;));</div><div class="line">    QNetworkAccessManager *manager = new QNetworkAccessManager(this);</div><div class="line">    /***json数据**********/</div><div class="line">    QJsonObject json;</div><div class="line">    json.insert(&quot;name&quot;, &quot;Qt&quot;);</div><div class="line">    json.insert(&quot;version&quot;, 7);</div><div class="line">    json.insert(&quot;windows&quot;, true);</div><div class="line"></div><div class="line">    QJsonDocument document;</div><div class="line">    document.setObject(json);</div><div class="line">    QByteArray byte_array = document.toJson(QJsonDocument::Compact);</div><div class="line"></div><div class="line">    //QNetworkReply *reply = manager.post(req, QByteArray(&quot;&#123;&#125;&quot;));</div><div class="line">    //QNetworkReply *reply = manager-&gt;post(req,byte_array);//发送请求，并会获得一个reply的响应对象</div><div class="line">    manager-&gt;post(req,byte_array);//发送请求，使用 json 参数直接传递</div><div class="line"></div><div class="line"></div><div class="line">    //开启一个局部的事件循环，等待响应结束，</div><div class="line">    //退出因为请求的过程是异步的，所以此时使用 QEventLoop 开启一个局部的事件循环，等待响应结束，事件循环退出。</div><div class="line">    //注意：开启事件循环的同时，程序界面将不会响应用户操作（界面被阻塞）。</div><div class="line">   // QEventLoop ev;</div><div class="line">   //连接槽信号</div><div class="line">   // QObject::connect(manager, &amp;QNetworkAccessManager::finished, &amp;ev, &amp;QEventLoop::quit);</div><div class="line">    connect(manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(replyFinished(QNetworkReply *)));</div><div class="line"></div><div class="line">   // ev.exec();</div><div class="line">   //connect(reply, SIGNAL(finished()), &amp;ev, SLOT(quit()));</div><div class="line">   // ev.exec(QEventLoop::ExcludeUserInputEvents);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">MainWindow::~MainWindow()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line">//槽函数，获取响应的内容，调用 readAll()，由于上述的 POST 请求返回的数据为 Json 格式，将响应结果先转化为 Json，然后再对其解析</div><div class="line">void MainWindow::replyFinished(QNetworkReply *reply)</div><div class="line">&#123;</div><div class="line">    if(reply-&gt;error()!= QNetworkReply::NoError)</div><div class="line">         qDebug() &lt;&lt; QStringLiteral(&quot;响应失败&quot;);</div><div class="line"></div><div class="line">    // 获取响应信息，响应的内容可以是 HTML 页面，也可以是字符串、Json、XML等</div><div class="line">    QByteArray bytes = reply-&gt;readAll();</div><div class="line"></div><div class="line">    QJsonParseError jsonError;</div><div class="line">    QJsonDocument doucment = QJsonDocument::fromJson(bytes, &amp;jsonError);// 转化为 JSON文档</div><div class="line">    if (jsonError.error != QJsonParseError::NoError) &#123;</div><div class="line">        qDebug() &lt;&lt; QStringLiteral(&quot;解析Json失败&quot;);</div><div class="line">        qDebug() &lt;&lt; bytes;//如果服务器里响应的不是json格式的数据，则不用解析，直接输出</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 解析Json</div><div class="line">    if (doucment.isObject()) &#123;              // JSON 文档为对象</div><div class="line">        QJsonObject obj = doucment.object();// 转化为对象</div><div class="line">        QJsonValue value;</div><div class="line">        if (obj.contains(&quot;name&quot;)) &#123;</div><div class="line">            value = obj.take(&quot;name&quot;);      //Removes key from the object.</div><div class="line">            if (value.isString()) &#123;         //判断 value 是否为字符串</div><div class="line"></div><div class="line">                QString data = value.toString();// 将 value 转化为字符串</div><div class="line"></div><div class="line">                qDebug() &lt;&lt; endl &lt;&lt; data;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (obj.contains(&quot;version&quot;)) &#123;</div><div class="line">            value = obj.take(&quot;version&quot;);//Removes key from the object.</div><div class="line">            if(value.isDouble())</div><div class="line">            &#123;</div><div class="line">                int data = value.toVariant().toInt();</div><div class="line">                qDebug() &lt;&lt; data;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (obj.contains(&quot;windows&quot;)) &#123;</div><div class="line">            value = obj.take(&quot;windows&quot;);//Removes key from the object.</div><div class="line">            if(value.isBool())</div><div class="line">            &#123;</div><div class="line">                bool flag = value.toBool();</div><div class="line">                qDebug() &lt;&lt; flag ;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        qDebug() &lt;&lt; &quot;error, shoud json object&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //检测响应状态码,200 OK，表示请求已成功，请求所希望的响应头或数据体将随此响应返回</div><div class="line">    QVariant variant = reply-&gt;attribute(QNetworkRequest::HttpStatusCodeAttribute);</div><div class="line">    if (variant.isValid())</div><div class="line">        qDebug() &lt;&lt; variant.toInt();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>程序中请求是以json对象格式请求的，所以需要先使用 tojson()将QJsonDocument类文件转换成文本文件</p>
-<blockquote>
-<p>QByteArray byte_array = document.toJson(QJsonDocument::Compact);//转换成了字节数组</p>
-</blockquote>
-<p>然后发送请求<code>manager-&gt;post(req,byte_array);</code>//发送请求</p>
-<p>槽函数，获取响应的内容，调用 readAll()，由于上述的 POST 请求返回的数据为 Json 格式，将响应结果先转化为Json（fromjson函数），然后再对其解析。</p>
-<p>结果解析如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/1492952805%281%29.png" alt=""><br>服务器端响应的json格式数据被解析并输出。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1573,7 +1571,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1581,7 +1579,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1590,7 +1588,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

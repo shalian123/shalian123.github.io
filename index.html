@@ -265,6 +265,126 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/26/SLAM/" itemprop="url">
+                  SLAM
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-26T21:38:45+08:00" content="2017-10-26">
+              2017-10-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机视觉/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机视觉</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/26/SLAM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/26/SLAM/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天偶然看到一篇清华大学博士写的文章，他主要研究方向是计算机视觉，因为本人之前也帮一个朋友一起研究过SLAM，不过当时她主要是做扫地机器人路径规划的，看到这篇文章后顿时感到之前的研究只是皮毛（不是自黑）。<br><strong>什么是SLAM</strong>?机器人在未知环境中，要实现智能化需要完成三个任务，第一个是定位(Localization)，第二个是建图(Mapping)，第三个则是随后的路径规划(Navigation)。<br>几年前，如果有人问到什么是SLAM，我可能会举个例子：用在室内移动机器人上的技术，如果非要找个刚需场景的话，扫地机那边画图边扫地的样子简直是最好像向陌生人解释这东西有多牛掰的神器。然而，随着最近几年激光导航、AR、无人机、无人驾驶技术的发展，SLAM再次火了起来。<br>具体的介绍可以参考高博的博文，在此处附上他的博客链接：<br><a href="http://www.cnblogs.com/gaoxiang12/p/3695962.html" target="_blank" rel="external">http://www.cnblogs.com/gaoxiang12/p/3695962.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/09/21/c-的纯虚函数和虚函数/" itemprop="url">
                   c++的纯虚函数和虚函数
                 </a>
@@ -591,6 +711,8 @@
 <p>在file.c文件中有如下代码，<br>注：file.c中没有包含get_square函数的声明；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void main()</div><div class="line">&#123;</div><div class="line"> uint64_t ret = 0;</div><div class="line"> ret = get_square(1&lt;&lt;20);</div><div class="line"> printf(&quot;ret = %#llx\n&quot;,ret);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>结果输出多少？<br>%llx表示64位16进制数；左移20位的平方就是左移40位，4位二进制是一个16进制。就是16进制左移10位。即0x00000000001—–<strong>0x10000000000</strong>(答案)</p>
 <p><strong>5.请写出int变量v关于s(数值&gt;=1且为2的n次方)向上对齐的宏定义</strong><br> （如7关于4向上对齐为8，16关于8向上对齐后为16）<br> 答案： <code>#define ROUND_UP(v,s) ( ((v)+sizeof(s)-1)&amp;~(sizeof(s)-1) )</code><br>  具体解析参考 <a href="http://blog.csdn.net/duanlove/article/details/9948947" target="_blank" rel="external">http://blog.csdn.net/duanlove/article/details/9948947</a> //Linux socket.h 中 CMSG_ALIGN 宏定义的作用（字节对齐）</p>
+<p><strong>6.请写出int变量v中第l到第h比特位取反，其他比特位不变的宏定义（0&lt;=l&lt;=h&lt;=31）</strong><br>  答：<code>#define BITS_XOR(v,h,l) ( v^int(pow(2,h)-pow(2,(l-1))) )</code></p>
+<p><strong>7.进行TCP/IP网络编程中，需要将本地字节充转换成网络字节序，在linux环境下，c语言中将本地的short类型转换成网络字节序的接口名是？</strong>（<strong>htons()</strong>函数）<br>相关知识：网络字节顺序是TCP/IP中规定好的一种数据表示格式，它与具体的CPU类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。网络字节顺序采用big endian方式。注意：X86系列CPU都是小端little-endian字节序，即低字节存低位，高字节存高位。<br>为此，linux专门提供了字节转换函数。<br>unsigned long  int<strong> htonl</strong>(unsigned long  int hostlong)<br>unsigned short int <strong>htons</strong>(unisgned short int hostshort)<br>unsigned long  int <strong>ntohl</strong>(unsigned long  int netlong)<br>unsigned short int <strong>ntohs</strong>(unsigned short int netshort)<br>在这四个转换函数中，h代表host，n代表 network，s代表short，l代表long 。htonl()函数的意义是将本机器上的long数据转化为网络上的long。其他几个函数的意义也差不多。<br>网上的例子：<br><img src="http://ols4zt49w.bkt.clouddn.com/1505984122%281%29.png" alt=""><br>也就是说对于从网络上接收到的非单子节的基本数据类型数据，首先需要用ntohl(s)将其转换成本地字节序；同理，发往网络的非单子节的基本数据类型数据，首先用htonl(s)将其转换成网络字节序。这里最常见的就是IP地址和端口号。<br>关于其他网络应用程序开发的知识可以参考<a href="http://blog.chinaunix.net/uid-28404635-id-3976077.html" target="_blank" rel="external">Linux环境下网络编程杂谈</a></p>
 
           
         
@@ -1444,130 +1566,6 @@ printf(&quot;0x%x\n&quot;, val);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/23/短路非短路与/" itemprop="url">
-                  短路非短路与
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-23T16:26:29+08:00" content="2017-07-23">
-              2017-07-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java学习/" itemprop="url" rel="index">
-                    <span itemprop="name">java学习</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/07/23/短路非短路与/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/23/短路非短路与/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="短路非短路与"><a href="#短路非短路与" class="headerlink" title="短路非短路与"></a>短路非短路与</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">1.运算符</div><div class="line">    算术：+，-，*，/，%，++，--</div><div class="line">    关系：&gt;,&lt;,&lt;=，&gt;=,==,!=</div><div class="line">    逻辑 : &amp;&amp; , ||, !</div><div class="line">注意：</div><div class="line">    &amp;&amp;和||又称为短路与和短路非 （写 &amp; 和 | 的时候不短路，逻辑一样）</div><div class="line">          例子：</div><div class="line">                   int  a=5,b=10,c=5;</div><div class="line">                   boolean b3 = a&lt;b &amp;&amp; a++&gt;2;</div><div class="line">                   System.out.println(b3);           //true</div><div class="line">                   System.out.println(a);            //6</div><div class="line"></div><div class="line">                    </div><div class="line">                   int  a=5,b=10,c=5;</div><div class="line">                   boolean b3 = a&gt;b &amp;&amp; a++&gt;2;</div><div class="line">                   System.out.println(b3);           //false</div><div class="line">                   System.out.println(a);            //5,</div><div class="line">对于&amp;&amp;，当第一个操作数为false时，将不会再判断第二个数的操作，结果都为false</div><div class="line">对于||，    当第一个操作数为true时，将不会再判断第二个数的操作， 结果都为true</div></pre></td></tr></table></figure>
-<p>应用比较<br>短路&amp;&amp; 是很有用的。例如，下面的程序语句说明了短路逻辑运算符的优点，用它来防止被0除的错误：<br>if (denom != 0 &amp;&amp; num / denom &gt; 10)<br>既然用了短路与(&amp;&amp;) 运算符，就不会有当denom为0时产生的意外运行时错误。如果该行代码使用标准与 运算符（&amp;），它将对两个运算数都求值，当出现被0除的情况时，就会产生运行时错误。</p>
-<h4 id="基本类型转换"><a href="#基本类型转换" class="headerlink" title="基本类型转换"></a>基本类型转换</h4><p>基本类型间的转换：<br>   类型从小到大依次为：(与字节无关)<br>    byte,   short/char,  int,   long,  float , double,<br> 1）两种方式：<br> <strong>   1.1自动类型转换：从小类型到大类型<br>    1.2强制类型转换：从大类型到小类型</strong></p>
-<p> 2）两点规则：<br><strong>    2.1整数直接量可以直接赋值给byte，short，char,但不能超范围<br>    2.2byte,short,char型变量参与运算时，先一律转为int再运算</strong><br>byte b1=5;//可以，因为是直接量<br>byte b2=6;//可以<br>byte b3=b1+b2;//不可以，必须得强转 byte b3=（byte）(b1+b2);   b1+b2后已经是int型</p>
-<h4 id="建议使用扩展赋值"><a href="#建议使用扩展赋值" class="headerlink" title="建议使用扩展赋值"></a>建议使用扩展赋值</h4><p>赋值:建议使用扩展赋值<br>         a+=5; 相当于a=a+5<br>例子：  short s1 =5;<br>            s1=s1+10;//编译错误，要强转<br>            s1+=10;   //正确，<strong>扩展赋值运算自动强转</strong></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1613,7 +1611,7 @@ printf(&quot;0x%x\n&quot;, val);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1621,7 +1619,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1630,7 +1628,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
