@@ -1,0 +1,7 @@
+shalian.site
+
+feed:	#之后配置rss会用，使用如下配置即可
+  type: atom
+  path: atom.xml
+  limit: 20  
+
