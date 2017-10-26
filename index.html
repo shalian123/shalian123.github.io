@@ -344,10 +344,10 @@
 <p>_config.yml，themes/，source，scffolds/，package.json，.gitignore复制到你克隆下来的仓库文件夹，即Username.github.io；（Username是你自己的用户名）</p>
 <p>4、将themes/next/(我用的是NexT主题)中的.git/删除，否则无法将主题文件夹push；</p>
 <p>5、在Username.github.io；文件夹执行npm install，npm install hexo-deployer-git(这里可以看看分支是不是显示为hexo)<br><img src="http://ols4zt49w.bkt.clouddn.com/76YE31%7B%60HJ5C$3%5DYN%29%5DD@CQ.png" alt=""></p>
-<p>6、执行<code>git add</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
+<p>6、执行<code>git add .</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
 <p>7、执行hexo g -d 生成静态网页部署到github上。<br>这样，Username.github.io仓库就有master分支保存静态网页，hexo分支保存源文件。</p>
 <h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>在本地对博客修改（包括修改主题样式、发布新文章等）后</p>
-<p>1、执行<code>git add</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
+<p>1、执行<code>git add .</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
 <p>2、执行hexo g -d 生成静态网页部署到github上；</p>
 <p>（每次发布重复这两步，它们之间没有严格的顺序）</p>
 <h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><p>换电脑想改博客：<br>1、安装git；<br>2、安装Nodejs和npm；<br>3、使用克隆命令将仓库拷贝至本地；<br>4、在文件夹内执行命令<code>npm install hexo-cli -g</code>、<code>npm install</code>、<code>npm install hexo-deployer-git</code>；</p>
