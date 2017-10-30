@@ -265,6 +265,133 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/30/全局变量、局部变量、静态全局变量、静态局部变量的区别/" itemprop="url">
+                  全局变量、局部变量、静态全局变量、静态局部变量的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-30T12:05:29+08:00" content="2017-10-30">
+              2017-10-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/30/全局变量、局部变量、静态全局变量、静态局部变量的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/30/全局变量、局部变量、静态全局变量、静态局部变量的区别/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>C++变量根据定义位置的不同，具有不同的作用域，作用域可分为6种：全局作用域，局部作用域，语句作用域，类作用域，命名作用域和文件作用域。</p>
+<h4 id="从作用域看："><a href="#从作用域看：" class="headerlink" title="从作用域看："></a>从作用域看：</h4><p><strong>全局变量</strong>具有全局作用域。全局变量只需在一个源文件中定义，就可以作用于所有的源文件。当然，其他不包括全局变量定义的源文件需要用extern关键字再次声明这个全局变量。</p>
+<p><strong>静态局部变量</strong>具有局部作用域。它只被初始化一次，自从第一次初始化直到程序与你新内阁结束都一直存在，他和全局变量的区别在于全局变量对所有的函数都是可见的，而静态局部变量只对定义自己的函数体始终可见。<strong>(一般用来充当函数的返回值</strong>)</p>
+<p><strong>局部变量</strong>也只有局部作用域，他是自动对象，他在程序运行期间不是一直存在，而是只在函数执行期间存在，函数的一次调用结束后，变量就被撤销，其所占用的内存也被收回。</p>
+<p><strong>静态全局变量</strong>也具有全局作用域，他与全局变量的区别在于如果程序包含多个文件的话，他作用于定义它的文件里，不能作用到其他文件里，即被static关键字修饰过的变量具有<strong>文件作用域</strong>。这样即使两个不同的源文件都定义了相同的静态全局变量，他们也是不同的变量。</p>
+<h4 id="从分配内存空间看："><a href="#从分配内存空间看：" class="headerlink" title="从分配内存空间看："></a>从分配内存空间看：</h4><p>全局变量、静态局部变量、静态全局变量都在静态存储区分配空间，而局部变量在栈分配空间。</p>
+<p>全局变量本身就是静态存储方式，静态全局变量当然也是静态存储方式。这两者在存储方式上没有什么不同。<br><strong>区别在于</strong>非静态全局变量的作用域是整个源程序，当一个源程序由多个源文件组成时，非静态的全局变量在各个源文件中都是有效的。<br>而静态全局变量则限制了其作用域，即只在定义该变量的源文件内有效，在同一源程序的其他源文件中不能使用它。由于静态全局变量的作用域局限于一个源文件内，只能为该源文件内的函数公用，因此可以避免在其他源文件中引起错误。<br>1、<strong>静态变量</strong>会被放在程序的<strong>静态数据存储区</strong>里，<strong>这样可以在下一次调用的时候还可以保持原来的赋值。这一点是他与堆栈变量和堆变量的区别</strong><br>2、<strong>变量用static告知编译器，自己仅仅在变量的作用域范围内可见。这一点是他与全局变量的区别。</strong><br>从以上分析可以看出，把局部变量改变为静态变量后是改变了他的存储方式，即改变了他的生存期。把全局变量改变为静态变量后是改变了他的作用域，限制了他的使用范围，因此static这个说明符在不同的地方起的作用是不同的。</p>
+<h4 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h4><p>1、若全局变量仅在单个文件中访问，则可以讲这个变量修改为静态全局变量。<br>2、若全局变量仅在单个函数中使用，则可以将这个变量修改为该函数的静态局部变量。<br>3、全局变量、静态局部变量、静态全局变量都存放在静态数据存储区。<br>4、函数中必须要使用static变量的情况：当某函数的返回值为指针类型时，则必须是static的局部变量的地址作为返回值，若为auto类型，则返回为错指针。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/10/26/怎么去备份你的hexo博客/" itemprop="url">
                   怎么去备份你的hexo博客
                 </a>
@@ -1470,130 +1597,6 @@ printf(&quot;0x%x\n&quot;, val);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/04/http协议的补充/" itemprop="url">
-                  http协议的补充
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-04T14:51:16+08:00" content="2017-08-04">
-              2017-08-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/网络编程/" itemprop="url" rel="index">
-                    <span itemprop="name">网络编程</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/08/04/http协议的补充/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/04/http协议的补充/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a><br>在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的<strong>请求头部</strong>和<strong>请求数据</strong>是分开的。<strong>思路</strong>：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。</p>
-<p>一、首先我们了解一下我采取如此方案的原因：</p>
-<p><strong>POST提交</strong>：把提交的数据放置在是HTTP包的包体中。<br><strong>GET提交</strong>，请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，多个参数用&amp;连接；例 如：login.action?name=hyddd&amp;password=idontknow&amp;verify=%E4%BD%A0 %E5%A5%BD。如果数据是英文字母/数字，原样发送，如果是空格，转换为+，如果是中文/其他字符，则直接把字符串用BASE64加密，得出如： %E4%BD%A0%E5%A5%BD，其中％XX中的XX为该符号以16进制表示的ASCII。<br><strong>因此，GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变。</strong></p>
-<p><strong>我们看看GET和POST的区别</strong><br>1.GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456. POST方法是把提交的数据放在HTTP包的Body中.<br><strong>2.GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制</strong>.<br>3.GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。<br>4.GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</p>
-<p>二、下面是部分代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">void Widget::on_pushButton_3_clicked()</div><div class="line">&#123;</div><div class="line"></div><div class="line">    QFile file(&quot;C:/Users/hasee/Desktop/shujv-ceshi/build-untitled-Desktop_QT_5_3-Debug/test.txt&quot;);</div><div class="line">    file.open(QIODevice::ReadWrite);</div><div class="line">    //int file_len =file.size();</div><div class="line">    //QByteArray fdata=file.readAll();</div><div class="line">    QString data =file.readAll();</div><div class="line">    qDebug()&lt;&lt;data;</div><div class="line">    QNetworkRequest request;</div><div class="line"></div><div class="line">    request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!uploadThicknessRecordString.action&quot;));</div><div class="line">   // request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!checkUser.action&quot;));</div><div class="line">    request.setHeader(QNetworkRequest::ContentTypeHeader,&quot;application/x-www-form-urlencoded&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept&quot;,&quot;text/html, application/xhtml+xml, */*&quot;);</div><div class="line">   // request.setRawHeader(&quot;Referer&quot;,&quot;http://localhost:8888/login&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept-Language&quot;,&quot;zh-CN&quot;);</div><div class="line">    request.setRawHeader(&quot;X-Requested-With&quot;,&quot;XMLHttpRequest&quot;);</div><div class="line">    request.setRawHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)&quot;);</div><div class="line">    request.setRawHeader(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);//窗体数据被编码为名称/值对。这是标准的编码格式</div><div class="line">    //request.setRawHeader(&quot;Content-Type&quot;, &quot;application/json&quot;);//如果是json格式访问则加,但是这里我以字符串来发送，将文本里的内容读取发送</div><div class="line">    request.setRawHeader(&quot;Accept-Encoding&quot;,&quot;gzip,deflate&quot;);</div><div class="line">    request.setRawHeader(&quot;Connection&quot;,&quot;Keep-Alive&quot;);</div><div class="line">    request.setRawHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);</div><div class="line"></div><div class="line">    QString postData;</div><div class="line">   // postData.append(&quot;pid=1332&amp;username=superuser&amp;password=admin&quot;);</div><div class="line">   // postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&#123;thicknessrecord:&apos;sha&apos;,a:12.21&#125;&quot;);</div><div class="line">    postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&quot;);</div><div class="line">    postData+=data;//将文件中的字符串拼接上</div><div class="line">    QByteArray postData1=postData.toLatin1();//很重要，要将请求数据编码,toUtf8()也行</div><div class="line">    request.setRawHeader(&quot;Content-Length&quot;,QString::number(postData1.length()).toLatin1());//在请求头部设置请求数据的长度</div><div class="line">    _uploadManager-&gt;post(request,postData1);//postData1是请求数据</div><div class="line">          qDebug()&lt;&lt;postData1;</div><div class="line">    connect( _uploadManager,SIGNAL(finished(QNetworkReply*)),SLOT(replyFinished(QNetworkReply*)));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1639,7 +1642,7 @@ printf(&quot;0x%x\n&quot;, val);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1656,7 +1659,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -265,6 +265,224 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/21/数据结构注意点-指针与结构体/" itemprop="url">
+                  数据结构注意点(指针与结构体)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-21T22:55:32+08:00" content="2017-03-21">
+              2017-03-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/21/数据结构注意点-指针与结构体/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/21/数据结构注意点-指针与结构体/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在c语言中，结构体和指针常常能见到他们的身影，本文初步总结了在平常写代码中易忽视的一些小细节。</p>
+<h4 id="typedef-struct-A-和-typedef-struct-A-A；有什么区别"><a href="#typedef-struct-A-和-typedef-struct-A-A；有什么区别" class="headerlink" title="typedef struct A{};和 typedef struct A{}A；有什么区别"></a>typedef struct A{};和 typedef struct A{}A；有什么区别</h4><p>首先，关于结构体补充一点，国内经典教材——谭浩强的《C++程序设计》中明确指出：</p>
+<p>1、在C语言中，定义结构体变量格式为：struct A a；</p>
+<p>2、在C++中，定义结构体变量格式为：A a；</p>
+<p>另外，<strong>c++</strong>保留了C的风格，即C++中既可以struct A a，也可以用A a，谭先生建议用新式写法A a；</p>
+<p>所以该问题，可以这么回答：</p>
+<p>（1）<strong>在C语言中（或C风格的程序）</strong>：</p>
+<p>使用 <strong>typedef struct A{}A可以在定义结构体变量时，不必写成struct A a，直接写成A a</strong>（这里的A是 typedef struct A{}A后边</p>
+<p>的A），目的是省去struct使程序更简练；</p>
+<p><strong>而使用typedef struct A{}定义结构体变量时必须写成struct A a，不能省略struct</strong>；</p>
+<p>（2）<strong>在C++语言中</strong>（或C++风格的程序）：</p>
+<p>在<strong>C++</strong>中一般也不会出现 typedef struct A{}A这样多此一举的形式，出现的原因可能是分不清C与C++；</p>
+<p>另外，<strong>关于结构体C与C++还有一点区别：</strong> <strong>C结构体不能包含函数，C++结构体可以包含函数，**</strong>但一般<strong>不这样做而是</strong>采用类**的方法实现。</p>
+<h4 id="结构指针的赋值问题（空指针）"><a href="#结构指针的赋值问题（空指针）" class="headerlink" title="结构指针的赋值问题（空指针）"></a>结构指针的赋值问题（空指针）</h4><p>首先我们先看一段程序：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p;
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+}
+</code></pre><p>这段代码有一个明显的错误：定义了一个结构体指针，用来指向此类结构体，但是却没有给他赋值，此时p的值为null，你没有在内存中为p分配任何空间。（<strong>注：空指针很危险也很容易犯错</strong>）<br>改法1：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p,temp;
+p = &amp;temp; //让p指向一个已存在的内存空间
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+
+}
+</code></pre><p>改法2：</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+int main()
+{
+struct abc
+{
+    int a;
+};
+struct abc *p；
+p = (struct abc *)malloc(sizeof(struct abc));给p分配一段内存空间，并使其指向此空间
+p-&gt;a = 1;
+printf(&quot;%d&quot;, p-&gt;a);
+getchar();
+return 0;
+free(p);//释放内存
+}
+</code></pre><h4 id="结构体指针与结构体变量用作函数参数区别"><a href="#结构体指针与结构体变量用作函数参数区别" class="headerlink" title="结构体指针与结构体变量用作函数参数区别"></a>结构体指针与结构体变量用作函数参数区别</h4><p>见代码：</p>
+<pre><code>#include&lt;stdio.h&gt;
+/* 定义结构体类型Point */
+typedef struct
+{
+int x;
+int y;
+}Point;
+
+void fun1(Point point){
+point.x += 10;
+point.y += 10;
+}
+
+void fun2(Point *pPoint){
+pPoint-&gt;x += 10;
+pPoint-&gt;y += 10;
+}
+
+void main()
+{
+Point p;
+p.x = 100;
+p.y = 200;
+
+/* 调用 fun1 */
+fun1(p);
+printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
+printf(&quot;\n&quot;);
+
+/* 调用 fun2：取p的地址作为参数 */
+fun2(&amp;p);
+printf(&quot;x=%d,y=%d&quot;,p.x,p.y);
+getchar();
+}
+</code></pre><p>输出结果：<br>x=100, y=200<br>x=110, y=210<br><strong>注意：调用fun1时，所传递的参数p被复制到调用堆栈中，fun1函数所操作是堆栈中的变量而不是原来的那个变量（main中的p）；另一方面，调用fun2时，传入的p的地址，fun2通过地址，修改了main中的变量p。这是结构体指针与结构体变量用作函数参数最大的区别</strong></p>
+<h4 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h4><p><strong>指针常量：</strong><br>int a；<br>int <strong>*</strong> const p = &amp;a    //指针常量，<strong>*</strong>p可以修改 <strong>*p = 8（OK）； p 不可以修改 p++（ERROR），即指针所指地址不能变，但地址中存的值可以变</strong></p>
+<p><strong>常量指针</strong><br>int a，b；<br>const int <strong>*</strong>p = &amp;a；//常量指针    <strong>*</strong>p不可修改， <strong>*</strong>p = 8；（ERROR）； p 可以修改 p = &amp;b （OK）<strong>即地址可改，值不能改</strong></p>
+<p><strong>还有一种</strong><br>const int <strong>* </strong>const p = &amp;a；    // *p 和 p均不可改变了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/16/QT-Qte-Qtopia三者的区别/" itemprop="url">
                   QT/Qte/Qtopia三者的区别
                 </a>
@@ -1464,7 +1682,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1481,7 +1699,7 @@ exit(EXIT_SUCCESS);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
