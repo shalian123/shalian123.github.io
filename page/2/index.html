@@ -265,6 +265,135 @@
             
               
                 
+                <a class="post-title-link" href="/2017/08/23/QT移植到am437x开发板/" itemprop="url">
+                  QT移植到am437x开发板
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-23T18:42:00+08:00" content="2017-08-23">
+              2017-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/23/QT移植到am437x开发板/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/23/QT移植到am437x开发板/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：<br>首先贴出我参考的以些资料：<br><a href="http://bbs.elecfans.com/forum.php?mod=viewthread&amp;tid=905966&amp;extra=&amp;ordertype=2" target="_blank" rel="external">【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板</a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a><br><a href="http://www.cnblogs.com/topeet/p/5711957.html" target="_blank" rel="external">【转帖】嵌入式4412开发板QT5.7编译安装到arm </a><br><a href="http://www.cnblogs.com/t1029901995/p/6046600.html" target="_blank" rel="external">Qt5.7.0移植到4412 </a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a></p>
+<p>在移植的过程中遇到的问题：<br>1.linux下qt不能编译？<br>  解决：（1）权限的问题：工程代码需要权限；qtcreator也需要权 （2）linux下目录是‘/’（没有双杠，且左低右高）<br>2.移植的注意点：<br>  （1）如果是原生的ubuntu（刚装好的），移植前需要先安装x11的库，见下图：</p>
+<p>  <img src="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png" alt=""><br>  （2）安装跟板子配套的交叉编译工具链，注意：三星的4412是arm-none-linux-gnueabi-gcc，ti用的是arm-linux-gnueabihf，由于板子出厂固件中运行的是基于Qt5.7,因此我下载的也是跟5.7配套的交叉编译工具链<code>gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf.tar</code><br>  （3）修改交叉编译架构用到的信息：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489195%281%29.png" alt=""></p>
+<p>  （3）创建脚本文件用于生成Makefile文件时，要有<code>-no-iconv  \</code>, 否则字库会出问题。<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489408%281%29.png" alt=""></p>
+<p>  （4）在开发板上运行校正程序时出现No raw modules loaded<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">解决方法是把  tslib/etc目录下的ts.conf 的 &quot;#module_raw input&quot;的注释符号“＃”去掉。但记住不要在前面留有 空格 ，否则会出现错误Segmentation fault</div></pre></td></tr></table></figure></p>
+<p>  （5）程序运行起来，仍报错：<br>QIconvCodec::convertFromUnicode: using Latin-1 for conversion, iconv_open failed<br>QIconvCodec::convertToUnicode: using Latin-1 for conversion, iconv_open failed​<br>解决 ：下载 <a href="http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz" target="_blank" rel="external">http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz</a><br>                ./configure -prefix=$PWD/_install -host=arm-linux-gnueabihf<br>                make<br>                make install<br>                把_install/lib 下的preloadable_libiconv.so 拷到系统的/system/lib 下,<br>                export LD_PRELOAD=/system/lib/preloadable_libiconv.so</p>
+<p>   （6）在环境变量配置时，如果不想把板子自带的DT Demo覆盖掉，可以不配置QT_ROOT<br>   配置如下：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489027%281%29.png" alt=""></p>
+<p>   （7）要使板子支持中文，可以下载中文字库，放在ARM板的fonts目录下，这里我放在<code>/usr/share/fonts/ttf</code>下。此处我提供下载连接。<br>   <a href="http://ols4zt49w.bkt.clouddn.com/DroidSansFallback.ttf" target="_blank" rel="external">QT中文字库，直接放在ARM板的fonts目录下</a></p>
+<p>   （8）移植sqlite到arm板上，参考：<a href="http://www.cnblogs.com/lidabo/p/5851752.html" target="_blank" rel="external">http://www.cnblogs.com/lidabo/p/5851752.html</a></p>
+<p>最后，附上一张移植后的图片：<br><img src="http://ols4zt49w.bkt.clouddn.com/881346359011543039.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/08/04/http协议的补充/" itemprop="url">
                   http协议的补充
                 </a>
@@ -1360,137 +1489,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/27/简述如何将qt程序在arm开发板上运行起来/" itemprop="url">
-                  简述如何将qt程序在arm开发板上运行起来
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-27T19:01:38+08:00" content="2017-06-27">
-              2017-06-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/嵌入式/" itemprop="url" rel="index">
-                    <span itemprop="name">嵌入式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/27/简述如何将qt程序在arm开发板上运行起来/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/27/简述如何将qt程序在arm开发板上运行起来/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前我谈论了qt的一些开发应用，他主要应用在一些嵌入式设备上，比如平板，机顶盒，路由等等。下面我简要通过我的试验和学习过程总结出：将qt程序移植到开发板（平板）上。（）</p>
-<h4 id="Qt-E4-7-1-编译器的安装"><a href="#Qt-E4-7-1-编译器的安装" class="headerlink" title="Qt/E4.7.1 编译器的安装"></a>Qt/E4.7.1 编译器的安装</h4><p>Qt/E4.7.1 使用的编译器是交叉编译器编译工具“arm-linux-gcc-4.3.2.tar.gz”<br>1.将“arm-linux-gcc-4.3.2.tar.gz”解压到 Ubuntu 系统的文件夹“/usr/local/arm”中<br>2.修改环境变量（注意：root用户下）<br>  输入命令“<code>vim .bashrc</code>”，打开设置环境变量的文件“.bashrc”，然后进入最后行，如下图，将环境变量修改为<br>  “<code>export PATH=$PATH:/usr/local/arm/4.3.2/bin</code>”，如下图：<img src="http://ols4zt49w.bkt.clouddn.com/1498563723%281%29.png" alt=""><br>  保存退出，然后更新一下环境变量，输入命令“<code>source .bashrc</code>”<br> 接着测试一下，编译器路径设置的对不对。如下图，在 Ubuntu 命令行中输入命令”arm”,然后按键盘”Tab”，出现编译器“arm-none-linux-gnueabi-gcc-4.3.2”，这就说明编译器路径设置正确。 如下图：<br> <img src="http://ols4zt49w.bkt.clouddn.com/1498564244%281%29.png" alt=""></p>
-<h4 id="Qt-E4-7-1-镜像的编译"><a href="#Qt-E4-7-1-镜像的编译" class="headerlink" title="Qt/E4.7.1 镜像的编译"></a>Qt/E4.7.1 镜像的编译</h4><p>先将 Qt/E4.7.1 源码压缩包“qt-everywhere-opensource-src-4.7.1.tar.gz”拷贝到 Ubuntu 的文件夹“root/yizhi”中，没有这个文件夹则可以新建一个。在 Ubuntu 命令行中输入解压命令“<code>tar -vxf qt-everywhere-opensource-src-4.7.1.tar.gz</code>”，解压后得到文件夹“qt-everywhere-opensource-src-4.7.1”。<br>进入“qt-everywhere-opensource-src-4.7.1”文件夹中，执行编译脚本“<code>./build-all</code>”,注意这个命令有个点“<code>.</code>”如下图：<br><img src="http://ols4zt49w.bkt.clouddn.com/1498564694%281%29.png" alt=""><br>输入回车，如下图所示，开始编译，编译比较耗费时间。<br>编译完成后，如下图，进入”/opt”目录，可以看到编译生成的“qt-4.7.1”文件夹。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498564714%281%29.png" alt=""><br>进入文件夹“/home/topeet/Linux+QT/root/opt”（目录 topeet 根据用户实际建立的文件夹调整），然后将“qt-4.7.1”文件夹拷贝到该目录下，如下图。红色框中的“qt-4.7.1”文件夹是 Qt/E4.7，蓝色框中的”Qtopia”就是之前编译得到的“Qtopia”文件系统。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498564966%281%29.png" alt=""><br>如下图，进入文件夹“/home/topeet/Linux+QT”中，输入命令“<code>make_ext4fs -s -l 314572800 -a root -L linux system.img root</code>”，编译生成二进制文件“system.img”。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498565228.png" alt=""><br>如下图，文件“system.img”就是 Qt/E4.7 的镜像。（注意：编译生成Qt/E4.7 的镜像的时候，文件夹“/home/topeet/Linux+QT/root/opt里不要有qtopia文件系统）<br><img src="http://ols4zt49w.bkt.clouddn.com/1498565428%281%29.png" alt=""><br>其它三个文件和 Qtopia 文件系统对应的镜像一模一样。</p>
-<p>  <strong>补充：</strong><br> <strong>生成 system.img的前期工作：</strong><br> 生成可以下载的 system.img 文件需要工具“mkimage，这里在客服提供的02_编译器以及烧写工具”→“tools”文件夹下的压缩包“linux_tools.tgz”中。<br>拷贝压缩包到 Ubuntu 系统的“/”目录下，<strong>注意目录是“/”</strong>。<br>进入“/”目录，然后使用命令“<code>tar -vxf linux_tools.tgz</code> ”，将压缩包解压。<br>解压后如下图所示，在“/usr/local/bin/”目录下生成了两个文件。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498566182%281%29.png" alt=""><br>使用命令“<code>cd /home/topeet/</code>”进入 topeet 目录，然后使用命令“<code>mkdir Linux+QT</code>”新建一个“Linux+QT”文件夹。如下图所示：<br><img src="http://ols4zt49w.bkt.clouddn.com/1498566369%281%29.png" alt=""><br>拷贝root.tar.gz”到新建的“Linux+QT”文件夹，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/1498566645%281%29.png" alt=""><br>使用命令“<code>tar -vxf root_20150123.tar.gz</code>”解压压缩包<br>解压后会生成文件夹“root”，如下图所示。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498566756%281%29.png" alt=""><br><strong>在编译生成镜像前先把前面编译生成的文件夹“Qtopia”或qt-4.7.1”文件夹拷贝到root解压出来的“opt”文件夹中</strong>，在执行上面的操作后，最后执行生成二进制文件的命令，在目录“/home/topeet/Linux+QT ”中，使用命令“<code>make_ext4fs -s -l 314572800 -a root -L linux system.img root</code>”</p>
-<p><strong>以上为生成system.img的前期工作或者必须了解的。</strong></p>
-<h4 id="系统运行后-Qt-E4-7-和-Qtopia2-2-0-的切换"><a href="#系统运行后-Qt-E4-7-和-Qtopia2-2-0-的切换" class="headerlink" title="系统运行后 Qt/E4.7 和 Qtopia2.2.0 的切换"></a>系统运行后 Qt/E4.7 和 Qtopia2.2.0 的切换</h4><p>为了方便切换，只需要将编译 Qtopia 和编译 Qt/E4.7 得到的文件夹同时放到“/home/topeet/Linux+QT/root/opt”目录中，然后再使用“<code>make_ext4fs -s -l 314572800 -a root -L linux system.img root</code>”，编译可以得到“system.img”。</p>
-<h5 id="设置开发板优先运行的文件系统"><a href="#设置开发板优先运行的文件系统" class="headerlink" title="设置开发板优先运行的文件系统"></a>设置开发板优先运行的文件系统</h5><p>源代码编译后，<strong>默认是运行 Qtopia</strong>，下面讲一下如何直接运行 Qt/E4.7。<br>这里需要修改“root/etc/init.d/rcS”文件。如下图所示，打开“root/etc/init.d/rcS”文件<br><img src="http://ols4zt49w.bkt.clouddn.com/1498565767%281%29.png" alt=""><br>打开文件“rcS”后，进入文件中的最后一行，如果要默认启动“qt-4.7.1”，则将修改为上图中的“qtopia”修改为“qt4”，如下图<br>所示。注意这里的修改语法和格式一定要和源代码的的一样。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498567183%281%29.png" alt=""><br>修改后，<strong>重新编译生成二进制文件</strong>，系统就会默认运行 Qt/E4.7。</p>
-<p><strong>注意：</strong>Qt/E4.7.1 的u-boot-iTOP-4412.bin、zImage 以及ramdisk-uboot.img 和Qtopia 通用，编译方法也一样。它们的区别是“Qtopia”带有一个桌面系统，“Qt/E4.7.1”只是一个强大的库。关于他们的区别，可以参考我之前的一篇博客：<a href="http://shalian.site/2017/03/16/QT-Qte-Qtopia%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_blank" rel="external">QT/Qte/Qtopia三者的区别</a></p>
-<h5 id="系统运行后-Qt-E4-7-和-Qtopia2-2-0-的切换-1"><a href="#系统运行后-Qt-E4-7-和-Qtopia2-2-0-的切换-1" class="headerlink" title="系统运行后 Qt/E4.7 和 Qtopia2.2.0 的切换"></a>系统运行后 Qt/E4.7 和 Qtopia2.2.0 的切换</h5><p>输入切换命令的时候如果已经打开过一个文件系统，则需要先关闭已启动文件系统的进程。下面举例说明，如何关闭文件系统的进程。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498567538%281%29.png" alt=""><br><img src="http://ols4zt49w.bkt.clouddn.com/1498567561%281%29.png" alt=""><br>Qt/E4.7 文件系统启动后，再切换到 Qtopia2.2.0，也是使用和上面类似的方法，这里就不再重复讲解了。</p>
-<h4 id="在-iTOP-4412-开发板上运行-helloworld"><a href="#在-iTOP-4412-开发板上运行-helloworld" class="headerlink" title="在 iTOP-4412 开发板上运行 helloworld"></a>在 iTOP-4412 开发板上运行 helloworld</h4><p>在ubuntu里进入源码文件夹<br><img src="http://ols4zt49w.bkt.clouddn.com/1498567854%281%29.png" alt=""><br>之前我们编译生成了“/opt/qt-4.7.1/”，这个文件夹包含了移植所需要的<strong>最重要的工具 qmake。</strong>进入“<strong>/opt/qt-4.7.1/bin</strong>”，可以看到 qmake 文件。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498567953%281%29.png" alt=""><br>查看了 Qt/E4.7.1 的 qmake 之后，再进入 helloworld 的源码文件夹，然后，在该文件夹中运行 qmake “<code>#/opt/qt-4.7.1/bin/qmake</code>”<br><img src="http://ols4zt49w.bkt.clouddn.com/1498568160%281%29.png" alt=""><br>如下图，多了一个 Makefile 文件。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498568168%281%29.png" alt=""><br>然后，执行编译命令“#make”，如下图所示。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498568292%281%29.png" alt=""><br>生成了“helloworld”<br><img src="http://ols4zt49w.bkt.clouddn.com/1498568375%281%29.png" alt=""><br>然后，我们使用 file 命令测试一下。如下图，“#file helloworld”，可以看到 hellworld应用文件的基本信息，它是属于 ARM 平台的。<br><img src="http://ols4zt49w.bkt.clouddn.com/1498568440%281%29.png" alt=""><br>最后，将此文件U盘或tf卡挂载。在超级终端中，先修改权限“#<code>chmod 777 helloworld</code>”，然后再运行“#<code>./hellworld -qws</code>”<br>结果如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/468431670471850727.jpg" alt=""></p>
-<h4 id="linux-Qt系统下挂载U盘"><a href="#linux-Qt系统下挂载U盘" class="headerlink" title="linux Qt系统下挂载U盘"></a>linux Qt系统下挂载U盘</h4><p><img src="http://ols4zt49w.bkt.clouddn.com/1498568714%281%29.png" alt=""></p>
-<p>最后，欢迎志同道合者一起交流~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1536,7 +1534,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1553,7 +1551,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
