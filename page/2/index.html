@@ -265,6 +265,257 @@
             
               
                 
+                <a class="post-title-link" href="/2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/" itemprop="url">
+                  海康威视2018秋招-嵌入式软件开发9.20
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-20T16:33:57+08:00" content="2017-09-20">
+              2017-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/笔试面试/" itemprop="url" rel="index">
+                    <span itemprop="name">笔试面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>1.静态变量通常存储在进程哪个区？</strong><br>  答：静态变量和全局变量都存在全局区（静态区）。     new和malloc申请的在堆区。  函数局部变量和函数的参数在栈区。</p>
+<p>2.在软件生命周期中，能准确地确认软件系统必须做什么和必须具备哪些功能地阶段是：<strong>需求分析</strong>。</p>
+<p><strong>3.请用只包含一个表达式的宏定义，判断一个数是否是2的n次幂的数？</strong><br>  答：<strong> #define  S（n）（（n&amp;(n-1)）==0 ）</strong></p>
+<p><strong>4.在file.c文件中有如下函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line">uint64_t get_square(uint64_t a)</div><div class="line">&#123;</div><div class="line"> return a*a;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在file.c文件中有如下代码，<br>注：file.c中没有包含get_square函数的声明；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void main()</div><div class="line">&#123;</div><div class="line"> uint64_t ret = 0;</div><div class="line"> ret = get_square(1&lt;&lt;20);</div><div class="line"> printf(&quot;ret = %#llx\n&quot;,ret);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果输出多少？<br>%llx表示64位16进制数；左移20位的平方就是左移40位，4位二进制是一个16进制。就是16进制左移10位。即0x00000000001—–<strong>0x10000000000</strong>(答案)</p>
+<p><strong>5.请写出int变量v关于s(数值&gt;=1且为2的n次方)向上对齐的宏定义</strong><br> （如7关于4向上对齐为8，16关于8向上对齐后为16）<br> 答案： <code>#define ROUND_UP(v,s) ( ((v)+sizeof(s)-1)&amp;~(sizeof(s)-1) )</code><br>  具体解析参考 <a href="http://blog.csdn.net/duanlove/article/details/9948947" target="_blank" rel="external">http://blog.csdn.net/duanlove/article/details/9948947</a> //Linux socket.h 中 CMSG_ALIGN 宏定义的作用（字节对齐）</p>
+<p><strong>6.请写出int变量v中第l到第h比特位取反，其他比特位不变的宏定义（0&lt;=l&lt;=h&lt;=31）</strong><br>  答：<code>#define BITS_XOR(v,h,l) ( v^int(pow(2,h)-pow(2,(l-1))) )</code></p>
+<p><strong>7.进行TCP/IP网络编程中，需要将本地字节充转换成网络字节序，在linux环境下，c语言中将本地的short类型转换成网络字节序的接口名是？</strong>（<strong>htons()</strong>函数）<br>相关知识：网络字节顺序是TCP/IP中规定好的一种数据表示格式，它与具体的CPU类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。网络字节顺序采用big endian方式。注意：X86系列CPU都是小端little-endian字节序，即低字节存低位，高字节存高位。<br>为此，linux专门提供了字节转换函数。<br>unsigned long  int<strong> htonl</strong>(unsigned long  int hostlong)<br>unsigned short int <strong>htons</strong>(unisgned short int hostshort)<br>unsigned long  int <strong>ntohl</strong>(unsigned long  int netlong)<br>unsigned short int <strong>ntohs</strong>(unsigned short int netshort)<br>在这四个转换函数中，h代表host，n代表 network，s代表short，l代表long 。htonl()函数的意义是将本机器上的long数据转化为网络上的long。其他几个函数的意义也差不多。<br>网上的例子：<br><img src="http://ols4zt49w.bkt.clouddn.com/1505984122%281%29.png" alt=""><br>也就是说对于从网络上接收到的非单子节的基本数据类型数据，首先需要用ntohl(s)将其转换成本地字节序；同理，发往网络的非单子节的基本数据类型数据，首先用htonl(s)将其转换成网络字节序。这里最常见的就是IP地址和端口号。<br>关于其他网络应用程序开发的知识可以参考<a href="http://blog.chinaunix.net/uid-28404635-id-3976077.html" target="_blank" rel="external">Linux环境下网络编程杂谈</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/09/18/Linux系统32位与64位数据类型长度比较/" itemprop="url">
+                  Linux系统32位与64位数据类型长度比较
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-18T11:44:52+08:00" content="2017-09-18">
+              2017-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/18/Linux系统32位与64位数据类型长度比较/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/18/Linux系统32位与64位数据类型长度比较/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Linux系统32位与64位GCC编译器基本数据类型长度对照表</strong><br><strong>GCC 32位</strong><br>sizeof(char)=1<br>sizeof(double)=8<br>sizeof(float)=4<br>sizeof(int)=4<br><strong>sizeof(short)=2</strong><br><strong>sizeof(long)=4</strong><br><strong>sizeof(long long)=8</strong><br><strong>sizeof(long double)=12</strong><br><strong>sizeof(complex long double)=24</strong></p>
+<p><strong>GCC 64位</strong><br>sizeof(char)=1<br>sizeof(double)=8<br>sizeof(float)=4<br>sizeof(int)=4<br>sizeof(short)=2<br><strong>sizeof(long)=8</strong><br><strong>sizeof(long long)=8</strong><br><strong>sizeof(long double)=16<br>sizeof(complex long double)=32</strong></p>
+<p>32位，指针占用4个字节；<br>64位，指针占用8个字节。<br>以下是实测结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;limits.h&gt;</div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">printf(&quot;size of char %d\n&quot;,sizeof(char));</div><div class="line">printf(&quot;size of char max %d\n&quot;,CHAR_MAX);</div><div class="line">printf(&quot;size of char min %d\n&quot;,CHAR_MIN);</div><div class="line">printf(&quot;size of int %d\n&quot;,sizeof(int));</div><div class="line">printf(&quot;size of int min %d\n&quot;,INT_MIN);</div><div class="line">printf(&quot;size of int max %d\n&quot;,INT_MAX);</div><div class="line">printf(&quot;size of long %d\n&quot;,sizeof(long));</div><div class="line">printf(&quot;size of long min %ld\n&quot;,LONG_MIN);</div><div class="line">printf(&quot;size of long max %ld\n&quot;,LONG_MAX);</div><div class="line">printf(&quot;size of short %d\n&quot;,sizeof(short));</div><div class="line">printf(&quot;size of short min %d\n&quot;,SHRT_MIN);</div><div class="line">printf(&quot;size of short max %d\n&quot;,SHRT_MAX);</div><div class="line">printf(&quot;size of unsigned char %d\n&quot;,sizeof(unsigned char));</div><div class="line">printf(&quot;size of unsigned char max %d\n&quot;,UCHAR_MAX);</div><div class="line">printf(&quot;size of unsigned long %d\n&quot;,sizeof(unsigned long));</div><div class="line">printf(&quot;size of unsigned long max %lu\n&quot;,ULONG_MAX);</div><div class="line">printf(&quot;size of unsigned short %d\n&quot;,sizeof(unsigned short));</div><div class="line">printf(&quot;size of unsigned short max %u\n&quot;,USHRT_MAX);</div><div class="line">printf(&quot;size of double %d\n&quot;,sizeof(double));</div><div class="line">printf(&quot;size of long long %d\n&quot;,sizeof(long long));</div><div class="line">printf(&quot;size of long double %d\n&quot;,sizeof(long double));</div><div class="line">printf(&quot;size of float %d\n&quot;,sizeof(float));</div><div class="line">int *p;</div><div class="line">printf(&quot;size of pointer  %d\n&quot;,sizeof(p));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>64 |32位上运行结果：<br>size of char 1<br>size of char max 127<br>size of char min -128<br>size of int 4<br>size of int min -2147483648<br>size of int max 2147483647<br>size of long 8  |32位是4<br>size of long min -9223372036854775808<br>size of long max 9223372036854775807<br>size of short 2<br>size of short min -32768<br>size of short max 32767<br>size of unsigned char 1<br>size of unsigned char max 255<br>size of unsigned long 8 |32位是4<br>size of unsigned long max 18446744073709551615<br>size of unsigned short 2<br>size of unsigned short max 65535<br>size of double 8<br>size of long long 8<br>size of long double 16     ///////32位是12<br>size of float 4<br>size of pointer  8  /////////32位是4 </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/09/17/海康威视2018秋招-嵌入式软件9.14/" itemprop="url">
                   海康威视2018秋招-嵌入式软件9.14
                 </a>
@@ -1324,249 +1575,6 @@ printf(&quot;0x%x\n&quot;, val);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/" itemprop="url">
-                  QT窗口自适应大小显示图片及数据库存取图片
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-13T17:54:59+08:00" content="2017-07-13">
-              2017-07-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h5 id="Qt窗口自适应大小显示图片"><a href="#Qt窗口自适应大小显示图片" class="headerlink" title="Qt窗口自适应大小显示图片"></a>Qt窗口自适应大小显示图片</h5><p>实现思路也挺简单的，使用QLabel显示图片，把这个QLabel放在一个ScrollArea上面，这样图片过大的时候会自动的添加滚动条，最后窗体使用水平布局，这样ScrollArea的大小会随着窗口的大小自动改变。下面上代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">private:</div><div class="line">    Ui::MainWindow *ui;</div><div class="line">    QLabel *label ;</div></pre></td></tr></table></figure></p>
-<p>首先声明一个QLabel用于图片（<strong>ScrollArea在设计器上拖放到窗体上，并设置窗口的布局方式为水平布局</strong>）。<br>设置QLabel的pixmap，并设置QLabel的大小和图片一致，最后将该QLabel添加到ScrollArea上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">QImage *image=new QImage(&quot;C:/Users/hasee/Desktop/nfc-02/nfc/pics/changshi.png&quot;);</div><div class="line">ui-&gt;label_42-&gt;setGeometry(0,0,500,500);</div><div class="line">ui-&gt;label_42-&gt;setPixmap(QPixmap::fromImage(*image));</div><div class="line">    //label-&gt;setPixmap(QPixmap(&quot;E:/Qt_Program/Chrysanthemum.jpg&quot;));</div><div class="line">ui-&gt;label_42-&gt;resize(QSize(image-&gt;width(),image-&gt;height()));//设置QLabel的大小和图片一致</div><div class="line">ui-&gt;label_42-&gt;show();</div><div class="line">ui-&gt;label_42-&gt;setScaledContents(true);//自动适应布满整个label</div></pre></td></tr></table></figure></p>
-<p>效果如图：<br><img src="http://ols4zt49w.bkt.clouddn.com/1499940207%281%29.png" alt=""></p>
-<h5 id="数据库sqlite中存取图片"><a href="#数据库sqlite中存取图片" class="headerlink" title="数据库sqlite中存取图片"></a>数据库sqlite中存取图片</h5><p>一般来说图片不会直接存在数据库里，都是存在文件里，然后将文件目录存到数据库，读取的话也只需读取它的目录，然后再将它显示出来。<br>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 创建一个数据库连接，使用“connection1”为连接名</div><div class="line">   QSqlDatabase db1 = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;, &quot;connection1&quot;);//可以省略第二个参数即连接名，创建默认连接</div><div class="line">   db1.setDatabaseName(&quot;my1.db&quot;);//数据库名</div><div class="line">   if (!db1.open()) &#123;</div><div class="line">       QMessageBox::critical(0, &quot;Cannot open database1&quot;,</div><div class="line">                             &quot;Unable to establish a database connection.&quot;, QMessageBox::Cancel);</div><div class="line">       return false;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   // 这里要指定连接</div><div class="line">   QSqlQuery query1(db1);</div><div class="line">   //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">   query1.exec(&quot;create table Measuring_point (id int primary key, &quot;</div><div class="line">               &quot;name varchar(20),&quot;</div><div class="line">               &quot;position varchar(20),&quot;</div><div class="line">               &quot;pressure varchar(20),&quot;</div><div class="line">               &quot;tempeture varchar(20),&quot;</div><div class="line">               &quot;medium varchar(20),&quot;</div><div class="line">               &quot;material varchar(20),&quot;</div><div class="line">               &quot;diameter varchar(20),&quot;</div><div class="line">               &quot;thickness varchar(20),&quot;</div><div class="line">               &quot;image_path varchar(100))&quot;);</div><div class="line"></div><div class="line">   query1.exec(&quot;insert into Measuring_point values(0,&apos;sha&apos;,&apos;lian&apos;,&apos;150MPa&apos;,&apos;20&apos;,&apos;无&apos;,&apos;无&apos;,&apos;12mm&apos;,&apos;14mm&apos;,&apos;C:/Users/hasee/Desktop/nfc-03/nfc/pics/changshi.jpg&apos;)&quot;);</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/03/代理模式-代理追求者/" itemprop="url">
-                  代理模式-代理追求者
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-03T21:04:45+08:00" content="2017-07-03">
-              2017-07-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">大话设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/07/03/代理模式-代理追求者/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/03/代理模式-代理追求者/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>代理模式：为其他对象提供一种代理以控制对这个对象的访问。代理模式其实就是在访问对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。可以应用的场合：1、远程代理；2、虚拟代理；3安全代理；4、智能指引<br>1.远中程代理<br>为一个对象在不同地址空间提供局部代表。这样可以隐藏一个对象存在于不同地址空间的事实。例子：WebService在.Net中的应用。当在应用程序中加入web引用，引用一个webservice，此时会在项目中生成一个webreference的文件夹和一些文件，其实它们就是代理，使得客户端程序调用代理就可以解决远程访问的问题。<br>2.虚拟代理<br>根据需要创建开销很大的对象，通过他来存放实例化需要很长的时间的真实对象。比如打开一个很大的HTML网页，里面可能有很多的图片和文字，当你打开他时，看到的是所有汉子，但图片得一张张下载后才能看到，那些未打开得图片就是通过虚拟代理代替了真实得图片，此时代理存储了真实图片得路径和尺寸。<br>3.安全代理<br>用来控制真实对象访问时得权限。<br>4.智能指针<br><img src="http://ols4zt49w.bkt.clouddn.com/1499087323%281%29.png" alt=""><br>以追求MM为例，小A喜欢MM小C，但是小C不认识小A，但是认识小A的好哥们小B，于是小A就买了礼物让小B代理他送给小C，并转达他的爱意。此时小A就是RealSubject类，而小B就是Proxy类，他们共同继承Subject抽象接口类即礼物类，小A是真正的送礼物的，所以他必须实现这个抽象接口类。小B是代理者，他必须调用小A实现的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line"></div><div class="line">using namespace std;</div><div class="line"></div><div class="line">class SchoolGirl</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	string name;</div><div class="line"></div><div class="line">public:</div><div class="line">	SchoolGirl( string&amp; na ) : name(na)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line">	string GetName()</div><div class="line">	&#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line">	void SetName(string&amp; na)</div><div class="line">	&#123;</div><div class="line">		name = na;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/* 代理接口 */</div><div class="line">class IGiveGift</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual void GiveDolls() = 0;</div><div class="line">	virtual void GiveFlowers() = 0;</div><div class="line">	virtual void GiveChocolate() = 0;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">/* 追求者 */</div><div class="line">/* 让追求者去实现送礼物的接口 */</div><div class="line">class Pursuit : public IGiveGift</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	SchoolGirl mm;</div><div class="line"></div><div class="line">public:</div><div class="line">	Pursuit( SchoolGirl&amp; m ) : mm(m)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line">	virtual void GiveDolls()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你洋娃娃&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveFlowers()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你鲜花&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveChocolate()</div><div class="line">	&#123;</div><div class="line">		cout&lt;&lt;mm.GetName()&lt;&lt;&quot; 送你巧克力&quot;&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">/* 代理模式 */</div><div class="line">class Proxy : public IGiveGift</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	Pursuit* gg; /* 指向被代理对象的指针 */</div><div class="line"></div><div class="line">public:</div><div class="line">	Proxy( SchoolGirl&amp; mm )</div><div class="line">	&#123;</div><div class="line">		gg =  new Pursuit(mm);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	~Proxy()</div><div class="line">	&#123;</div><div class="line">		delete gg;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/* 在实现方法中调用追求者类的相关方法，因为真正送礼物的是追求者 */</div><div class="line">	virtual void GiveDolls()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveDolls();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveFlowers()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveFlowers();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual void GiveChocolate()</div><div class="line">	&#123;</div><div class="line">		gg-&gt;GiveChocolate();</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	string name = &quot;娇娇&quot;;</div><div class="line">	SchoolGirl sgirl(name);</div><div class="line"></div><div class="line">	Proxy daili( sgirl );</div><div class="line"></div><div class="line">	daili.GiveDolls();</div><div class="line">	daili.GiveFlowers();</div><div class="line">	daili.GiveChocolate();</div><div class="line"></div><div class="line">	return 0;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1612,7 +1620,7 @@ printf(&quot;0x%x\n&quot;, val);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1620,7 +1628,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1629,7 +1637,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">66</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -265,6 +265,258 @@
             
               
                 
+                <a class="post-title-link" href="/2017/11/12/静态库和共享库/" itemprop="url">
+                  静态库和共享库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-12T22:23:46+08:00" content="2017-11-12">
+              2017-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Unix-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Unix-C</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/12/静态库和共享库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/12/静态库和共享库/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="共享库（动态链接库、动态库）和静态库"><a href="#共享库（动态链接库、动态库）和静态库" class="headerlink" title="共享库（动态链接库、动态库）和静态库"></a>共享库（动态链接库、动态库）和静态库</h4><p>商业开发中，经常会把程序打包成一个库文件，进行整合和管理，库分为：静态库和共享库。库是 .o 文件的打包。</p>
+<font color="#0088ff" size="5" face="黑体"><br>在windows中静态库是以 .lib 为后缀的文件，共享库是以 .dll 为后缀的文件。在linux中静态库是以 .a 为后缀的文件，共享库是以 .so为后缀的文件<br></font>
+
+<p>静态库是 代码的归档，在使用时会复制代码到目标文档中。<br>     ==优点是：独立在连接完成以后就不再需要静态库了，速度稍快<br>     缺点是：占用空间太大，修改和维护不方便==</p>
+<p>共享库在使用时会把代码的地址放入目标文件中。（<strong>商业开发主流使用共享库</strong>）<br>     ==优点是：占用空间小，修改和维护方便<br>     缺点是：在程序运行时必须找到共享库，速度稍慢==</p>
+<h5 id="静态库的创建步骤："><a href="#静态库的创建步骤：" class="headerlink" title="静态库的创建步骤："></a><strong>静态库的创建步骤：</strong></h5><p>1、编写源程序add.c<br>2、编译源程序，生成目标文件（.o）<br>      <code>gcc -c add.c     (预处理和编译，不链接)</code><br>3、生成静态库文件 .a<br>     <code>ar     -r     库文件名    所有的.o        //（库文件名： lib开头，.a 结尾，中间放库名）</code><br>    <code>ar     -r    libmyku.a   add.o add1.o</code></p>
+<h5 id="静态库的使用步骤："><a href="#静态库的使用步骤：" class="headerlink" title="静态库的使用步骤："></a><strong>静态库的使用步骤：</strong></h5><p>1、编写使用程序test.c<br>2、编译test.c，生成 目标文件       <code>gcc -c test.c</code><br>3、链接静态库文件和test.o，有三种方法：<br>     <strong>3.1    直接连接</strong>        <code>//gcc test.o libmyku.a</code><br>    <strong> 3.2     双L链接法    (重点)</strong><br>              <code>gcc   test.o   -l库名   -L库所在目录</code><br>              <code>gcc   test.o   -lmyku   -L.</code><br>    <strong> 3.3     单l链接法</strong><br>    （配置环境变量LIBRARY_PATH）export LIBRARY_PATH=<strong>.</strong> <em>（。表示当前目录）</em><br>               方法：配置环境变量LIBRARY_PATH，把库所在目录配置<br>               <code>gcc  test.o  -lmyku</code><br>注意：编写商业代码，需要提供一个库文件和一个头文件</p>
+<h5 id="共享库的创建步骤："><a href="#共享库的创建步骤：" class="headerlink" title="共享库的创建步骤："></a><strong>共享库的创建步骤：</strong></h5><p>1、写源程序add.c<br>2、编译生成目标文件.o<br>    <code>gcc -c -fpic add.c     (-fpic不写也行)</code><br>3、生成共享库文件.so<br>     <code>gcc   -shared   add.o   -o libmyku.so</code>   //（库文件名和静态库只有后缀不一样，有些系统用 .so.整数）</p>
+<h5 id="共享库的使用步骤："><a href="#共享库的使用步骤：" class="headerlink" title="共享库的使用步骤："></a><strong>共享库的使用步骤：</strong></h5><p>和静态库一样！<br>运行时必须配置环境变量LD_LIBRARY_PATH。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ldd  a.out     可以查看相关的共享文件</div><div class="line">系统提供了一套API（应用程序接口，就是各种函数）可以直接打开共享库文件</div><div class="line">dlopen()   - 打开库文件</div><div class="line">dlsym()     -从打开的库文件中得到函数</div><div class="line">dlclose()   -关闭</div><div class="line">dlerror()    -判断是否出错</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/12/错误处理/" itemprop="url">
+                  错误处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-12T22:12:52+08:00" content="2017-11-12">
+              2017-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Unix-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Unix-C</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/12/错误处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/12/错误处理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>主流的编程语言（除了C语言）基本都使用 异常机制 处理错误，C语言中没有异常机制。<br>C程序员是用 返回值 代表是否出错。主要有以下4种情况<br>1、如果返回类型是int，并且返回值不可能是负数，数据会正常返回，返回 -1 代表出错。<br>2、如果返回类型是int ，并且返回值可能是负数，返回-1代表出错，0代表正确。数据用指针返回。<br>3、如果返回类型是指针，返回NULL代表出错，其他代表正常返回数据<br>4、如果函数不需要考虑出错问题，用 void 做返回值。</p>
+<p>注意：以上4种情况只是经验总结，不是绝对的<br>一个函数返回数据的方法有2种：<br>1、用return语句返回<br>2、参数中放入一个指针，也可以带回数据</p>
+<p>C语言用 外部的全局变量 errno 记录错误的信息，错误信息分为 错误编号（int）和具体信息（字符串），每个错误编号都对应一个具体信息。errno存的是错误编号。</p>
+<p>==     函数strerror()/perror()/printf()用于错误信息的显示和转换。<br>     strerror()传入一个编号，返回具体信息（转换函数） 不一定要出错，给个errno就行<br>     perror() 不用传入错误编号，直接打印errnod对应的信息（自动换行）<br>     printf(“%m”)直接打印errno对应的信息==<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,strerror(errno));</div><div class="line">perror(<span class="string">"fopen"</span>);</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%m\n"</span>)</div></pre></td></tr></table></figure></p>
+<p>不是所有的函数都只用errno 处理错误，比如 线程的函数。<br>errno只有咋出错时才改变值，不出错不会回复值。因此errno只能说明出了什么错，而不能判断是否出错。判断是否出错使用函数的返回值，出错以后再使用errno。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/11/12/链式结构/" itemprop="url">
                   链式结构
                 </a>
@@ -1273,257 +1525,6 @@ new出的对象在堆中；
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/" itemprop="url">
-                  海康威视2018秋招-嵌入式软件开发9.20
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-09-20T16:33:57+08:00" content="2017-09-20">
-              2017-09-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/笔试面试/" itemprop="url" rel="index">
-                    <span itemprop="name">笔试面试</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/20/海康威视2018秋招-嵌入式软件开发9.20/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>1.静态变量通常存储在进程哪个区？</strong><br>  答：静态变量和全局变量都存在全局区（静态区）。     new和malloc申请的在堆区。  函数局部变量和函数的参数在栈区。</p>
-<p>2.在软件生命周期中，能准确地确认软件系统必须做什么和必须具备哪些功能地阶段是：<strong>需求分析</strong>。</p>
-<p><strong>3.请用只包含一个表达式的宏定义，判断一个数是否是2的n次幂的数？</strong><br>  答：<strong> #define  S（n）（（n&amp;(n-1)）==0 ）</strong></p>
-<p><strong>4.在file.c文件中有如下函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#include&lt;stdio.h&gt;</div><div class="line">uint64_t get_square(uint64_t a)</div><div class="line">&#123;</div><div class="line"> return a*a;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在file.c文件中有如下代码，<br>注：file.c中没有包含get_square函数的声明；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void main()</div><div class="line">&#123;</div><div class="line"> uint64_t ret = 0;</div><div class="line"> ret = get_square(1&lt;&lt;20);</div><div class="line"> printf(&quot;ret = %#llx\n&quot;,ret);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>结果输出多少？<br>%llx表示64位16进制数；左移20位的平方就是左移40位，4位二进制是一个16进制。就是16进制左移10位。即0x00000000001—–<strong>0x10000000000</strong>(答案)</p>
-<p><strong>5.请写出int变量v关于s(数值&gt;=1且为2的n次方)向上对齐的宏定义</strong><br> （如7关于4向上对齐为8，16关于8向上对齐后为16）<br> 答案： <code>#define ROUND_UP(v,s) ( ((v)+sizeof(s)-1)&amp;~(sizeof(s)-1) )</code><br>  具体解析参考 <a href="http://blog.csdn.net/duanlove/article/details/9948947" target="_blank" rel="external">http://blog.csdn.net/duanlove/article/details/9948947</a> //Linux socket.h 中 CMSG_ALIGN 宏定义的作用（字节对齐）</p>
-<p><strong>6.请写出int变量v中第l到第h比特位取反，其他比特位不变的宏定义（0&lt;=l&lt;=h&lt;=31）</strong><br>  答：<code>#define BITS_XOR(v,h,l) ( v^int(pow(2,h)-pow(2,(l-1))) )</code></p>
-<p><strong>7.进行TCP/IP网络编程中，需要将本地字节充转换成网络字节序，在linux环境下，c语言中将本地的short类型转换成网络字节序的接口名是？</strong>（<strong>htons()</strong>函数）<br>相关知识：网络字节顺序是TCP/IP中规定好的一种数据表示格式，它与具体的CPU类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。网络字节顺序采用big endian方式。注意：X86系列CPU都是小端little-endian字节序，即低字节存低位，高字节存高位。<br>为此，linux专门提供了字节转换函数。<br>unsigned long  int<strong> htonl</strong>(unsigned long  int hostlong)<br>unsigned short int <strong>htons</strong>(unisgned short int hostshort)<br>unsigned long  int <strong>ntohl</strong>(unsigned long  int netlong)<br>unsigned short int <strong>ntohs</strong>(unsigned short int netshort)<br>在这四个转换函数中，h代表host，n代表 network，s代表short，l代表long 。htonl()函数的意义是将本机器上的long数据转化为网络上的long。其他几个函数的意义也差不多。<br>网上的例子：<br><img src="http://ols4zt49w.bkt.clouddn.com/1505984122%281%29.png" alt=""><br>也就是说对于从网络上接收到的非单子节的基本数据类型数据，首先需要用ntohl(s)将其转换成本地字节序；同理，发往网络的非单子节的基本数据类型数据，首先用htonl(s)将其转换成网络字节序。这里最常见的就是IP地址和端口号。<br>关于其他网络应用程序开发的知识可以参考<a href="http://blog.chinaunix.net/uid-28404635-id-3976077.html" target="_blank" rel="external">Linux环境下网络编程杂谈</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/09/18/Linux系统32位与64位数据类型长度比较/" itemprop="url">
-                  Linux系统32位与64位数据类型长度比较
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-09-18T11:44:52+08:00" content="2017-09-18">
-              2017-09-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/09/18/Linux系统32位与64位数据类型长度比较/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/18/Linux系统32位与64位数据类型长度比较/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>Linux系统32位与64位GCC编译器基本数据类型长度对照表</strong><br><strong>GCC 32位</strong><br>sizeof(char)=1<br>sizeof(double)=8<br>sizeof(float)=4<br>sizeof(int)=4<br><strong>sizeof(short)=2</strong><br><strong>sizeof(long)=4</strong><br><strong>sizeof(long long)=8</strong><br><strong>sizeof(long double)=12</strong><br><strong>sizeof(complex long double)=24</strong></p>
-<p><strong>GCC 64位</strong><br>sizeof(char)=1<br>sizeof(double)=8<br>sizeof(float)=4<br>sizeof(int)=4<br>sizeof(short)=2<br><strong>sizeof(long)=8</strong><br><strong>sizeof(long long)=8</strong><br><strong>sizeof(long double)=16<br>sizeof(complex long double)=32</strong></p>
-<p>32位，指针占用4个字节；<br>64位，指针占用8个字节。<br>以下是实测结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;limits.h&gt;</div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">printf(&quot;size of char %d\n&quot;,sizeof(char));</div><div class="line">printf(&quot;size of char max %d\n&quot;,CHAR_MAX);</div><div class="line">printf(&quot;size of char min %d\n&quot;,CHAR_MIN);</div><div class="line">printf(&quot;size of int %d\n&quot;,sizeof(int));</div><div class="line">printf(&quot;size of int min %d\n&quot;,INT_MIN);</div><div class="line">printf(&quot;size of int max %d\n&quot;,INT_MAX);</div><div class="line">printf(&quot;size of long %d\n&quot;,sizeof(long));</div><div class="line">printf(&quot;size of long min %ld\n&quot;,LONG_MIN);</div><div class="line">printf(&quot;size of long max %ld\n&quot;,LONG_MAX);</div><div class="line">printf(&quot;size of short %d\n&quot;,sizeof(short));</div><div class="line">printf(&quot;size of short min %d\n&quot;,SHRT_MIN);</div><div class="line">printf(&quot;size of short max %d\n&quot;,SHRT_MAX);</div><div class="line">printf(&quot;size of unsigned char %d\n&quot;,sizeof(unsigned char));</div><div class="line">printf(&quot;size of unsigned char max %d\n&quot;,UCHAR_MAX);</div><div class="line">printf(&quot;size of unsigned long %d\n&quot;,sizeof(unsigned long));</div><div class="line">printf(&quot;size of unsigned long max %lu\n&quot;,ULONG_MAX);</div><div class="line">printf(&quot;size of unsigned short %d\n&quot;,sizeof(unsigned short));</div><div class="line">printf(&quot;size of unsigned short max %u\n&quot;,USHRT_MAX);</div><div class="line">printf(&quot;size of double %d\n&quot;,sizeof(double));</div><div class="line">printf(&quot;size of long long %d\n&quot;,sizeof(long long));</div><div class="line">printf(&quot;size of long double %d\n&quot;,sizeof(long double));</div><div class="line">printf(&quot;size of float %d\n&quot;,sizeof(float));</div><div class="line">int *p;</div><div class="line">printf(&quot;size of pointer  %d\n&quot;,sizeof(p));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>64 |32位上运行结果：<br>size of char 1<br>size of char max 127<br>size of char min -128<br>size of int 4<br>size of int min -2147483648<br>size of int max 2147483647<br>size of long 8  |32位是4<br>size of long min -9223372036854775808<br>size of long max 9223372036854775807<br>size of short 2<br>size of short min -32768<br>size of short max 32767<br>size of unsigned char 1<br>size of unsigned char max 255<br>size of unsigned long 8 |32位是4<br>size of unsigned long max 18446744073709551615<br>size of unsigned short 2<br>size of unsigned short max 65535<br>size of double 8<br>size of long long 8<br>size of long double 16     ///////32位是12<br>size of float 4<br>size of pointer  8  /////////32位是4 </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1569,7 +1570,7 @@ new出的对象在堆中；
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1577,7 +1578,7 @@ new出的对象在堆中；
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1586,7 +1587,7 @@ new出的对象在堆中；
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">66</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
