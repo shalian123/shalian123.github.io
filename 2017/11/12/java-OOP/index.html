@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java," />
 
 
 
@@ -86,15 +86,57 @@
 
 
 
-<meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wind">
-<meta property="og:url" content="http://shalian123.github.io/archives/page/2/index.html">
+<meta name="description" content="今天同步的是java面向对象部分的知识，还是从我之前用印象笔记记录的。同步过程中一些图片没法完善只能在每一节目录下加上相关的图片。
+java-OOP 对象和类（上）
+ 
+ 
+ 
+ 对象和类（下）、数组
+ 对象内存管理、继承的意义（上）
+  
+ 
+ 继承的意义（下）、访问控制、static、final
+ 抽象类、接口和内部类（上）
+ 抽象类、接口和内部类（下）、面向对象汇总">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-OOP">
+<meta property="og:url" content="http://shalian123.github.io/2017/11/12/java-OOP/index.html">
 <meta property="og:site_name" content="Wind">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="今天同步的是java面向对象部分的知识，还是从我之前用印象笔记记录的。同步过程中一些图片没法完善只能在每一节目录下加上相关的图片。
+java-OOP 对象和类（上）
+ 
+ 
+ 
+ 对象和类（下）、数组
+ 对象内存管理、继承的意义（上）
+  
+ 
+ 继承的意义（下）、访问控制、static、final
+ 抽象类、接口和内部类（上）
+ 抽象类、接口和内部类（下）、面向对象汇总">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%80%BC.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/new%E5%87%BA%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%A0%86%E4%B8%AD%EF%BC%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%9C%A8%E6%A0%88%E4%B8%AD.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%A0%86.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/V@~C%7D0B%60%60V$QW%28~%259~YX9K9.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%90%91%E4%B8%8A%E9%80%A0%E5%9E%8B.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%8C%BA%E5%88%AB.png">
+<meta property="og:updated_time" content="2017-11-12T07:19:55.809Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Wind">
-<meta name="twitter:description" content="记录生活点滴">
+<meta name="twitter:title" content="java-OOP">
+<meta name="twitter:description" content="今天同步的是java面向对象部分的知识，还是从我之前用印象笔记记录的。同步过程中一些图片没法完善只能在每一节目录下加上相关的图片。
+java-OOP 对象和类（上）
+ 
+ 
+ 
+ 对象和类（下）、数组
+ 对象内存管理、继承的意义（上）
+  
+ 
+ 继承的意义（下）、访问控制、static、final
+ 抽象类、接口和内部类（上）
+ 抽象类、接口和内部类（下）、面向对象汇总">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%80%BC.png">
 
 
 
@@ -112,7 +154,7 @@
   };
 </script>
 
-  <title> 归档 | Wind </title>
+  <title> java-OOP | Wind </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -133,7 +175,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -241,409 +283,198 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-       
-      
-      OK! 目前共计 50 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/23/QT数据库操作2/" itemprop="url">
-              
-                <span itemprop="name">QT数据库操作2</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-23T18:58:55+08:00"
-              content="2017-08-23" >
-          08-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/23/QT移植到am437x开发板/" itemprop="url">
-              
-                <span itemprop="name">QT移植到am437x开发板</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-23T18:42:00+08:00"
-              content="2017-08-23" >
-          08-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/04/http协议的补充/" itemprop="url">
-              
-                <span itemprop="name">http协议的补充</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-04T14:51:16+08:00"
-              content="2017-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/30/Qt数据库操作/" itemprop="url">
-              
-                <span itemprop="name">Qt数据库操作</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-30T17:17:33+08:00"
-              content="2017-07-30" >
-          07-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/23/短路非短路与/" itemprop="url">
-              
-                <span itemprop="name">短路非短路与</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-23T16:26:29+08:00"
-              content="2017-07-23" >
-          07-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/" itemprop="url">
-              
-                <span itemprop="name">qt子窗口调用父窗口函数(跨控件跨类)</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-20T17:27:57+08:00"
-              content="2017-07-20" >
-          07-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/19/QT中使用QPainter在主窗口的子控件里画图/" itemprop="url">
-              
-                <span itemprop="name">QT中使用QPainter在主窗口的子控件里画图</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-19T18:35:58+08:00"
-              content="2017-07-19" >
-          07-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/13/Qt窗口自适应大小显示图片及数据库存取图片/" itemprop="url">
-              
-                <span itemprop="name">QT窗口自适应大小显示图片及数据库存取图片</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-13T17:54:59+08:00"
-              content="2017-07-13" >
-          07-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/03/代理模式-代理追求者/" itemprop="url">
-              
-                <span itemprop="name">代理模式-代理追求者</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-03T21:04:45+08:00"
-              content="2017-07-03" >
-          07-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/03/装饰模式-衣服穿着设计/" itemprop="url">
-              
-                <span itemprop="name">装饰模式-衣服穿着设计</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-03T10:54:26+08:00"
-              content="2017-07-03" >
-          07-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java-OOP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-12T14:49:40+08:00" content="2017-11-12">
+              2017-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java学习/" itemprop="url" rel="index">
+                    <span itemprop="name">java学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/12/java-OOP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/12/java-OOP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
 
 
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天同步的是java面向对象部分的知识，还是从我之前用印象笔记记录的。同步过程中一些图片没法完善只能在每一节目录下加上相关的图片。</p>
+<h4 id="java-OOP"><a href="#java-OOP" class="headerlink" title="java-OOP"></a><a href="http://ols4zt49w.bkt.clouddn.com/java-OOP_index.html" target="_blank" rel="external">java-OOP</a></h4><p> <a href="http://ols4zt49w.bkt.clouddn.com/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB%EF%BC%88%E4%B8%8A%EF%BC%89.html" target="_blank" rel="external">对象和类（上）</a></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%80%BC.png" alt="在java中引用类型（除去那八个基本类型）的默认值都是null"></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC.png" alt=""></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/new%E5%87%BA%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%A0%86%E4%B8%AD%EF%BC%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%9C%A8%E6%A0%88%E4%B8%AD.png" alt="局部变量内存分配在栈中；
+new出的对象在堆中；
+"></p>
+<p> <a href="http://ols4zt49w.bkt.clouddn.com/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB%EF%BC%88%E4%B8%8B%EF%BC%89%E3%80%81%E6%95%B0%E7%BB%84%EF%BC%881%EF%BC%89.html" target="_blank" rel="external">对象和类（下）、数组</a></p>
+<p> <a href="http://ols4zt49w.bkt.clouddn.com/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%81%E7%BB%A7%E6%89%BF%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%88%E4%B8%8A%EF%BC%89.html" target="_blank" rel="external">对象内存管理、继承的意义（上）</a></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/%E5%A0%86.png" alt="堆"><br> <img src="http://ols4zt49w.bkt.clouddn.com/V@~C%7D0B%60%60V$QW%28~%259~YX9K9.png" alt=""></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/%E5%90%91%E4%B8%8A%E9%80%A0%E5%9E%8B.png" alt="向上造型"></p>
+<p> <a href="http://ols4zt49w.bkt.clouddn.com/%E7%BB%A7%E6%89%BF%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%88%E4%B8%8B%EF%BC%89%E3%80%81%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E3%80%81static%E3%80%81final.html" target="_blank" rel="external">继承的意义（下）、访问控制、static、final</a></p>
+<p> <a href="http://ols4zt49w.bkt.clouddn.com/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%88%E4%B8%8A%EF%BC%89.html" target="_blank" rel="external">抽象类、接口和内部类（上）</a></p>
+<p> <a href="http://ols4zt49w.bkt.clouddn.com/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%88%E4%B8%8B%EF%BC%89%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%B1%87%E6%80%BB.html" target="_blank" rel="external">抽象类、接口和内部类（下）、面向对象汇总</a></p>
+<p> <img src="http://ols4zt49w.bkt.clouddn.com/%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%8C%BA%E5%88%AB.png" alt="接口和抽象类的区别"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/10/java基础/" rel="next" title="java基础">
+                <i class="fa fa-chevron-left"></i> java基础
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/11/12/java-OOP/"
+     data-title="java-OOP"
+     data-content=""
+     data-url="http://shalian123.github.io/2017/11/12/java-OOP/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/11/12/java-OOP/"
+           data-title="java-OOP" data-url="http://shalian123.github.io/2017/11/12/java-OOP/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -663,8 +494,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
@@ -773,6 +613,17 @@
       </section>
 
       
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#java-OOP"><span class="nav-number">1.</span> <span class="nav-text">java-OOP</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
 
     </div>
   </aside>
@@ -875,11 +726,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
 
 
   
