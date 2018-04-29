@@ -1,0 +1,754 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="c++,华为软挑," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="距离上一篇博文发布已经快过去半年了，在这半年里虽然我没有实时更新博文，但笔记其实还在记录。由于偶然间发现印象笔记这个神器，因此这半年的笔记我基本上都在我的印象笔记里，等以后有时间我再更新到博客上。
+队名：胜利属于兄弟会ShaLian2018/4/28
+做了将近一个半月的华为软件精英挑战赛最终落下了帷幕，在整个比赛中我们收获了很多，有算法软件知识，也有团队交流合作能力。最终取得杭厦赛区13名的成绩，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018华为软件精英挑战赛总结">
+<meta property="og:url" content="http://shalian123.github.io/2018/04/29/2018华为软件精英挑战赛总结/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="距离上一篇博文发布已经快过去半年了，在这半年里虽然我没有实时更新博文，但笔记其实还在记录。由于偶然间发现印象笔记这个神器，因此这半年的笔记我基本上都在我的印象笔记里，等以后有时间我再更新到博客上。
+队名：胜利属于兄弟会ShaLian2018/4/28
+做了将近一个半月的华为软件精英挑战赛最终落下了帷幕，在整个比赛中我们收获了很多，有算法软件知识，也有团队交流合作能力。最终取得杭厦赛区13名的成绩，">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1524987094%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1524987119%281%29.png">
+<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1524988789%281%29.png">
+<meta property="og:updated_time" content="2018-04-29T14:52:46.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018华为软件精英挑战赛总结">
+<meta name="twitter:description" content="距离上一篇博文发布已经快过去半年了，在这半年里虽然我没有实时更新博文，但笔记其实还在记录。由于偶然间发现印象笔记这个神器，因此这半年的笔记我基本上都在我的印象笔记里，等以后有时间我再更新到博客上。
+队名：胜利属于兄弟会ShaLian2018/4/28
+做了将近一个半月的华为软件精英挑战赛最终落下了帷幕，在整个比赛中我们收获了很多，有算法软件知识，也有团队交流合作能力。最终取得杭厦赛区13名的成绩，">
+<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/1524987094%281%29.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 2018华为软件精英挑战赛总结 | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                2018华为软件精英挑战赛总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-04-29T15:13:40+08:00" content="2018-04-29">
+              2018-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/04/29/2018华为软件精英挑战赛总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/29/2018华为软件精英挑战赛总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>距离上一篇博文发布已经快过去半年了，在这半年里虽然我没有实时更新博文，但笔记其实还在记录。由于偶然间发现印象笔记这个神器，因此这半年的笔记我基本上都在我的印象笔记里，等以后有时间我再更新到博客上。</p>
+<p><strong>队名：胜利属于兄弟会<br>ShaLian<br>2018/4/28</strong></p>
+<p>做了将近一个半月的华为软件精英挑战赛最终落下了帷幕，在整个比赛中我们收获了很多，有算法软件知识，也有团队交流合作能力。最终取得<strong>杭厦赛区13名</strong>的成绩，对没能取得前4还是有点遗憾的，但是因为结束了一个多月的紧张备战还是感到轻松了很多。</p>
+<h4 id="比赛结果"><a href="#比赛结果" class="headerlink" title="比赛结果"></a><strong>比赛结果</strong></h4><p>初赛<br><img src="http://ols4zt49w.bkt.clouddn.com/1524987094%281%29.png" alt=""><br>复赛<br><img src="http://ols4zt49w.bkt.clouddn.com/1524987119%281%29.png" alt=""></p>
+<h4 id="比赛赛题"><a href="#比赛赛题" class="headerlink" title="比赛赛题"></a><strong>比赛赛题</strong></h4><p><strong>题目背景</strong><br>云平台为了满足不同租户的需求，提供了一种可随时自助获取、可弹性伸缩的云服务器，即弹性云服务器（Elastic Cloud Server，ECS）。为容纳更多的租户请求、并尽可能提高资源利用率、降低成本，自动化、智能化的资源调度管理系统非常关键。</p>
+<p>由于租户对ECS实例（虚拟机，VM）请求的行为具有一定规律，可以通过对历史ECS实例请求的分析，预测到未来一段时间的ECS实例请求，然后对预测的请求分配资源（如图1所示），这样可以找到一个接近最优的分配策略，实现资源最大化利用，同时也能参考预测的结果制定云数据中心的建设计划。<br><img src="http://ols4zt49w.bkt.clouddn.com/1524988789%281%29.png" alt=""><br>赛题更加详细的信息请参考2018华为软件精英挑战赛官网 <a href="http://codecraft.devcloud.huaweicloud.com/home/detail" target="_blank" rel="external">http://codecraft.devcloud.huaweicloud.com/home/detail</a></p>
+<p>比赛赛题主要可以分成两个步骤：<br>1、根据历史虚拟机请求数量预测接下来几天的各类虚拟机请求数量（主要通过机器学习方法）。<br>2、将预测出来的虚拟机放置进规定规格的物理服务器中，使得物理服务器的资源（CPU或者内存）利用率最高。</p>
+<h4 id="比赛体验"><a href="#比赛体验" class="headerlink" title="比赛体验"></a><strong>比赛体验</strong></h4><p>比赛刚开始时，我和舍友看到华为官方推送了相关比赛信息，于是就想试试，毕竟之前还没参加过类似纯算法的比赛（虽然后期觉得算法，代码能力，运气各占5：4：1）。正好之前另一个同学也提过这个比赛，于是我两便叫上他一起组队了。</p>
+<p>首先便是分工问题，由于是团队赛，分工好坏其实对团队的效率和成绩起到关键作用，幸运的是我们分工还是比较好的，一个人负责文件的读取和数据的去噪，一个人负责训练数据并预测模型部分，还有一个人负责最后的放置问题。在比赛过程中我们每天吃饭的时候都会一起交流，相互交流自己的ideal，我觉得这是一个团队所必需的，因为有时可能别人能发现你没有考虑到的问题，同时在交流中也能互相学到东西。</p>
+<p>在比赛中我感受到了平时的知识长时间不用是会遗忘的，虽然之前接触过c++的STL，但是由于平时用c用的比较多，比赛时大部分都遗忘了，虽然官方也支持用c实现，但是在实际撸码中发现STL能为我们提供很多方便。</p>
+<p>第二，在比赛中我也感受到了竞争的激烈，可能今天你还在榜上前四，过了一晚你就掉出前十了，毕竟喜欢熬夜的大佬还是很多的，这也激励着我们进一步的改善优化，毕竟不到最后一刻结局还是个未解之谜。</p>
+<h4 id="比赛收获"><a href="#比赛收获" class="headerlink" title="比赛收获"></a><strong>比赛收获</strong></h4><p>在比赛中我主要负责数据的训练和预测模型的建立，预测模型很多，但是每种不一定都适合时间序列预测。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">1、多元线性回归模型</div><div class="line">线性回归可谓是世界上最知名的建模方法之一，也是我们第一个接触的模型。线性回归用最适直线(回归线)去建立因变量Y和一个或多个自变量X之间的关系。可以用公式来表示：</div><div class="line">   Y=a+b*X+e</div><div class="line">   a为截距，b为回归线的斜率，e是误差项。</div><div class="line">   简单线性回归与多元线性回归的差别在于：多元线性回归有多个(&gt;1)自变量，而简单线性回归只有一个自变量。到现在我们的问题就是：如何找到那条回归线？</div><div class="line">   </div><div class="line">我们可以通过最小二乘法把这个问题解决。其实最小二乘法就是线性回归模型的损失函数，只有把损失函数做到最小时得出的参数，才是我们最需要的参数。损失函数我们可以采用差方和。</div><div class="line"></div><div class="line">重点：</div><div class="line">1.自变量与因变量之间必须要有线性关系。</div><div class="line">2.多重共线性、自相关和异方差对多元线性回归的影响很大。</div><div class="line">3.线性回归对异常值非常敏感，其能严重影响回归线，最终影响预测值。（因此在训练数据前需要做好去噪，我们采用过平均滤波，高斯滤波等，最终采用的是高斯滤波）</div><div class="line"></div><div class="line">调试过程中遇到的问题并做的小结：</div><div class="line">多元回归：</div><div class="line">1、循环预测N次，将N天数据累加。(后来事实证明不能将最先预测的数据带入，重新训练生成新的参数，从而生成新的预测数据。)</div><div class="line">2、动态申请二维数组，将每天的数据赋值给它。（原先定义的时候是长度固定的数组，可以存放100天的数据，但是实际上可能没有这么多的天数，所以后面没数据的天数数据会全部为初始值0，影响训练效果。）</div><div class="line">3、N天和作为输入，训练预测N天的和。（后来效果没有一天一天预测的效果好）</div><div class="line">4、降噪完在存入数据。</div></pre></td></tr></table></figure>
+<p>关于其他回归模型，有兴趣的可以参考一些博文：<br><a href="https://blog.csdn.net/zc02051126/article/details/54709096" target="_blank" rel="external">https://blog.csdn.net/zc02051126/article/details/54709096</a><br><a href="https://www.jianshu.com/p/15dd20f8d02c" target="_blank" rel="external">https://www.jianshu.com/p/15dd20f8d02c</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">2、指数平滑预测</div><div class="line">我们初赛用的是二次的，复赛用的是三次的。</div><div class="line">一次指数平滑实际就是对历史数据的加权平均，它可以用于任何一种没有明显函数规律，但确实存在某种前后关联的时间序列的短期预测。</div><div class="line">局限性：</div><div class="line">第一，预测值不能反映趋势变动、季节波动等有规律的变动；</div><div class="line">第二，这种方法多适用于短期预测，而不适合作中长期的预测；</div><div class="line">第三，由于预测值是历史数据的均值，因此与实际序列的变化相比有滞后现象。</div><div class="line"></div><div class="line">二次指数</div><div class="line">二次指数平滑是对一次指数平滑的再平滑。它适用于具有线性趋势的时间数列。（一次指数平滑没有考虑历史数据变化趋势对当前预测值的影响， 因此无法预测趋势）</div><div class="line"></div><div class="line">三次指数</div><div class="line">1. 与前两种相比，我们多考虑一个因素：季节性效应（ Seasonality）。这种平均模型考虑的季节性效应，在股票或者期货价格中都会比较常见，比如  在过年前A股市场通常会交易比较频繁，在小麦成熟的时候   小麦期货价格   也会有比较明显的波动。</div><div class="line"></div><div class="line">在尝试此模型的过程中，平滑系数a的选取至关重要，我们后来尝试了用暴力解法来确定a，但是如果将a从0-1之间每0.001累加从而暴力求解的话会发现有时会超时，因此我后来在0-1之间截取不同段从而确定最佳的平滑系数在那个区间，从而减少暴力求解的时间。同时，对于不同的去噪方式，对平滑系数的选取都会有一定的影响。</div><div class="line"></div><div class="line">注意：</div><div class="line">1、指数平滑预测只适合中短期的时间序列预测，预测时间过长或预测起始时间和训练数据结束时间间隔太久时，会影响它的准确度。</div><div class="line">2、复赛时，由于预测起始时间和所给训练数据间存在间隔T,为了避免误差过大，可采用累加N天数据的和做为训练数据。</div><div class="line">   主要分两步：N1=T，预测出紧挨着训练数据的 T天的数据和data1; N2=T+预测天数，预测出紧挨着训练数据的 T+预测天数 天的数据和data2；最后data2-data1即为预测天数的数据和。</div></pre></td></tr></table></figure>
+<p>对于指数平滑预测模型感兴趣的还可以参考以下博文：<br><a href="https://www.cnblogs.com/TTyb/p/5716125.html" target="_blank" rel="external">https://www.cnblogs.com/TTyb/p/5716125.html</a><br><a href="https://www.cnblogs.com/devilmaycry812839668/p/6935167.html" target="_blank" rel="external">https://www.cnblogs.com/devilmaycry812839668/p/6935167.html</a></p>
+<p>至于其他模型，我们还试过最佳拟合直线（和简单线性回归类似）；bp神经网络；adaboost(二分类模型)等。在此处就不再一一展开了，有兴趣的可以自己查阅相关资料。<br><a href="https://blog.csdn.net/Pruett/article/details/68951232" target="_blank" rel="external">最佳拟合直线</a><br><a href="https://blog.csdn.net/guyuealian/article/details/70995333" target="_blank" rel="external">Adaboost算法原理分析和实例</a></p>
+<p>附：在和大佬的交流中，我发现杭电大部人人都用的ARIMA模型（自回归移动平均），但是由于时间原因我并没有仔细研究，有兴趣的人可以试试。</p>
+<p>最后，附上个人观点，其实每种模型都有各自的优缺点，不管你尝试哪种模型，只要你想办法去优化模型，针对具体数据去改善模型都能取得不错的成绩。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">3、装箱问题</div><div class="line">这部分主要是由队友做的，我们一开始采用的是最简单的方法（也是官方文档示例方法）是贪心+首次适应法（FF算法），即将所有的虚拟机按次序放入物理服务器中，对于每个虚拟机，检查服务器资源是否足够放下该虚拟机，如果可以放下就将其放在这台服务器上，如果服务器剩余资源不足以放下该虚拟机，则新建一台服务器，将虚拟机放入新建的服务器……直到最后放置完所有的虚拟机，将每个服务器放置的虚拟机输出即可。</div><div class="line">显然，首次适应方法有个弊端，可能会造成每个服务器都有挺多资源剩余，但是却无法被后来的虚拟机利用。由于在采用首次适应法的前提下，虚拟机放置方式只与虚拟机初始排列顺序有关，所以我们可以用智能算法对初始排列顺序进行优化，求得接近最优解的解。</div><div class="line"></div><div class="line">后来我们采用模拟退火算法进行最优解的寻找，模拟退火算法（Simulated Annealing Algorithm）用于优化问题的出发点是基于物理中固体物质的退火过程与一般优化问题的相似性，虽然模拟退火法能够提高利用率，但是有时评估次数设置的过多可能会导致程序超时（60s），而且到后期发现退火的利用率也到极限了（cpu和内存比值）。</div><div class="line"></div><div class="line">后来和其他队的交流，想要尽快放满一台服务器，可以尝试动态规划（DP）和最佳适应法。最终我们写了六种放置方法，并在调用前判断哪种的利用率高，然后调用哪种。（哈哈哈，也是厉害了，居然想到了这种方法。。。）</div></pre></td></tr></table></figure>
+<p>作为第一次参加类似的比赛（纯算法），我还是感触颇深的，也认识到了自己和大佬间的差距，希望以后有机会再一较高下吧。<br>代码地址：<a href="https://github.com/shalian123/HuaweiCodeCraft" target="_blank" rel="external">https://github.com/shalian123/HuaweiCodeCraft</a><br>欢迎各位交流给星哦~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag">#c++</a>
+          
+            <a href="/tags/华为软挑/" rel="tag">#华为软挑</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/静态库和共享库/" rel="next" title="静态库和共享库">
+                <i class="fa fa-chevron-left"></i> 静态库和共享库
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2018/04/29/2018华为软件精英挑战赛总结/"
+     data-title="2018华为软件精英挑战赛总结"
+     data-content=""
+     data-url="http://shalian123.github.io/2018/04/29/2018华为软件精英挑战赛总结/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/04/29/2018华为软件精英挑战赛总结/"
+           data-title="2018华为软件精英挑战赛总结" data-url="http://shalian123.github.io/2018/04/29/2018华为软件精英挑战赛总结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#比赛结果"><span class="nav-number">1.</span> <span class="nav-text">比赛结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比赛赛题"><span class="nav-number">2.</span> <span class="nav-text">比赛赛题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比赛体验"><span class="nav-number">3.</span> <span class="nav-text">比赛体验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比赛收获"><span class="nav-number">4.</span> <span class="nav-text">比赛收获</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
