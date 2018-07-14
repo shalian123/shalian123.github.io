@@ -265,6 +265,134 @@
             
               
                 
+                <a class="post-title-link" href="/2017/09/21/c-的纯虚函数和虚函数/" itemprop="url">
+                  c++的纯虚函数和虚函数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-21T10:36:28+08:00" content="2017-09-21">
+              2017-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/21/c-的纯虚函数和虚函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/21/c-的纯虚函数和虚函数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在学java，在学习的过程中发现和之前的c++由好多类似但又不同的地方，而且十分容易混淆。因此做了一些简单的笔记，避免混淆。<br>首先，我借用网上的一篇博文,简单区分一下c++的虚函数和纯虚函数。<br><a href="http://blog.csdn.net/foreverhuylee/article/details/34108837" target="_blank" rel="external">C++中纯虚函数和虚函数的区别</a><br>如下：<br>首先：强调一个概念<br>定义一个函数为虚函数，不代表该函数为不被实现的函数<br>==定义他为虚函数是为了允许用基类的指针来调用子类的这个函数==  </p>
+<p>定义一个函数为纯虚函数，才代表函数没有被实现<br>==定义他是为了实现一个接口，起到一个规范的作用，规范继承这个类的程序员必须实现这个函数。== </p>
+<p>（<br> 纯虚函数就是父类不给定义，子类必须要实现这个函数，不然子类不能被具象化</p>
+<p>虚函数的话父类也要给定义，因为子类可以不实现这个虚函数而沿用父类的虚函数</p>
+<p>）<br>对继承的影响：<br>       普通的类（没有虚函数，纯虚函数）就可以被继承，而且工作的相当好<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">*****************************************************************************************************************************************</div><div class="line">关于实例化一个类：  </div><div class="line">有纯虚函数的类是不可能生成类对象的，如果没有纯虚函数则可以。比如：  </div><div class="line">class  CA  </div><div class="line">&#123;  </div><div class="line">public:  </div><div class="line">       virtual  void  fun()  =  0;    //  说明fun函数为纯虚函数  </div><div class="line">       virtual  void  fun1();  </div><div class="line">&#125;;  </div><div class="line"> </div><div class="line">class  CB  </div><div class="line">&#123;  </div><div class="line">public:  </div><div class="line">     virtual  void  fun();  </div><div class="line">     virtual  void  fun1();  </div><div class="line">&#125;;  </div><div class="line"> </div><div class="line">//  CA，CB类的实现  </div><div class="line">...  </div><div class="line"> </div><div class="line">void  main()  </div><div class="line">&#123;  </div><div class="line">       CA  a;      //  不允许，因为类CA中有纯虚函数  </div><div class="line">       CB  b;      //  可以，因为类CB中没有纯虚函数  </div><div class="line">       ...  </div><div class="line">&#125;  </div><div class="line">**************************************************************************************</div></pre></td></tr></table></figure></p>
+<p>对“<strong>虚函数是为了允许用基类的指针来调用子类</strong>”这句话的理解：<br>设Parent是父类，Child是子类<br>Parent parent；<br>Child Child；<br>父类中有function1和function2这两个函数，<br>并且function2是虚函数。<br>当我们在程序中，使用<br><code>Parent *p;  // 定义一个基类指针</code><br><code>p=&amp;child;         // 指向继承类对象     ，或者用 p=new Child（）这样的形式，</code><br>这里就是用基类的指针（p）来调用子类，（<strong>因为把子类的对象赋给了它</strong>）<br><strong>如果基类的函数中没有virtual的话，就算是把子类的对象赋值给了父类指针，由于静态联编，指针p永远都只调用父类的方法（下行转换，和java的向上造型类似）<br>但是，若父类的某个方法用virtual修饰了，变成了虚函数，那么，这时virtual就起作用了，这个p 将会调用Child类的function2，而不是父类的function2~~</strong><br>若Parent类还有一个子类，叫Child2<br>当执行<br>Parent *p;<br>p=new Child2();<br>时，就能体现出virtual的功劳了，动态联编会选择执行Child2这个类的function2函数，而不是基类的function2函数</p>
+<p>下面是我做的和java的对比：<br>1.c++的虚函数和java中普通方法的重写类似。（当方法被重写时，调用哪个方法看<strong>对象</strong>，与引用无关），注：重载时看类型；向上造型时看类型。</p>
+<p>2.补充：区别c++和java<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">C++           Java</div><div class="line">　　虚函数 ---------普通函数</div><div class="line">　　纯虚函数 ------ 抽象方法</div><div class="line">　　抽象类 -------- 抽象类</div><div class="line">　　虚基类 -------- 接口</div></pre></td></tr></table></figure></p>
+<p>c++定义一个函数为虚函数，不代表函数为不被实现的函数。<br>      定义他为虚函数是为了允许用基类的指针来调用子类的这个函数。<br>      定义一个函数为纯虚函数，才代表函数没有被实现。<br>抽象类只能作为基类来使用，其纯虚函数的实现由派生类给出。如果派生类中没有重新定义纯虚函数，而只是继承基类的纯虚函数，则这个派生类仍然还是一个抽象类。如果派生类中给出了基类纯虚函数的实现，则该派生类就不再是抽象类了，它是一个可以建立对象的具体的类。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/09/20/printf-易忽视的大问题/" itemprop="url">
                   printf 易忽视的大问题
                 </a>
@@ -1442,130 +1570,6 @@ printf(&quot;0x%x\n&quot;, val);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/" itemprop="url">
-                  qt子窗口调用父窗口函数(跨控件跨类)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-20T17:27:57+08:00" content="2017-07-20">
-              2017-07-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/20/qt子窗口调用父窗口函数-跨控件跨类/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在qt中有时需要窗体间传递数据，在这里我写了一个demo,主要的效果是：主窗体点击跳出一个子窗体，然后由子窗体控制在主窗体显示画图等。简要来说就是，<strong>子窗口中的一个按钮被点击了，父窗口上的一个slot函数响应这个点击。</strong><br>思路：<br>1）在子窗口里面增加一个signal，在父窗口里面增加一个响应slot用于接收这个信号。<br>2）子窗口的按钮slot函数中emit这个signal。<br>3）在父窗口中把子窗口的这个signal连到自己的响应slot。<br>下面是子窗体的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">  //dialog_mea.h</div><div class="line">#ifndef DIALOG_MEA_H</div><div class="line">#define DIALOG_MEA_H</div><div class="line"></div><div class="line">#include &lt;QDialog&gt;</div><div class="line"></div><div class="line">namespace Ui &#123;</div><div class="line">class Dialog_mea;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Dialog_mea : public QDialog</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line"></div><div class="line">public:</div><div class="line">    explicit Dialog_mea(QWidget *parent = 0);</div><div class="line">    ~Dialog_mea();</div><div class="line"></div><div class="line"></div><div class="line">signals:</div><div class="line"></div><div class="line">    void Dialog_meaEvent();//子窗体添加的信号</div><div class="line"></div><div class="line">protected slots:</div><div class="line"></div><div class="line">    void Button_clicked();</div><div class="line"></div><div class="line">private:</div><div class="line">    Ui::Dialog_mea *ui;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // DIALOG_MEA_H</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">      //dialog_mea.c</div><div class="line">#include &quot;dialog_mea.h&quot;</div><div class="line">#include &quot;ui_dialog_mea.h&quot;</div><div class="line"></div><div class="line">Dialog_mea::Dialog_mea(QWidget *parent) :</div><div class="line">    QDialog(parent),</div><div class="line">    ui(new Ui::Dialog_mea)</div><div class="line">&#123;</div><div class="line">    ui-&gt;setupUi(this);</div><div class="line">    connect(ui-&gt;pushButton,SIGNAL(clicked()),this,SLOT(Button_clicked()));</div><div class="line">&#125;</div><div class="line"></div><div class="line">Dialog_mea::~Dialog_mea()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line">void Dialog_mea::Button_clicked()</div><div class="line">&#123;</div><div class="line">    emit Dialog_meaEvent();//发射信号</div><div class="line">    this-&gt;close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>下面是主窗体的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">  //widget.h文件</div><div class="line">#ifndef WIDGET_H</div><div class="line">#define WIDGET_H</div><div class="line"></div><div class="line">#include &lt;QWidget&gt;</div><div class="line">#include &quot;dialog_mea.h&quot;</div><div class="line">#include &quot;paintline.h&quot;</div><div class="line">#include &lt;QHBoxLayout&gt;</div><div class="line">namespace Ui &#123;</div><div class="line">class Widget;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Widget : public QWidget</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line"></div><div class="line">public:</div><div class="line">    explicit Widget(QWidget *parent = 0);</div><div class="line">    ~Widget();</div><div class="line">protected slots:</div><div class="line">    void SonWindowEventClicked() ;</div><div class="line">private slots:</div><div class="line"></div><div class="line">    void on_pushButton_clicked();</div><div class="line"></div><div class="line">private:</div><div class="line">    Ui::Widget *ui;</div><div class="line">    Dialog_mea dialog2;</div><div class="line">    paintline *pp;</div><div class="line">    QHBoxLayout  *layout;</div><div class="line">    Dialog_mea *ww;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // WIDGET_H</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"> //widget.c文件</div><div class="line">#include &quot;widget.h&quot;</div><div class="line">#include &quot;ui_widget.h&quot;</div><div class="line"></div><div class="line">Widget::Widget(QWidget *parent) :</div><div class="line">    QWidget(parent),</div><div class="line">    ui(new Ui::Widget)</div><div class="line">&#123;</div><div class="line">    ui-&gt;setupUi(this);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">Widget::~Widget()</div><div class="line">&#123;</div><div class="line">    delete ui;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    dialog2.show();</div><div class="line">    connect(&amp;dialog2,SIGNAL(Dialog_meaEvent()),this,SLOT(SonWindowEventClicked()));</div><div class="line">&#125;</div><div class="line">void Widget::SonWindowEventClicked()//主窗体响应子窗体信号</div><div class="line">&#123;</div><div class="line">    pp = new paintline();</div><div class="line">    layout = new QHBoxLayout();</div><div class="line">    layout-&gt;addWidget(pp);</div><div class="line">    ui-&gt;widget-&gt;setLayout(layout);</div><div class="line">    pp-&gt;show();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>关于上面代码中涉及到的paintline类等，参考我上一篇的文章。<a href="http://shalian.site/2017/07/19/QT%E4%B8%AD%E4%BD%BF%E7%94%A8QPainter%E5%9C%A8%E4%B8%BB%E7%AA%97%E5%8F%A3%E7%9A%84%E5%AD%90%E6%8E%A7%E4%BB%B6%E9%87%8C%E7%94%BB%E5%9B%BE/" target="_blank" rel="external">QT中使用QPainter在主窗口的子控件里画图</a><br>最后附上几篇讲的不错的帖子：<br><a href="http://blog.csdn.net/shihoongbo/article/details/48681979" target="_blank" rel="external">【Qt】窗体间传递数据（跨控件跨类），三种情况与处理方法 </a><br><a href="http://blog.csdn.net/guo503604087/article/details/48826025" target="_blank" rel="external">qt子窗口调用父窗口的函数</a><br><a href="https://zhidao.baidu.com/question/2078605278997086108.html" target="_blank" rel="external">https://zhidao.baidu.com/question/2078605278997086108.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1611,7 +1615,7 @@ printf(&quot;0x%x\n&quot;, val);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1628,7 +1632,7 @@ printf(&quot;0x%x\n&quot;, val);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
