@@ -265,6 +265,126 @@
             
               
                 
+                <a class="post-title-link" href="/2018/08/20/printf缓冲区问题/" itemprop="url">
+                  printf缓冲区问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-08-20T22:45:01+08:00" content="2018-08-20">
+              2018-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/08/20/printf缓冲区问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/20/printf缓冲区问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://ols4zt49w.bkt.clouddn.com/FZDKDS%25E~QUS_8WZ$AQ%600WF.png" alt=""><br><strong>关于printf的缓冲问题：</strong><br>在printf的实现中，在调用write之前先写入IO缓冲区，这是一个用户空间的缓冲。系统调用是软中断，频繁调用，需要频繁陷入内核态，这样的效率不是很高，而printf实际是向用户空间的IO缓冲写，在满足条件的情况下才会调用write系统调用，减少IO次数，提高效率。<br>printf在glibc中默认为行缓冲，遇到以下几种情况会<strong>刷新缓冲区</strong>，输出内容：<br>（1）缓冲区填满；<br>（2）写入的字符中有换行符\n或回车符\r；<br>（3）调用fflush手动刷新缓冲区；<br>（4）调用scanf要从输入缓冲区中读取数据时，也会将输出缓冲区内的数据刷新。<br>可使用setbuf(stdout,NULL)<strong>关闭行缓冲</strong>，或者setbuf(stdout,uBuff)设置新的缓冲区，uBuff为自己指定的缓冲区。也可以使用setvbuf(stdout,NULL,_IOFBF,0);来改变标准输出为全缓冲。全缓冲与行缓冲的区别在于遇到换行符不刷新缓冲区。<br><strong>注意：</strong><br>main函数的return有刷新缓冲区，但是其他函数的return并不能刷新！！！ printf在VC++中默认关闭缓冲区，输出时会及时的输到屏幕。如果显示开启缓冲区，只能设置全缓冲。因为微软闭源，所以无法研究printf函数的实现源码。<br>linux下printf默认是存在缓冲区的。<br>Linux和Windows下的缓冲区管理可见：<a href="https://blog.csdn.net/k346k346/article/details/63259524" target="_blank" rel="external">标题C的全缓冲、行缓冲和无缓冲</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/07/14/性能优化/" itemprop="url">
                   性能优化
                 </a>
@@ -1426,126 +1546,6 @@ new出的对象在堆中；
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/10/26/SLAM/" itemprop="url">
-                  SLAM
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-10-26T21:38:45+08:00" content="2017-10-26">
-              2017-10-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/计算机视觉/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机视觉</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/10/26/SLAM/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/26/SLAM/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天偶然看到一篇清华大学博士写的文章，他主要研究方向是计算机视觉，因为本人之前也帮一个朋友一起研究过SLAM，不过当时她主要是做扫地机器人路径规划的，看到这篇文章后顿时感到之前的研究只是皮毛（不是自黑）。<br><strong>什么是SLAM</strong>?机器人在未知环境中，要实现智能化需要完成三个任务，第一个是定位(Localization)，第二个是建图(Mapping)，第三个则是随后的路径规划(Navigation)。<br>几年前，如果有人问到什么是SLAM，我可能会举个例子：用在室内移动机器人上的技术，如果非要找个刚需场景的话，扫地机那边画图边扫地的样子简直是最好像向陌生人解释这东西有多牛掰的神器。然而，随着最近几年激光导航、AR、无人机、无人驾驶技术的发展，SLAM再次火了起来。<br>具体的介绍可以参考高博的博文，在此处附上他的博客链接：<br><a href="http://www.cnblogs.com/gaoxiang12/p/3695962.html" target="_blank" rel="external">http://www.cnblogs.com/gaoxiang12/p/3695962.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1591,7 +1591,7 @@ new出的对象在堆中；
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-count">56</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
