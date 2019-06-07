@@ -265,6 +265,157 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/26/怎么去备份你的hexo博客/" itemprop="url">
+                  怎么去备份你的hexo博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-26T22:44:07+08:00" content="2017-10-26">
+              2017-10-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hexo教程/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo教程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/26/怎么去备份你的hexo博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/26/怎么去备份你的hexo博客/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>作为一个写代码的人来说，保存和备份就像是吃饭和喝水一下重要，所以随手保存和存有备份已经成为我的习惯了。使用Hexo在github搭建的博客，仓库里只有生成的静态网页文件，是没有Hexo的源文件的，如果现在这个电脑出现了什么问题，那就麻烦了，所以我就研究了一下怎么备份。备份的教程和搭建的教程比起来简直是少的可怜，好不容易找到一份教程，却是写的非常高深，个人觉得不应该是那么复杂的，所以果断放弃，就在我准备自己瞎搞得时候，终于让我看到了一份简单明了的教程，因为测试成功了，所以我需要把过程记录下来，以后忘了还可以有个参考</p>
+<p>作者：程序媛JY<br>链接：<a href="http://www.jianshu.com/p/baab04284923" target="_blank" rel="external">http://www.jianshu.com/p/baab04284923</a><br>來源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>针对博客已经搭建并发布过文章的。</p>
+<p>1、在你的博客仓库创建一个分支hexo（这个命名随意）；</p>
+<p>2、设置hexo为默认分支（不知道的参考<a href="http://blog.csdn.net/zwx2445205419/article/details/66970640）；" target="_blank" rel="external">http://blog.csdn.net/zwx2445205419/article/details/66970640）；</a></p>
+<p>3、将博客仓库clone至本地，将之前的hexo文件夹中的</p>
+<p>_config.yml，themes/，source，scffolds/，package.json，.gitignore复制到你克隆下来的仓库文件夹，即Username.github.io；（Username是你自己的用户名）</p>
+<p>4、将themes/next/(我用的是NexT主题)中的.git/删除，否则无法将主题文件夹push；</p>
+<p>5、在Username.github.io；文件夹执行npm install，npm install hexo-deployer-git(这里可以看看分支是不是显示为hexo)<br><img src="http://ols4zt49w.bkt.clouddn.com/76YE31%7B%60HJ5C$3%5DYN%29%5DD@CQ.png" alt=""></p>
+<p>6、执行<code>git add .</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
+<p>7、执行hexo g -d 生成静态网页部署到github上。<br>这样，Username.github.io仓库就有master分支保存静态网页，hexo分支保存源文件。</p>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>在本地对博客修改（包括修改主题样式、发布新文章等）后</p>
+<p>1、执行<code>git add .</code>，<code>git commit -m &quot;提交文件&quot;</code>，<code>git push origin hexo</code>来提交hexo网站源文件；</p>
+<p>2、执行hexo g -d 生成静态网页部署到github上；</p>
+<p>（每次发布重复这两步，它们之间没有严格的顺序）</p>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><p>换电脑想改博客：<br>1、安装git；<br>2、安装Nodejs和npm；<br>3、使用克隆命令将仓库拷贝至本地；<br>4、在文件夹内执行命令<code>npm install hexo-cli -g</code>、<code>npm install</code>、<code>npm install hexo-deployer-git</code>；</p>
+<h4 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h4><p>Hexo的源文件说明：</p>
+<p>1、_config.yml站点的配置文件，需要拷贝；</p>
+<p>2、themes/主题文件夹，需要拷贝；</p>
+<p>3、source博客文章的.md文件，需要拷贝；</p>
+<p>4、scaffolds/文章的模板，需要拷贝；</p>
+<p>5、package.json安装包的名称，需要拷贝；</p>
+<p>6、.gitignore限定在push时哪些文件可以忽略，需要拷贝；</p>
+<p>7、.git/主题和站点都有，标志这是一个git项目，不需要拷贝；</p>
+<p>8、node_modules/是安装包的目录，在执行npm install的时候会重新生成，不需要拷贝；</p>
+<p>9、public是hexo g生成的静态网页，不需要拷贝；</p>
+<p>10、.deploy_git同上，hexo g也会生成，不需要拷贝；</p>
+<p>11、db.json文件，不需要拷贝。</p>
+<p>不需要拷贝的文件正是.gitignore中所忽略的。</p>
+<p>注：本文主要是为了避免以后换电脑或电脑出问题，具体操作参考了一些博客：<br><a href="http://www.jianshu.com/p/baab04284923" target="_blank" rel="external">怎么去备份你的Hexo博客</a></p>
+<p><a href="http://blog.csdn.net/u012195214/article/details/72721065" target="_blank" rel="external">使用Hexo搭建博客，备份至GitHub过程 </a></p>
+<p><a href="http://blog.csdn.net/zwx2445205419/article/details/66970640" target="_blank" rel="external">Hexo+github个人博客搭建+异地管理 </a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/10/26/SLAM/" itemprop="url">
                   SLAM
                 </a>
@@ -1443,129 +1594,6 @@ printf(&quot;0x%x\n&quot;, val);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/30/Qt数据库操作/" itemprop="url">
-                  Qt数据库操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-30T17:17:33+08:00" content="2017-07-30">
-              2017-07-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index">
-                    <span itemprop="name">QT</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/07/30/Qt数据库操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/30/Qt数据库操作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在公司的项目涉及到用QT来操作数据库，在qt里自带了一个小型本地型的数据库sqlite，一般在移动设备或嵌入式设备中经常使用，但是公司服务器端用的是<strong>oracle数据库</strong>，这就需要实现两种数据库的交互。在此我采用的方案是，服务器端提供相关<strong>接口</strong>，然后在软件中通过<strong>http</strong>协议<strong>获取一些json数据</strong>，通过<strong>解析</strong>再将它们<strong>写入</strong>软件自带的<strong>sqlite数据库</strong>。</p>
-<h5 id="数据库的建立"><a href="#数据库的建立" class="headerlink" title="数据库的建立"></a>数据库的建立</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">#ifndef COLLECTION_H</div><div class="line">#define COLLECTION_H</div><div class="line">#include &lt;QMessageBox&gt;</div><div class="line">#include &lt;QSqlDatabase&gt;</div><div class="line">#include &lt;QSqlQuery&gt;</div><div class="line"></div><div class="line">static bool createConnection()</div><div class="line">&#123;</div><div class="line">    // 创建一个数据库连接，使用“connection1”为连接名</div><div class="line">    QSqlDatabase db1 = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;, &quot;connection1&quot;);//可以省略第二个参数即连接名，创建默认连接</div><div class="line">    db1.setDatabaseName(&quot;my1.db&quot;);//数据库名</div><div class="line">    if (!db1.open()) &#123;</div><div class="line">        QMessageBox::critical(0, &quot;Cannot open database1&quot;,</div><div class="line">                              &quot;Unable to establish a database connection.&quot;, QMessageBox::Cancel);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 这里要指定连接</div><div class="line">    QSqlQuery query1(db1);</div><div class="line">    //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">    query1.exec(&quot;create table Measuring_point (id int primary key, &quot;</div><div class="line">                &quot;pointpart varchar(100),&quot;</div><div class="line">                &quot;pressure number(10,3),&quot;</div><div class="line">                &quot;tempeture number(10,3),&quot;</div><div class="line">                &quot;medium varchar(100),&quot;</div><div class="line">                &quot;material varchar(100),&quot;</div><div class="line">                &quot;originthickness number(10),&quot;</div><div class="line">                &quot;outerdiameter number(10),&quot;</div><div class="line">                &quot;deviceid number(19),&quot;</div><div class="line">                &quot;devicename varchar(100),&quot;</div><div class="line">                &quot;orgseq varchar(30),&quot;</div><div class="line">                &quot;equipid number(19),&quot;</div><div class="line">                &quot;equipcode varchar(100),&quot;</div><div class="line">                &quot;equipname varchar(100),&quot;</div><div class="line">                &quot;partual varchar(200))&quot;);</div><div class="line"></div><div class="line">   // query1.exec(&quot;insert into Measuring_point values(0,&apos;sha&apos;,&apos;lian&apos;,&apos;150MPa&apos;,&apos;20&apos;,&apos;无&apos;,&apos;无&apos;,&apos;12mm&apos;,&apos;14mm&apos;,&apos;C:/Users/hasee/Desktop/nfc-04/nfc/pics/changshi.png&apos;)&quot;);</div><div class="line"></div><div class="line"></div><div class="line">    QSqlQuery query2(db1);</div><div class="line">    //query1.exec(&quot;SET NAMES &apos;Latin1&apos;&quot;);//使数据库支持中文</div><div class="line">    query2.exec(&quot;create table ThicknessRecord (pointid int primary key, &quot;</div><div class="line">                &quot;checkdate date(100),&quot;</div><div class="line">                &quot;value number(10,2))&quot;);</div><div class="line"></div><div class="line"></div><div class="line">    return true;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#endif // COLLECTION_H</div></pre></td></tr></table></figure>
-<h5 id="http访问"><a href="#http访问" class="headerlink" title="http访问"></a>http访问</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">//发送请求</div><div class="line">void Widget::on_pushButton_clicked()</div><div class="line">&#123;</div><div class="line">    manage = new QNetworkAccessManager(this);</div><div class="line">    manage1= new QNetworkAccessManager(this);</div><div class="line">    QNetworkRequest network_request;</div><div class="line">    QNetworkRequest network_request1;</div><div class="line"></div><div class="line">    /*设置发送数据*/</div><div class="line"></div><div class="line">   //QString cityName = &quot;杭州&quot;;</div><div class="line"></div><div class="line">  // network_request.setUrl(QUrl(&quot;http://apis.haoservice.com/weather?cityname=%E6%9D%AD%E5%B7%9E&amp;key=4c08a10447eb435e98080000c50f3f77&amp;paybyvas=false&quot;));</div><div class="line"></div><div class="line">   /* 注意：当url里有中文或空格之类的，需要用一些在线转码工具进行url编码，这里纠结了很久*/</div><div class="line"></div><div class="line">  //验证用户</div><div class="line"> // network_request.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!checkUser.action?pid=1349&amp;username=superuser&amp;password=admin&quot;));</div><div class="line"></div><div class="line"> //下载测点信息</div><div class="line">    network_request.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!downloadMeasurePoint.action?token=306d848a21164e23a4ce33a051b6dde7&amp;pnum=6&quot;));</div><div class="line"></div><div class="line">    //下载测厚记录</div><div class="line">  //  network_request1.setUrl(QUrl(&quot;http://172.16.10.24:8081/dreamfoil/nfc/nfc-thickness!downloadThicknessRecord.action?token=306d848a21164e23a4ce33a051b6dde7&quot;));</div><div class="line">    /*发送get网络请求*/</div><div class="line">    manage-&gt;get(network_request);</div><div class="line">   // manage1-&gt;get(network_request1);</div><div class="line">    /*建立connect，replyFinished为自定义槽函数，获取api发回来的天气信息（Jason）格式*/</div><div class="line">    connect(manage,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line">  //  connect(manage1,SIGNAL(finished(QNetworkReply *)),this,SLOT( getReplyFinished(QNetworkReply *)) );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="json解析及插入数据库"><a href="#json解析及插入数据库" class="headerlink" title="json解析及插入数据库"></a>json解析及插入数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">//获取传回的数据</div><div class="line">void Widget::getReplyFinished(QNetworkReply *reply)</div><div class="line">&#123;</div><div class="line">    if(reply-&gt;error()!= QNetworkReply::NoError)</div><div class="line">       qDebug() &lt;&lt; QStringLiteral(&quot;响应失败&quot;);</div><div class="line"></div><div class="line">    QByteArray bytes = reply-&gt;readAll();</div><div class="line">    QJsonParseError jsonError;</div><div class="line">    QJsonDocument document = QJsonDocument::fromJson(bytes,&amp;jsonError);//转化为json文档</div><div class="line">    if (jsonError.error != QJsonParseError::NoError) &#123;</div><div class="line">            qDebug() &lt;&lt; QStringLiteral(&quot;解析Json失败&quot;);//此处可以验证是否获取到天气信息（json格式）</div><div class="line">            //qDebug() &lt;&lt; bytes;//如果API响应的不是json格式的数据，则不用解析，直接输出</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    QJsonObject data = document.object();//转化为对象，传回的整体是一个对象</div><div class="line">    //QJsonArray data = document.array();  // 转化为数组</div><div class="line">    qDebug() &lt;&lt; &quot;测点信息：&quot; &lt;&lt; data;</div><div class="line">    qDebug()&lt;&lt;&quot;result:&quot;;</div><div class="line">    getMeasurePointInfo(data);//获取测点信息</div><div class="line">   // getMeasureRecordInfo(data);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获取测点result信息，进一步解析json</div><div class="line">void Widget::getMeasurePointInfo(QJsonObject data)</div><div class="line">&#123;</div><div class="line">    if (data.contains(&quot;result&quot;))</div><div class="line">    &#123;</div><div class="line">     QJsonValue value = data.value(&quot;result&quot;);</div><div class="line">     if(value.isArray())&#123;    //result是数组</div><div class="line">        QJsonArray array = value.toArray();</div><div class="line">        int nSize = array.size();  // 获取数组大小</div><div class="line">        MeasurePointInfo pointInfo;</div><div class="line">        //QStringList todayInfoList;//在文本框里显示</div><div class="line">        QSqlDatabase db1 = QSqlDatabase::database(&quot;connection1&quot;);//database（）静态函数，通过指定链接名来获取相应的数据库连接</div><div class="line">        QSqlQuery query1(db1);</div><div class="line">        for (int i = 0; i &lt; nSize; ++i) &#123;  // 遍历数组</div><div class="line">               if(array.at(i).isObject())&#123;  //数组里面又是对象</div><div class="line">                   QJsonObject object =array.at(i).toObject();</div><div class="line">                   pointInfo.orgseq = object.value(&quot;orgseq&quot;).toString();//装置序列</div><div class="line">                   pointInfo.pointpart = object.value(&quot;pointpart&quot;).toString();//测点部位</div><div class="line">                   pointInfo.equipname = object.value(&quot;equipname&quot;).toString();//设备名称</div><div class="line">                   pointInfo.deviceid = object.value(&quot;deviceid&quot;).toString();//装置id</div><div class="line">                   pointInfo.originthickness = object.value(&quot;originthickness&quot;).toDouble();//公称壁厚</div><div class="line">                   pointInfo.equipcode = object.value(&quot;equipcode&quot;).toString();//设备编号</div><div class="line">                   pointInfo.equipid = object.value(&quot;equipid&quot;).toInt();       //设备id</div><div class="line">                   pointInfo.parturl = object.value(&quot;parturl&quot;).toString();  //部位图</div><div class="line">                   pointInfo.id = object.value(&quot;id&quot;).toInt();                 //测点id</div><div class="line">                   qDebug() &lt;&lt; &quot;getMeasurePointInfo:\n&quot; &lt;&lt;pointInfo.orgseq&lt;&lt; pointInfo.pointpart &lt;&lt; pointInfo.equipname &lt;&lt; pointInfo.deviceid &lt;&lt; pointInfo.originthickness</div><div class="line">                           &lt;&lt;pointInfo.equipcode&lt;&lt;pointInfo.equipid&lt;&lt;pointInfo.parturl&lt;&lt;pointInfo.id;</div><div class="line">                 &#125;</div><div class="line">               //插入数据</div><div class="line">               query1.prepare(&quot;insert into Measuring_point values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)&quot;);//位置绑定</div><div class="line">               query1.bindValue(0,pointInfo.id);</div><div class="line">               query1.bindValue(1,pointInfo.pointpart);</div><div class="line">               query1.bindValue(10,pointInfo.orgseq);</div><div class="line">               query1.bindValue(13,pointInfo.equipname);</div><div class="line">               query1.bindValue(8,pointInfo.deviceid);</div><div class="line">               query1.bindValue(6,pointInfo.originthickness);</div><div class="line">               query1.bindValue(12,pointInfo.equipcode);</div><div class="line">               query1.bindValue(11,pointInfo.equipid);</div><div class="line">               query1.bindValue(14,pointInfo.parturl);</div><div class="line">               query1.exec();</div><div class="line"></div><div class="line">               //更新数据</div><div class="line"></div><div class="line">               /*query1.clear();</div><div class="line">               query1.prepare(QString(&quot;update pointpart=?,orgseq=?,&quot;</div><div class="line">                                      &quot;equipname=?,deviceid=?,&quot;</div><div class="line">                                      &quot;originthickness=?,equipcode=?,&quot;</div><div class="line">                                      &quot;equipid=?,partural=? where id=%1&quot;).arg(pointInfo.id));</div><div class="line">               query1.bindValue(1,pointInfo.pointpart);</div><div class="line">               query1.bindValue(10,pointInfo.orgseq);</div><div class="line">               query1.bindValue(13,pointInfo.equipname);</div><div class="line">               query1.bindValue(8,pointInfo.deviceid);</div><div class="line">               query1.bindValue(6,pointInfo.originthickness);</div><div class="line">               query1.bindValue(12,pointInfo.equipcode);</div><div class="line">               query1.bindValue(11,pointInfo.equipid);</div><div class="line">               query1.bindValue(14,pointInfo.partural);</div><div class="line">               query1.exec();</div><div class="line">              */</div><div class="line">            &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="将数据库的数据在tablewidget显示"><a href="#将数据库的数据在tablewidget显示" class="headerlink" title="将数据库的数据在tablewidget显示"></a>将数据库的数据在tablewidget显示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">if (createConnection()) //连接成功</div><div class="line">&#123;</div><div class="line">   // 使用QSqlQuery查询连接1的整张表，先要使用连接名获取该连接</div><div class="line">   QSqlDatabase db1 = QSqlDatabase::database(&quot;connection1&quot;);//database（）静态函数，通过指定链接名来获取相应的数据库连接</div><div class="line">   QSqlQuery query1(db1);</div><div class="line">   qDebug() &lt;&lt; &quot;connection1:&quot;;</div><div class="line">   //query1.exec(&quot;select * from Measuring_point&quot;);</div><div class="line">   query1.exec(&quot;select id,pointpart,originthickness from Measuring_point&quot;);</div><div class="line">   query1.last();</div><div class="line">   int nRow=query1.at()+1;</div><div class="line">   query1.first();</div><div class="line">   //tableWidget-&gt;setColumnCount(nRow);</div><div class="line">   //while(query1.next())//这边不能再有了，因为会影响到for循环的query1.next()</div><div class="line">   //&#123;</div><div class="line">       //qDebug() &lt;&lt; &quot;ok&quot;;</div><div class="line">      // qDebug() &lt;&lt; query1.value(0).toInt() &lt;&lt; query1.value(1).toString();</div><div class="line">   //&#125;</div><div class="line"></div><div class="line">   tableWidget = new QTableWidget(this);</div><div class="line">   QStringList header;</div><div class="line">   header&lt;&lt;&quot;设备管理&quot;&lt;&lt;&quot;测点部位&quot; &lt;&lt;&quot;公称壁厚(mm)&quot; &lt;&lt;&quot;测量壁厚(mm)&quot;</div><div class="line">        &lt;&lt;&quot;测量时间&quot;&lt;&lt;&quot;测量提示&quot;&lt;&lt;&quot;关联状态&quot;&lt;&lt;&quot;更多&quot;;</div><div class="line">   tableWidget-&gt;setRowCount(nRow);//一定要有行和列</div><div class="line">   tableWidget-&gt;setColumnCount(8);</div><div class="line">   tableWidget-&gt;setHorizontalHeaderLabels(header);</div><div class="line">   /*QPalette pll = tableWidget-&gt;palette();</div><div class="line">   pll.setBrush(QPalette::Base,QBrush(QColor(255,255,255,0)));</div><div class="line">   tableWidget-&gt;setPalette(pll);  //和QTextEdit一样，都可以使用样式表QPalette来修改它的背景颜色和背景图片，这里我们把刷子设置为全透明的，就可以是透明的</div><div class="line">  */</div><div class="line">   ui-&gt;manageLayout-&gt;addWidget(tableWidget);</div><div class="line">  // tableWidget-&gt;show();</div><div class="line"></div><div class="line">             /************第一行的数据******************/</div><div class="line">   tableWidget-&gt;setItem(0,0,new QTableWidgetItem(query1.value(0).toString()));</div><div class="line">   tableWidget-&gt;setItem(0,1,new QTableWidgetItem(query1.value(1).toString()));</div><div class="line">   tableWidget-&gt;setItem(0,2,new QTableWidgetItem(query1.value(2).toString()));</div><div class="line"></div><div class="line">   /********************将数据在table widget显示************************/</div><div class="line">   for(int i=1;query1.next();i++)&#123;</div><div class="line"></div><div class="line">       tableWidget-&gt;setItem(i,0,new QTableWidgetItem(query1.value(0).toString()));</div><div class="line">       tableWidget-&gt;setItem(i,1,new QTableWidgetItem(query1.value(1).toString()));</div><div class="line">       tableWidget-&gt;setItem(i,2,new QTableWidgetItem(query1.value(2).toString()));</div><div class="line"></div><div class="line">       QCheckBox* checkBoxSeclect = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxInsert = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxUpdate = new QCheckBox();</div><div class="line">       QCheckBox* checkBoxDelect = new QCheckBox();</div><div class="line">       tableWidget-&gt;setCellWidget(i,3,checkBoxSeclect);</div><div class="line">       tableWidget-&gt;setCellWidget(i,4,checkBoxInsert);</div><div class="line">       tableWidget-&gt;setCellWidget(i,5,checkBoxUpdate);</div><div class="line">       tableWidget-&gt;setCellWidget(i,6,checkBoxDelect);</div><div class="line">       qDebug() &lt;&lt; &quot;ok&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   tableWidget-&gt;show();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1611,7 +1639,7 @@ printf(&quot;0x%x\n&quot;, val);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1723,7 +1751,7 @@ printf(&quot;0x%x\n&quot;, val);
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

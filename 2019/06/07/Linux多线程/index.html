@@ -1,0 +1,732 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wind" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="@TOC
+进程与线程　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wind">
+<meta property="og:url" content="http://shalian123.github.io/2019/06/07/Linux多线程/index.html">
+<meta property="og:site_name" content="Wind">
+<meta property="og:description" content="@TOC
+进程与线程　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190525161505299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzc2MzI1OQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2019-06-07T13:54:25.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wind">
+<meta name="twitter:description" content="@TOC
+进程与线程　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title>  | Wind </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Wind</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">细节在于观察，成功在于积累。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-06-07T21:57:29+08:00" content="2019-06-07">
+              2019-06-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/06/07/Linux多线程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/07/Linux多线程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>@<a href="Linux多线程">TOC</a></p>
+<h1 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h1><p>　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。<br>　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。<br>      <strong>同一进程内的所有线程</strong>除了==共享全局变量==外还共享：</p>
+<ul>
+<li>进程指令；</li>
+<li><strong>mm</strong>；</li>
+<li>代码段（代码和常量）；</li>
+<li><strong>数据段（全局变量和静态变量）</strong></li>
+<li>扩展段（<strong>堆存储</strong>）</li>
+<li>打开的文件（即描述符）；</li>
+<li>信号处理函数和信号处置；</li>
+<li>当前工作目录；</li>
+<li>用户ID和组ID。<br>   <strong>每个线程拥有各自的：</strong></li>
+<li>线程ID；</li>
+<li>寄存器集合，包括程序计数器和栈指针；</li>
+<li><strong>栈</strong>（用于存放局部变量和返回地址）；</li>
+<li>errno；</li>
+<li>信号掩码；</li>
+<li>优先级。<pre><code>结构上的不同可以让我们更加了解进程和线程的相异之处：
+（1）==进程是资源分配的基本单位==；线程与资源分配无关，它属于某一个进程，并与进程内的其他线程共享进程的资源。
+（2）当进程发生调度时，不同的进程拥有不同的虚拟地址空间，而同一进程内的不同线程共享同一地址空间。
+（3）线程只由先关堆栈（系统栈或用户栈）寄存器和线程控制块组成。寄存器用来存储线程内的局部变量，但不能存储其他线程的相关变量。
+（4）进程切换时涉及有关资源指针的保存和地址空间的变化；线程切换时，由于处于同一进程内，所以不涉及资源信息的保存和地址空间的变化，从而减少了操作系统的时间开销
+</code></pre></li>
+</ul>
+<h1 id="进程fork和vfork"><a href="#进程fork和vfork" class="headerlink" title="进程fork和vfork"></a>进程fork和vfork</h1><p>fork（），子进程会拷贝父进程资源，但是==不共享，彼此隔离==。这里可以引申一下<strong><a href="https://www.cnblogs.com/biyeymyhjob/archive/2012/07/20/2601655.html" target="_blank" rel="external">写时拷贝技术</a></strong>。</p>
+<p> <img src="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center" alt="fock()"><br> vfock()，子进程会拷贝父进程资源，但是==内存不会拷贝==，与父进程共享一个内存（物理地址）。<br> <img src="https://img-blog.csdnimg.cn/20190525161505299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzc2MzI1OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="vfork()"></p>
+<h1 id="pthread-join和pthread-death"><a href="#pthread-join和pthread-death" class="headerlink" title="pthread_join和pthread_death"></a>pthread_join和pthread_death</h1><h2 id="一：关于join"><a href="#一：关于join" class="headerlink" title="一：关于join"></a>一：关于join</h2><p>　join<br>　　join是<strong>三种同步线程的方式之一</strong>。另外两种分别是互斥锁（mutex）和条件变量（condition variable）。<br>调用pthread_join()将阻塞自己，一直到要等待加入的线程运行结束， 或者调用了pthread_exit，或者被取消。<br>　　可以用pthread_join()获取线程的返回值。<br>　　一个线程对应一个pthread_join()调用，对同一个线程进行多次pthread_join()调用是逻辑错误。<br>join or detach<br>　　线程分两种：一种可以join，另一种不可以。该属性在创建线程的时候指定。<br>joinable线程可在创建后，<strong>用pthread_detach()显式地分离</strong>。但分离后不可以再合并。该操作不可逆。<br>为了确保移植性，在创建线程时，最好显式指定其join或detach属性。似乎不是所有POSIX实现都是用joinable作默认。 </p>
+<h2 id="二：-pthread-detach"><a href="#二：-pthread-detach" class="headerlink" title="二： pthread_detach"></a>二： pthread_detach</h2><p>　　创建一个线程默认的状态是joinable, 如果一个线程结束运行但没有被join,则它的状态类似于进程中的Zombie Process,即还有一部分资源没有被回收（退出状态码），所以创建线程者应该调用pthread_join来等待线程运行结束，并可得到线程的退出代码，回收其资源（类似于wait,waitpid) 。但是调用pthread_join(pthread_id)后，如果该线程没有运行结束，调用者会被阻塞，在有些情况下我们并不希望如此，比如在Web服务器中当主线程为每个新来的链接创建一个子线程进行处理的时候，主线程并不希望因为调用pthread_join而阻塞（因为还要继续处理之后到来的链接），<br>　　这时可以<strong>在子线程中加入代码 pthread_detach(pthread_self()) ，或者父线程调用<br>　　pthread_detach(thread_id)（非阻塞，可立即返回） ，这将该子线程的状态设置为detached,则该线程运行结束后会自动释放所有资源。</strong> </p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li>如果进程中的某个线程执行了pthread_detach(th)，则th线程将处于DETACHED状态，这使得th线程在结束运行时自行释放所占用的 内存资源，同时也无法由pthread_join()同步，pthread_detach()执行之后，对th请求pthread_join()将返回错误 。</li>
+<li>一个可join的线程所占用的内存仅当有线程对其执行了pthread_join()后才会释放，因此为了避免内存泄漏，所有线程的终止，要么已设为DETACHED，要么就需要使用pthread_join()来回收 。</li>
+<li>用pthread_exit只会使主线程自身退出，产生的子线程继续执行；用return则所有线程退出。<br>　　<br>　　在进程主函数（main()）中调用pthread_exit()，只会使主函数所在的线程（可以说是进程的主线程）退出；而如果是return，编译器将使其调用进程退出的代码（如_exit()），从而导致进程及其所有线程结束运行。 </li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/20/printf缓冲区问题/" rel="next" title="printf缓冲区问题">
+                <i class="fa fa-chevron-left"></i> printf缓冲区问题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2019/06/07/Linux多线程/"
+     data-title=""
+     data-content=""
+     data-url="http://shalian123.github.io/2019/06/07/Linux多线程/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/07/Linux多线程/"
+           data-title="" data-url="http://shalian123.github.io/2019/06/07/Linux多线程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/3812b31bb051f8196c5029e9d8b44aed2e73e718.jpg"
+               alt="shalian" />
+          <p class="site-author-name" itemprop="name">shalian</p>
+          <p class="site-description motion-element" itemprop="description">记录生活点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/shalian123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3329000660/home?wvr=5" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-pinterest"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.baidu.com/" title="百度" target="_blank">百度</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://harmansecurity.cn/" title="harman" target="_blank">harman</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.codecooler.tech/" title="DoRin" target="_blank">DoRin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程fork和vfork"><span class="nav-number">2.</span> <span class="nav-text">进程fork和vfork</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pthread-join和pthread-death"><span class="nav-number">3.</span> <span class="nav-text">pthread_join和pthread_death</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一：关于join"><span class="nav-number">3.1.</span> <span class="nav-text">一：关于join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：-pthread-detach"><span class="nav-number">3.2.</span> <span class="nav-text">二： pthread_detach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">3.3.</span> <span class="nav-text">注意</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shalian</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"shalian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
