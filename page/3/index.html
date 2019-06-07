@@ -265,6 +265,130 @@
             
               
                 
+                <a class="post-title-link" href="/2017/08/04/http协议的补充/" itemprop="url">
+                  http协议的补充
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-04T14:51:16+08:00" content="2017-08-04">
+              2017-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络编程/" itemprop="url" rel="index">
+                    <span itemprop="name">网络编程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/04/http协议的补充/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/04/http协议的补充/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="external">http://www.cnblogs.com/ranyonsue/p/5984001.html</a><br>在最近的项目中需要将本地文本中的json数据发送到服务器，在这里我采取了http的post方式，它的<strong>请求头部</strong>和<strong>请求数据</strong>是分开的。<strong>思路</strong>：我先将文档的数据读取出来，转化成字符串，然后拼接到http包的body中，最后提交数据请求。</p>
+<p>一、首先我们了解一下我采取如此方案的原因：</p>
+<p><strong>POST提交</strong>：把提交的数据放置在是HTTP包的包体中。<br><strong>GET提交</strong>，请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，多个参数用&amp;连接；例 如：login.action?name=hyddd&amp;password=idontknow&amp;verify=%E4%BD%A0 %E5%A5%BD。如果数据是英文字母/数字，原样发送，如果是空格，转换为+，如果是中文/其他字符，则直接把字符串用BASE64加密，得出如： %E4%BD%A0%E5%A5%BD，其中％XX中的XX为该符号以16进制表示的ASCII。<br><strong>因此，GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变。</strong></p>
+<p><strong>我们看看GET和POST的区别</strong><br>1.GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456. POST方法是把提交的数据放在HTTP包的Body中.<br><strong>2.GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制</strong>.<br>3.GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。<br>4.GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</p>
+<p>二、下面是部分代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">void Widget::on_pushButton_3_clicked()</div><div class="line">&#123;</div><div class="line"></div><div class="line">    QFile file(&quot;C:/Users/hasee/Desktop/shujv-ceshi/build-untitled-Desktop_QT_5_3-Debug/test.txt&quot;);</div><div class="line">    file.open(QIODevice::ReadWrite);</div><div class="line">    //int file_len =file.size();</div><div class="line">    //QByteArray fdata=file.readAll();</div><div class="line">    QString data =file.readAll();</div><div class="line">    qDebug()&lt;&lt;data;</div><div class="line">    QNetworkRequest request;</div><div class="line"></div><div class="line">    request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!uploadThicknessRecordString.action&quot;));</div><div class="line">   // request.setUrl(QUrl(&quot;http://172.16.10.24:8081/shsh/nfc/nfc-thickness!checkUser.action&quot;));</div><div class="line">    request.setHeader(QNetworkRequest::ContentTypeHeader,&quot;application/x-www-form-urlencoded&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept&quot;,&quot;text/html, application/xhtml+xml, */*&quot;);</div><div class="line">   // request.setRawHeader(&quot;Referer&quot;,&quot;http://localhost:8888/login&quot;);</div><div class="line">    request.setRawHeader(&quot;Accept-Language&quot;,&quot;zh-CN&quot;);</div><div class="line">    request.setRawHeader(&quot;X-Requested-With&quot;,&quot;XMLHttpRequest&quot;);</div><div class="line">    request.setRawHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)&quot;);</div><div class="line">    request.setRawHeader(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);//窗体数据被编码为名称/值对。这是标准的编码格式</div><div class="line">    //request.setRawHeader(&quot;Content-Type&quot;, &quot;application/json&quot;);//如果是json格式访问则加,但是这里我以字符串来发送，将文本里的内容读取发送</div><div class="line">    request.setRawHeader(&quot;Accept-Encoding&quot;,&quot;gzip,deflate&quot;);</div><div class="line">    request.setRawHeader(&quot;Connection&quot;,&quot;Keep-Alive&quot;);</div><div class="line">    request.setRawHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);</div><div class="line"></div><div class="line">    QString postData;</div><div class="line">   // postData.append(&quot;pid=1332&amp;username=superuser&amp;password=admin&quot;);</div><div class="line">   // postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&#123;thicknessrecord:&apos;sha&apos;,a:12.21&#125;&quot;);</div><div class="line">    postData.append(&quot;token=7eb935fb518e4234b83d3cae22d3873d&amp;recordFileString=&quot;);</div><div class="line">    postData+=data;//将文件中的字符串拼接上</div><div class="line">    QByteArray postData1=postData.toLatin1();//很重要，要将请求数据编码,toUtf8()也行</div><div class="line">    request.setRawHeader(&quot;Content-Length&quot;,QString::number(postData1.length()).toLatin1());//在请求头部设置请求数据的长度</div><div class="line">    _uploadManager-&gt;post(request,postData1);//postData1是请求数据</div><div class="line">          qDebug()&lt;&lt;postData1;</div><div class="line">    connect( _uploadManager,SIGNAL(finished(QNetworkReply*)),SLOT(replyFinished(QNetworkReply*)));</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/30/Qt数据库操作/" itemprop="url">
                   Qt数据库操作
                 </a>
@@ -1367,129 +1491,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/14/商品促销-策略模式-c-实现/" itemprop="url">
-                  商品促销-策略模式(c++实现)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-14T19:36:07+08:00" content="2017-06-14">
-              2017-06-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">大话设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/14/商品促销-策略模式-c-实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/商品促销-策略模式-c-实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>策略模式是一种定义一系列算法的方法，从概念上来看，所有这些算法完成的都是相同的工作，只是实现不同，它(策略模式)可以以相同的方式调用所有的算法，<strong>减少</strong>了各种算法类与使用算法类的之间的<strong>耦合</strong>。<br>策略模式就是用来封装算法的，但在实践中，可以用它来封装几乎任何类型的规则，只要在分析过程中听到需要在不同的时间应用不同的业务规则，就可以考虑使用策略模式处理这种变化的可能性。<br><img src="http://ols4zt49w.bkt.clouddn.com/1497440990%281%29.png" alt=""><br>补充：UML类图：</p>
-<p>类图一般分三层，第一层显示类的名称，如果是抽象类，则用斜体表示。第二层是类的特性，通常是字段和属性。第三层是类的操作，通常是方法或行为。<br>注意前面的符号，‘+’表示public，‘-’表示private，‘#’表示protected。<br><strong>继承</strong>用空心箭头+实线表示<br><strong>实现接口</strong>用空心箭头+虚线表示<br><strong>关联</strong>关系用实线箭头表示<br><strong>聚合</strong>表示一种弱的‘拥有’关系，体现的是A对象可以包含B对象，但B对象不是A对象的一部分，聚合用空心的菱形+实线箭头表示。<br><strong>合成</strong>（组合）是一种强的‘拥有’关系，体现了严格的部分和整体的关系。合成关系用实心的菱形+实线箭头表示。<br><strong>依赖</strong>关系，用虚线箭头表示。</p>
-<p>以商场促销活动为例，可以有多种促销方式，如打折、返现、积分等。这些活动都对应着不同的算法，也就是不同的策略来计算应付的金额。如果不对这些策略进行封装，每次活动的改变都要修改程序中的很多地方，不够灵活，可维护性差。将所有的策略封装成相互独立的类，由一个统一的抽象类Strategy类指明具体用到的策略类。还需要一个上下文策略类来配置这些策略即Context类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">/*付款金额计算的抽象类*/</div><div class="line">class CashSuper</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	/*计算应付金额*/</div><div class="line">	virtual double AcceptCash(double money) = 0;//纯虚函数</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*正常收费策略*/</div><div class="line">class CashNormal : public CashSuper</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		return money;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*打折收费策略*/</div><div class="line">class CashRebate : public CashSuper</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	double discount;</div><div class="line">public:</div><div class="line">	//构造函数</div><div class="line">	CashRebate(double dis) : discount(dis)//构造函数初始化列表以一个冒号开始，接着是以逗号分隔的数据成员列表，每个数据成员后面跟一个放在括号中的初始化式。(显性初始化类成员)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		return money * discount;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*返现收费策略*/</div><div class="line">class CashReturn : public CashSuper</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	double moneyCondition;</div><div class="line">	double moneyReturn;</div><div class="line">public:</div><div class="line">	CashReturn(double condition, double retu) : moneyCondition(condition), moneyReturn(retu)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		double result = money;</div><div class="line"></div><div class="line">		if (money &gt; moneyCondition)</div><div class="line">		&#123;</div><div class="line">			result = money - (static_cast&lt;int&gt;(money / moneyCondition)) * moneyReturn;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/* 收费策略 */</div><div class="line">class CashContext</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	CashSuper* cs; /* 声明付款金额的收费策略 */</div><div class="line"></div><div class="line">public:</div><div class="line">	/*初始化时，传入具体的策略对象(正常、打折、返现)*/</div><div class="line">	CashContext(int type)</div><div class="line">	&#123;</div><div class="line">		switch (type)</div><div class="line">		&#123;</div><div class="line">		case 1:</div><div class="line">			cs = new CashNormal();</div><div class="line">			break;</div><div class="line">		case 2:</div><div class="line">			cs = new CashRebate(0.8);</div><div class="line">			break;</div><div class="line">		case 3:</div><div class="line">			cs = new CashReturn(300, 100);</div><div class="line">			break;</div><div class="line">		default:</div><div class="line">			throw exception(&quot;没有这种促销活动&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	~CashContext()</div><div class="line">	&#123;</div><div class="line">		delete cs;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/*得到现金计算结果(利用了多态机制，不同的策略行为导致不同的结果)*/</div><div class="line">	double GetResult(double money)</div><div class="line">	&#123;</div><div class="line">		return cs-&gt;AcceptCash(money);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	double price;</div><div class="line">	double number;</div><div class="line">	int type;  /* 活动类型 */</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入单价: &quot;;</div><div class="line">	cin &gt;&gt; price;</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入数量: &quot;;</div><div class="line">	cin &gt;&gt; number;</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请选择促销活动：&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;1 : 正常收费&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;2 : 打8折&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;3 : 满 300 返 100&quot; &lt;&lt; endl;</div><div class="line">	cin &gt;&gt; type;</div><div class="line"></div><div class="line">	try</div><div class="line">	&#123;</div><div class="line">		CashContext cashcontext(type);</div><div class="line"></div><div class="line">		cout &lt;&lt; &quot;总计：&quot; &lt;&lt; price * number &lt;&lt; endl;</div><div class="line"></div><div class="line">		cout &lt;&lt; &quot;实收现金：&quot;;</div><div class="line">		cout &lt;&lt; cashcontext.GetResult(price * number) &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">	catch (exception&amp; e)</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; e.what() &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果有新的促销活动需要加入，只需再写一个对应的策略类，并在CashContext类中修改部分代码即可实现。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1535,7 +1536,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">58</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

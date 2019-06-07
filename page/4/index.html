@@ -265,6 +265,129 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/14/商品促销-策略模式-c-实现/" itemprop="url">
+                  商品促销-策略模式(c++实现)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-14T19:36:07+08:00" content="2017-06-14">
+              2017-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大话设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">大话设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/14/商品促销-策略模式-c-实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/14/商品促销-策略模式-c-实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>策略模式是一种定义一系列算法的方法，从概念上来看，所有这些算法完成的都是相同的工作，只是实现不同，它(策略模式)可以以相同的方式调用所有的算法，<strong>减少</strong>了各种算法类与使用算法类的之间的<strong>耦合</strong>。<br>策略模式就是用来封装算法的，但在实践中，可以用它来封装几乎任何类型的规则，只要在分析过程中听到需要在不同的时间应用不同的业务规则，就可以考虑使用策略模式处理这种变化的可能性。<br><img src="http://ols4zt49w.bkt.clouddn.com/1497440990%281%29.png" alt=""><br>补充：UML类图：</p>
+<p>类图一般分三层，第一层显示类的名称，如果是抽象类，则用斜体表示。第二层是类的特性，通常是字段和属性。第三层是类的操作，通常是方法或行为。<br>注意前面的符号，‘+’表示public，‘-’表示private，‘#’表示protected。<br><strong>继承</strong>用空心箭头+实线表示<br><strong>实现接口</strong>用空心箭头+虚线表示<br><strong>关联</strong>关系用实线箭头表示<br><strong>聚合</strong>表示一种弱的‘拥有’关系，体现的是A对象可以包含B对象，但B对象不是A对象的一部分，聚合用空心的菱形+实线箭头表示。<br><strong>合成</strong>（组合）是一种强的‘拥有’关系，体现了严格的部分和整体的关系。合成关系用实心的菱形+实线箭头表示。<br><strong>依赖</strong>关系，用虚线箭头表示。</p>
+<p>以商场促销活动为例，可以有多种促销方式，如打折、返现、积分等。这些活动都对应着不同的算法，也就是不同的策略来计算应付的金额。如果不对这些策略进行封装，每次活动的改变都要修改程序中的很多地方，不够灵活，可维护性差。将所有的策略封装成相互独立的类，由一个统一的抽象类Strategy类指明具体用到的策略类。还需要一个上下文策略类来配置这些策略即Context类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">/*付款金额计算的抽象类*/</div><div class="line">class CashSuper</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	/*计算应付金额*/</div><div class="line">	virtual double AcceptCash(double money) = 0;//纯虚函数</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*正常收费策略*/</div><div class="line">class CashNormal : public CashSuper</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		return money;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*打折收费策略*/</div><div class="line">class CashRebate : public CashSuper</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	double discount;</div><div class="line">public:</div><div class="line">	//构造函数</div><div class="line">	CashRebate(double dis) : discount(dis)//构造函数初始化列表以一个冒号开始，接着是以逗号分隔的数据成员列表，每个数据成员后面跟一个放在括号中的初始化式。(显性初始化类成员)</div><div class="line">	&#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		return money * discount;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/*返现收费策略*/</div><div class="line">class CashReturn : public CashSuper</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	double moneyCondition;</div><div class="line">	double moneyReturn;</div><div class="line">public:</div><div class="line">	CashReturn(double condition, double retu) : moneyCondition(condition), moneyReturn(retu)</div><div class="line">	&#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line">	virtual double AcceptCash(double money)</div><div class="line">	&#123;</div><div class="line">		double result = money;</div><div class="line"></div><div class="line">		if (money &gt; moneyCondition)</div><div class="line">		&#123;</div><div class="line">			result = money - (static_cast&lt;int&gt;(money / moneyCondition)) * moneyReturn;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">/* 收费策略 */</div><div class="line">class CashContext</div><div class="line">&#123;</div><div class="line">private:</div><div class="line">	CashSuper* cs; /* 声明付款金额的收费策略 */</div><div class="line"></div><div class="line">public:</div><div class="line">	/*初始化时，传入具体的策略对象(正常、打折、返现)*/</div><div class="line">	CashContext(int type)</div><div class="line">	&#123;</div><div class="line">		switch (type)</div><div class="line">		&#123;</div><div class="line">		case 1:</div><div class="line">			cs = new CashNormal();</div><div class="line">			break;</div><div class="line">		case 2:</div><div class="line">			cs = new CashRebate(0.8);</div><div class="line">			break;</div><div class="line">		case 3:</div><div class="line">			cs = new CashReturn(300, 100);</div><div class="line">			break;</div><div class="line">		default:</div><div class="line">			throw exception(&quot;没有这种促销活动&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	~CashContext()</div><div class="line">	&#123;</div><div class="line">		delete cs;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/*得到现金计算结果(利用了多态机制，不同的策略行为导致不同的结果)*/</div><div class="line">	double GetResult(double money)</div><div class="line">	&#123;</div><div class="line">		return cs-&gt;AcceptCash(money);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	double price;</div><div class="line">	double number;</div><div class="line">	int type;  /* 活动类型 */</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入单价: &quot;;</div><div class="line">	cin &gt;&gt; price;</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入数量: &quot;;</div><div class="line">	cin &gt;&gt; number;</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请选择促销活动：&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;1 : 正常收费&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;2 : 打8折&quot; &lt;&lt; endl</div><div class="line">		&lt;&lt; &quot;3 : 满 300 返 100&quot; &lt;&lt; endl;</div><div class="line">	cin &gt;&gt; type;</div><div class="line"></div><div class="line">	try</div><div class="line">	&#123;</div><div class="line">		CashContext cashcontext(type);</div><div class="line"></div><div class="line">		cout &lt;&lt; &quot;总计：&quot; &lt;&lt; price * number &lt;&lt; endl;</div><div class="line"></div><div class="line">		cout &lt;&lt; &quot;实收现金：&quot;;</div><div class="line">		cout &lt;&lt; cashcontext.GetResult(price * number) &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line">	catch (exception&amp; e)</div><div class="line">	&#123;</div><div class="line">		cout &lt;&lt; e.what() &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果有新的促销活动需要加入，只需再写一个对应的策略类，并在CashContext类中修改部分代码即可实现。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/14/简单工厂模式-c-实现/" itemprop="url">
                   简单工厂模式(c++实现)
                 </a>
@@ -1380,134 +1503,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/15/c-动态申请二维数组并释放/" itemprop="url">
-                  c++动态申请一维、二维数组并释放
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-15T08:59:59+08:00" content="2017-05-15">
-              2017-05-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/c-c/" itemprop="url" rel="index">
-                    <span itemprop="name">c/c++</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/05/15/c-动态申请二维数组并释放/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/15/c-动态申请二维数组并释放/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在平时写代码的过程中，常常会需要动态开辟一个二维数组，具体的行和列不再是常量，之前遇到了总是容易忘记，现在特地整理一下。同时将一维数组也整理了一下。<br>c++中有三种方法来动态申请多维数组</p>
-<p><strong>(1)C中的malloc/free</strong></p>
-<p><strong>(2)C++中的new/delete</strong></p>
-<p><strong>(3)STL容器中的vector</strong></p>
-<p><strong>第一种malloc/free</strong><br>动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">动态开辟一维数组</div><div class="line">void dynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int m;</div><div class="line">	int i;</div><div class="line">	int *p;</div><div class="line">    </div><div class="line">	printf(&quot;请输入开辟的数组长度：&quot;);</div><div class="line">	scanf(&quot;%d&quot;,&amp;m);</div><div class="line">	p = (int*)malloc(sizeof(int)*m);//动态开辟</div><div class="line"></div><div class="line">	printf(&quot;请输入数据：&quot;);</div><div class="line">	for(i = 0; i &lt; m ; i++)</div><div class="line">		scanf(&quot;%d&quot;,&amp;p[i]);</div><div class="line"></div><div class="line">    printf(&quot;输出数据：\n&quot;);</div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">		printf(&quot;%d &quot;,p[i]);</div><div class="line">	free(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">void dynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	int i,j;</div><div class="line">	int **p;</div><div class="line"></div><div class="line">    printf(&quot;请输入数组行和列：&quot;);</div><div class="line">	scanf(&quot;%d%d&quot;,&amp;m,&amp;n);</div><div class="line"></div><div class="line">	p = (int**)malloc(sizeof(int*)*m); //开辟行</div><div class="line"></div><div class="line">	for(i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		*(p+i) = (int*)malloc(sizeof(int)*n);//开辟列</div><div class="line">	&#125;</div><div class="line">	//输入数据</div><div class="line">	printf(&quot;请输入数：&quot;);</div><div class="line">    for(i = 0 ; i &lt; m;i++)</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">			scanf(&quot;%d&quot;,&amp;p[i][j]);</div><div class="line">    </div><div class="line">	//输出数据</div><div class="line">	for(i = 0 ; i &lt; m;i++)</div><div class="line">	&#123;</div><div class="line">		for(j = 0; j &lt; n;j++)</div><div class="line">		&#123;</div><div class="line">		   printf(&quot;%3d &quot;,p[i][j]);</div><div class="line">		&#125;</div><div class="line">		printf(&quot;\n&quot;);</div><div class="line">	&#125;</div><div class="line">	//释放开辟的二维空间</div><div class="line">	for(i = 0; i &lt; m;i++)</div><div class="line">		free(*(p+i));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>第二种：new/delete</strong><br>1.动态开辟一维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate1Array()</div><div class="line">&#123;</div><div class="line">	int len;</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入长度：&quot;;</div><div class="line">	cin&gt;&gt;len;</div><div class="line">	</div><div class="line">	int *p = new int[len];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">    for(int i = 0; i &lt; len; i++)</div><div class="line">		cin&gt;&gt;p[i];</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(i = 0; i &lt; len; i++)</div><div class="line">		cout&lt;&lt;setw(4)&lt;&lt;p[i];</div><div class="line">	</div><div class="line">	delete[] p;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2.动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">void DynamicCreate2Array()</div><div class="line">&#123;</div><div class="line">	int m, n;</div><div class="line">	cout &lt;&lt; &quot;请输入行和列：&quot;;</div><div class="line">	cin &gt;&gt; m &gt;&gt; n;</div><div class="line"></div><div class="line">	//动态开辟空间</div><div class="line">	int **p = new int*[m]; //开辟行</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		p[i] = new int[n]; //开辟列</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;请输入数据：&quot;;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	for (int j = 0; j &lt; n; j++)</div><div class="line">		cin &gt;&gt; p[i][j];</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;输出数据：&quot; &lt;&lt; endl;</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">		for (int j = 0; j &lt; n; j++)</div><div class="line">			cout &lt;&lt; setw(3) &lt;&lt; p[i][j];</div><div class="line">		cout &lt;&lt; endl;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//释放开辟的资源</div><div class="line">	for (int i = 0; i &lt; m; i++)</div><div class="line">		delete[] p[i];</div><div class="line">	delete[] p;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>第三种：STL中的vector</strong><br>动态开辟二维数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void VectorCreate()</div><div class="line">&#123;</div><div class="line">	int m,n;</div><div class="line">	cout&lt;&lt;&quot;请输入行和列：&quot;;</div><div class="line">	cin&gt;&gt;m&gt;&gt;n;</div><div class="line">	</div><div class="line">	//注意下面这一行：vector &lt;int后两个 &quot;&gt; &quot;之间要有空格！否则会被认为是重载 &quot;&gt; &gt; &quot;。 </div><div class="line">    vector&lt;vector&lt;int&gt; &gt; p(m,vector&lt;int&gt;(n));</div><div class="line">	</div><div class="line">	cout&lt;&lt;&quot;请输入数据：&quot;;</div><div class="line">	for(int i = 0 ; i &lt; m ; i++)</div><div class="line">		for(int j = 0; j &lt; n; j++)</div><div class="line">			cin&gt;&gt;p[i][j];</div><div class="line">		</div><div class="line">	cout&lt;&lt;&quot;输出数据：&quot;&lt;&lt;endl;</div><div class="line">	for(int i = 0; i &lt; m; i++)</div><div class="line">	&#123;</div><div class="line">    	for(int j = 0; j &lt; n; j++)</div><div class="line">			cout&lt;&lt;setw(3)&lt;&lt;p[i][j];</div><div class="line">		cout&lt;&lt;endl;</div><div class="line">	&#125;</div><div class="line">			</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1553,7 +1548,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">58</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
