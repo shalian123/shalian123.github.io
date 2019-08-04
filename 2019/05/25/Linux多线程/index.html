@@ -92,13 +92,13 @@
 <meta property="og:url" content="http://shalian123.github.io/2019/05/25/Linux多线程/index.html">
 <meta property="og:site_name" content="Wind">
 <meta property="og:description" content="进程与线程　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。      同一进程内">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190525161505299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzc2MzI1OQ==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:updated_time" content="2019-06-07T14:48:17.505Z">
+<meta property="og:image" content="http://qiniu.shalian.site/1564828734%281%29.png">
+<meta property="og:image" content="http://qiniu.shalian.site/1564829220%281%29.png">
+<meta property="og:updated_time" content="2019-08-03T10:51:30.188Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux多线程">
 <meta name="twitter:description" content="进程与线程　　进程的定义：进程是为了描述程序在并发执行时对系统资源的共享，所需的一个描述程序执行时动态特征的概念。进程是具有独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配、调度和保护的独立单位。　　线程的定义：线程也成为轻量级进程，是进程中的一个运行实体，作为CPU的调度单位。一个进程由多个线程组成，线程与同属一个进程的其他的线程共享进程所拥有的全部资源。      同一进程内">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center">
+<meta name="twitter:image" content="http://qiniu.shalian.site/1564828734%281%29.png">
 
 
 
@@ -355,8 +355,8 @@
 （4）进程切换时涉及有关资源指针的保存和地址空间的变化；线程切换时，由于处于同一进程内，所以不涉及资源信息的保存和地址空间的变化，从而减少了操作系统的时间开销
 </code></pre></li>
 </ul>
-<h1 id="进程fork和vfork"><a href="#进程fork和vfork" class="headerlink" title="进程fork和vfork"></a>进程fork和vfork</h1><p>fork（），子进程会拷贝父进程资源，但是==不共享，彼此隔离==。这里可以引申一下<strong><a href="https://www.cnblogs.com/biyeymyhjob/archive/2012/07/20/2601655.html" target="_blank" rel="external">写时拷贝技术</a></strong>。</p>
-<p> <img src="https://img-blog.csdnimg.cn/2019052516060756.png#pic_center" alt="fock()"><br> vfock()，子进程会拷贝父进程资源，但是==内存不会拷贝==，与父进程共享一个内存（物理地址）。<br> <img src="https://img-blog.csdnimg.cn/20190525161505299.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzc2MzI1OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="vfork()"></p>
+<h1 id="进程fork和vfork"><a href="#进程fork和vfork" class="headerlink" title="进程fork和vfork"></a>进程fork和vfork</h1><p>fork（），子进程会拷贝父进程资源，但是==不共享，彼此隔离==。这里可以引申一下<strong>[写时拷贝技术]<img src="http://qiniu.shalian.site/1564828734%281%29.png" alt=""></strong>。</p>
+<p> vfock()，子进程会拷贝父进程资源，但是==内存不会拷贝==，与父进程共享一个内存（物理地址）。<br> <img src="http://qiniu.shalian.site/1564829220%281%29.png" alt="vfork()"></p>
 <h1 id="pthread-join和pthread-death"><a href="#pthread-join和pthread-death" class="headerlink" title="pthread_join和pthread_death"></a>pthread_join和pthread_death</h1><h2 id="一：关于join"><a href="#一：关于join" class="headerlink" title="一：关于join"></a>一：关于join</h2><p>　join<br>　　join是<strong>三种同步线程的方式之一</strong>。另外两种分别是互斥锁（mutex）和条件变量（condition variable）。<br>调用pthread_join()将阻塞自己，一直到要等待加入的线程运行结束， 或者调用了pthread_exit，或者被取消。<br>　　可以用pthread_join()获取线程的返回值。<br>　　一个线程对应一个pthread_join()调用，对同一个线程进行多次pthread_join()调用是逻辑错误。<br>join or detach<br>　　线程分两种：一种可以join，另一种不可以。该属性在创建线程的时候指定。<br>joinable线程可在创建后，<strong>用pthread_detach()显式地分离</strong>。但分离后不可以再合并。该操作不可逆。<br>为了确保移植性，在创建线程时，最好显式指定其join或detach属性。似乎不是所有POSIX实现都是用joinable作默认。 </p>
 <h2 id="二：-pthread-detach"><a href="#二：-pthread-detach" class="headerlink" title="二： pthread_detach"></a>二： pthread_detach</h2><p>　　创建一个线程默认的状态是joinable, 如果一个线程结束运行但没有被join,则它的状态类似于进程中的Zombie Process,即还有一部分资源没有被回收（退出状态码），所以创建线程者应该调用pthread_join来等待线程运行结束，并可得到线程的退出代码，回收其资源（类似于wait,waitpid) 。但是调用pthread_join(pthread_id)后，如果该线程没有运行结束，调用者会被阻塞，在有些情况下我们并不希望如此，比如在Web服务器中当主线程为每个新来的链接创建一个子线程进行处理的时候，主线程并不希望因为调用pthread_join而阻塞（因为还要继续处理之后到来的链接），<br>　　这时可以<strong>在子线程中加入代码 pthread_detach(pthread_self()) ，或者父线程调用<br>　　pthread_detach(thread_id)（非阻塞，可立即返回） ，这将该子线程的状态设置为detached,则该线程运行结束后会自动释放所有资源。</strong> </p>
 <h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>

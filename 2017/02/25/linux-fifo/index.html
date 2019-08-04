@@ -98,20 +98,20 @@
 一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
 二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
 三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png">
-<meta property="og:updated_time" content="2017-03-13T07:26:31.469Z">
+<meta property="og:image" content="http://qiniu.shalian.site/mkfifo.png">
+<meta property="og:image" content="http://qiniu.shalian.site/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png">
+<meta property="og:image" content="http://qiniu.shalian.site/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png">
+<meta property="og:image" content="http://qiniu.shalian.site/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png">
+<meta property="og:image" content="http://qiniu.shalian.site/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png">
+<meta property="og:image" content="http://qiniu.shalian.site/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png">
+<meta property="og:updated_time" content="2019-08-04T16:20:59.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="测试linux-fifo">
 <meta name="twitter:description" content="linux进程间通信之有名管道fifo本文通过具体的实例带你深入了解进程通信里的有名管道通信
 一、硬件工具一块已经烧录最小系统进去的开发板pc机U盘或TF卡或NFS
 二、软件工具ubuntu及虚拟机交叉编译器（此处采用的是Arm-2009q3）编辑器（此处采用的是notepad）超级终端vim编辑器
 三、读本文前得了解的知识交叉编译，文件函数的操作（open，write，read等），对linux">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/mkfifo.png">
+<meta name="twitter:image" content="http://qiniu.shalian.site/mkfifo.png">
 
 
 
@@ -353,7 +353,7 @@
 <blockquote>
 <p>man 3 mkfifo</p>
 </blockquote>
-<p>我们可以看到如下图mkfifo函数得用法：<br><img src="http://ols4zt49w.bkt.clouddn.com/mkfifo.png" alt="mkfifo"></p>
+<p>我们可以看到如下图mkfifo函数得用法：<br><img src="http://qiniu.shalian.site/mkfifo.png" alt="mkfifo"></p>
 <p>为了更好的体验有名管道得通信，我们首先编写creatc.c测试mkfifo函数。</p>
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
@@ -529,19 +529,19 @@ exit(EXIT_SUCCESS);
 <blockquote>
 <p>mount /dev/sda1 /mnt/udisk/<br>加载U盘<br>./mnt/udisk/creatc<br>运行完会创建文本文件</p>
 </blockquote>
-<p>我们可以在终端里 ls 一下，会发现如下图多了data.txt文本：<br><img src="http://ols4zt49w.bkt.clouddn.com/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png" alt=""><br>打开data.txt文本，里面是重复的“I want to study Linux!”，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png" alt=""></p>
+<p>我们可以在终端里 ls 一下，会发现如下图多了data.txt文本：<br><img src="http://qiniu.shalian.site/%E5%88%9B%E5%BB%BA%E6%96%87%E6%9C%AC.png" alt=""><br>打开data.txt文本，里面是重复的“I want to study Linux!”，如下图<br><img src="http://qiniu.shalian.site/BC%5D7DRIOK8VT%7BZ2604YM5%7DB.png" alt=""></p>
 <blockquote>
 <p>使用命令./mnt/udisk/writepipe &amp;<br>后台运行管道写的程序，将data.txt文本中的数据写入管道</p>
 </blockquote>
-<p>我们可以使用linux命令jobs查看程序是否在运行<br><img src="http://ols4zt49w.bkt.clouddn.com/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png" alt=""><br>此时ls,可以看到 my_fifo 管道被创立了。</p>
+<p>我们可以使用linux命令jobs查看程序是否在运行<br><img src="http://qiniu.shalian.site/T%5BL%29P3S73%2961X%5D5%2526Y@7JQ.png" alt=""><br>此时ls,可以看到 my_fifo 管道被创立了。</p>
 <blockquote>
 <p>最后，运行time ./mnt/udisk/readpipe<br>运行并计时从管道读数据需要多长时间</p>
 </blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png" alt=""><br>如上图，共花费0.26s，jobs一下，程序早已运行结束。</p>
+<p><img src="http://qiniu.shalian.site/R9IQRG5MMOVD%5D5%5D9BBYT%60W8.png" alt=""><br>如上图，共花费0.26s，jobs一下，程序早已运行结束。</p>
 <blockquote>
 <p>ls -la</p>
 </blockquote>
-<p><img src="http://ols4zt49w.bkt.clouddn.com/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png" alt=""><br>可见整个数据量接近2.3M，传输速度接近10M/S.<br>综上，有名管道 fifo 给文件系统提供一个路径，这个路径和管道关联，只要知道这个管道路径，<br>就可以进行文件访问。且传输速度很快。</p>
+<p><img src="http://qiniu.shalian.site/1DN8%7BJLX@D%7BQR$%283OLZ6EP2.png" alt=""><br>可见整个数据量接近2.3M，传输速度接近10M/S.<br>综上，有名管道 fifo 给文件系统提供一个路径，这个路径和管道关联，只要知道这个管道路径，<br>就可以进行文件访问。且传输速度很快。</p>
 <h2 id="五、注意点"><a href="#五、注意点" class="headerlink" title="五、注意点"></a>五、注意点</h2><p>access(const char *pathname,int mode),检测权限函数，具体用法可man access查询一下。<br>PIPE_BUF,在linux中，它的大小是4096bytes,可man 7 pipe 查询。</p>
 
       

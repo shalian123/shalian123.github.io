@@ -92,12 +92,12 @@
 <meta property="og:url" content="http://shalian123.github.io/2017/04/23/QT之http网络编程，json访问应答/index.html">
 <meta property="og:site_name" content="Wind">
 <meta property="og:description" content="结合前面两篇文章《浅谈http之post与get的区别》和《QT之json》，本文重点尝试了如何在qt中通过http协议json格式请求和响应服务器的json格式，并解析。本文的重点是客户端的编写，服务器用的是一个简易的http本地服务器。服务器端的响应程序如下：12345678910111213141516171819void HttpServer::onRequest(HttpRequest*">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1492952805%281%29.png">
-<meta property="og:updated_time" content="2017-04-24T01:57:10.542Z">
+<meta property="og:image" content="http://qiniu.shalian.site/1492952805%281%29.png">
+<meta property="og:updated_time" content="2019-08-04T15:36:05.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QT之http网络编程，json访问应答">
 <meta name="twitter:description" content="结合前面两篇文章《浅谈http之post与get的区别》和《QT之json》，本文重点尝试了如何在qt中通过http协议json格式请求和响应服务器的json格式，并解析。本文的重点是客户端的编写，服务器用的是一个简易的http本地服务器。服务器端的响应程序如下：12345678910111213141516171819void HttpServer::onRequest(HttpRequest*">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/1492952805%281%29.png">
+<meta name="twitter:image" content="http://qiniu.shalian.site/1492952805%281%29.png">
 
 
 
@@ -339,7 +339,7 @@
 </blockquote>
 <p>然后发送请求<code>manager-&gt;post(req,byte_array);</code>//发送请求</p>
 <p>槽函数，获取响应的内容，调用 readAll()，由于上述的 POST 请求返回的数据为 Json 格式，将响应结果先转化为Json（fromjson函数），然后再对其解析。</p>
-<p>结果解析如下：<br><img src="http://ols4zt49w.bkt.clouddn.com/1492952805%281%29.png" alt=""><br>服务器端响应的json格式数据被解析并输出。</p>
+<p>结果解析如下：<br><img src="http://qiniu.shalian.site/1492952805%281%29.png" alt=""><br>服务器端响应的json格式数据被解析并输出。</p>
 
       
     </div>

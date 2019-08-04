@@ -92,16 +92,16 @@
 <meta property="og:url" content="http://shalian123.github.io/2017/08/23/QT移植到am437x开发板/index.html">
 <meta property="og:site_name" content="Wind">
 <meta property="og:description" content="最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：首先贴出我参考的以些资料：【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板Qt for ARM_Linux环境搭建-Qt5.7+">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489195%281%29.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489408%281%29.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/1503489027%281%29.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/881346359011543039.jpg">
-<meta property="og:updated_time" content="2017-08-23T12:10:16.205Z">
+<meta property="og:image" content="http://qiniu.shalian.site/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
+<meta property="og:image" content="http://qiniu.shalian.site/1503489195%281%29.png">
+<meta property="og:image" content="http://qiniu.shalian.site/1503489408%281%29.png">
+<meta property="og:image" content="http://qiniu.shalian.site/1503489027%281%29.png">
+<meta property="og:image" content="http://qiniu.shalian.site/881346359011543039.jpg">
+<meta property="og:updated_time" content="2019-08-04T05:38:37.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QT移植到am437x开发板">
 <meta name="twitter:description" content="最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：首先贴出我参考的以些资料：【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板Qt for ARM_Linux环境搭建-Qt5.7+">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
+<meta name="twitter:image" content="http://qiniu.shalian.site/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png">
 
 
 
@@ -337,14 +337,14 @@
       
         <p>最近在把之前开发好的应用程序移植到板子上，由于公司用的是TI的am437x系列，网上的资料也比较少，所以前前后后摸索了一个多星期，中间遇到了一些问题，通过自己的摸索还算是最终移植成功了。下面就此做一个简单的小结：<br>首先贴出我参考的以些资料：<br><a href="http://bbs.elecfans.com/forum.php?mod=viewthread&amp;tid=905966&amp;extra=&amp;ordertype=2" target="_blank" rel="external">【创龙AM4379 Cortex-A9试用体验】之移植QT5.4.1与tslib1.4到TL-4379开发板</a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a><br><a href="http://www.cnblogs.com/topeet/p/5711957.html" target="_blank" rel="external">【转帖】嵌入式4412开发板QT5.7编译安装到arm </a><br><a href="http://www.cnblogs.com/t1029901995/p/6046600.html" target="_blank" rel="external">Qt5.7.0移植到4412 </a><br><a href="http://blog.csdn.net/hechao3225/article/details/52981148" target="_blank" rel="external">Qt for ARM_Linux环境搭建-Qt5.7+iTop4412嵌入式平台移植 </a></p>
 <p>在移植的过程中遇到的问题：<br>1.linux下qt不能编译？<br>  解决：（1）权限的问题：工程代码需要权限；qtcreator也需要权 （2）linux下目录是‘/’（没有双杠，且左低右高）<br>2.移植的注意点：<br>  （1）如果是原生的ubuntu（刚装好的），移植前需要先安装x11的库，见下图：</p>
-<p>  <img src="http://ols4zt49w.bkt.clouddn.com/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png" alt=""><br>  （2）安装跟板子配套的交叉编译工具链，注意：三星的4412是arm-none-linux-gnueabi-gcc，ti用的是arm-linux-gnueabihf，由于板子出厂固件中运行的是基于Qt5.7,因此我下载的也是跟5.7配套的交叉编译工具链<code>gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf.tar</code><br>  （3）修改交叉编译架构用到的信息：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489195%281%29.png" alt=""></p>
-<p>  （3）创建脚本文件用于生成Makefile文件时，要有<code>-no-iconv  \</code>, 否则字库会出问题。<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489408%281%29.png" alt=""></p>
+<p>  <img src="http://qiniu.shalian.site/%E5%AE%89%E8%A3%85x11,%E5%8F%AF%E8%83%BD%E5%AE%89%E8%A3%85%E6%BA%90%E9%9C%80%E8%A6%81%E6%94%B9.png" alt=""><br>  （2）安装跟板子配套的交叉编译工具链，注意：三星的4412是arm-none-linux-gnueabi-gcc，ti用的是arm-linux-gnueabihf，由于板子出厂固件中运行的是基于Qt5.7,因此我下载的也是跟5.7配套的交叉编译工具链<code>gcc-linaro-6.2.1-2016.11-x86_64_arm-linux-gnueabihf.tar</code><br>  （3）修改交叉编译架构用到的信息：<br>   <img src="http://qiniu.shalian.site/1503489195%281%29.png" alt=""></p>
+<p>  （3）创建脚本文件用于生成Makefile文件时，要有<code>-no-iconv  \</code>, 否则字库会出问题。<br>   <img src="http://qiniu.shalian.site/1503489408%281%29.png" alt=""></p>
 <p>  （4）在开发板上运行校正程序时出现No raw modules loaded<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">解决方法是把  tslib/etc目录下的ts.conf 的 &quot;#module_raw input&quot;的注释符号“＃”去掉。但记住不要在前面留有 空格 ，否则会出现错误Segmentation fault</div></pre></td></tr></table></figure></p>
 <p>  （5）程序运行起来，仍报错：<br>QIconvCodec::convertFromUnicode: using Latin-1 for conversion, iconv_open failed<br>QIconvCodec::convertToUnicode: using Latin-1 for conversion, iconv_open failed​<br>解决 ：下载 <a href="http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz" target="_blank" rel="external">http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz</a><br>                ./configure -prefix=$PWD/_install -host=arm-linux-gnueabihf<br>                make<br>                make install<br>                把_install/lib 下的preloadable_libiconv.so 拷到系统的/system/lib 下,<br>                export LD_PRELOAD=/system/lib/preloadable_libiconv.so</p>
-<p>   （6）在环境变量配置时，如果不想把板子自带的DT Demo覆盖掉，可以不配置QT_ROOT<br>   配置如下：<br>   <img src="http://ols4zt49w.bkt.clouddn.com/1503489027%281%29.png" alt=""></p>
-<p>   （7）要使板子支持中文，可以下载中文字库，放在ARM板的fonts目录下，这里我放在<code>/usr/share/fonts/ttf</code>下。此处我提供下载连接。<br>   <a href="http://ols4zt49w.bkt.clouddn.com/DroidSansFallback.ttf" target="_blank" rel="external">QT中文字库，直接放在ARM板的fonts目录下</a></p>
+<p>   （6）在环境变量配置时，如果不想把板子自带的DT Demo覆盖掉，可以不配置QT_ROOT<br>   配置如下：<br>   <img src="http://qiniu.shalian.site/1503489027%281%29.png" alt=""></p>
+<p>   （7）要使板子支持中文，可以下载中文字库，放在ARM板的fonts目录下，这里我放在<code>/usr/share/fonts/ttf</code>下。此处我提供下载连接。<br>   <a href="http://qiniu.shalian.site/DroidSansFallback.ttf" target="_blank" rel="external">QT中文字库，直接放在ARM板的fonts目录下</a></p>
 <p>   （8）移植sqlite到arm板上，参考：<a href="http://www.cnblogs.com/lidabo/p/5851752.html" target="_blank" rel="external">http://www.cnblogs.com/lidabo/p/5851752.html</a></p>
-<p>最后，附上一张移植后的图片：<br><img src="http://ols4zt49w.bkt.clouddn.com/881346359011543039.jpg" alt=""></p>
+<p>最后，附上一张移植后的图片：<br><img src="http://qiniu.shalian.site/881346359011543039.jpg" alt=""></p>
 
       
     </div>

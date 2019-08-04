@@ -92,13 +92,13 @@
 <meta property="og:url" content="http://shalian123.github.io/2017/03/03/搭建NFS/index.html">
 <meta property="og:site_name" content="Wind">
 <meta property="og:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
-<meta property="og:image" content="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png">
-<meta property="og:updated_time" content="2017-03-13T07:24:40.032Z">
+<meta property="og:image" content="http://qiniu.shalian.site/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
+<meta property="og:image" content="http://qiniu.shalian.site/9%284D@WU3H%29D6VDL5FK~%5BJTP.png">
+<meta property="og:updated_time" content="2019-08-04T15:45:32.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建NFS及注意点">
 <meta name="twitter:description" content="NFS 是 Network File System 的缩写，是由 SUN 公司研制的 UNIX 表示层协议（pressentation layer protocol），NFS 是基于 UDP/IP 协议的应用。它的最大功能就是可以通过网络让不同的机器，不通的操作系统彼此共享文件，可以通过 NFS 挂载远程主机的目录，访问该目录就像访问本地目录一样，所以也可以简单的将它看做一个文件服务器。通过 NF">
-<meta name="twitter:image" content="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
+<meta name="twitter:image" content="http://qiniu.shalian.site/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png">
 
 
 
@@ -344,7 +344,7 @@
 <blockquote>
 <p>vi /etc/exports</p>
 </blockquote>
-<p>在/etc/export 文件的最后一行添加：<br>/home/minilinux/system/ *(rw,sync,no_root_squash)，如下图<br><img src="http://ols4zt49w.bkt.clouddn.com/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png" alt=""><br>接下来重启 portmap 服务</p>
+<p>在/etc/export 文件的最后一行添加：<br>/home/minilinux/system/ *(rw,sync,no_root_squash)，如下图<br><img src="http://qiniu.shalian.site/~DGB@XPKTOPS@V%7D$%29VRQ7%7B7.png" alt=""><br>接下来重启 portmap 服务</p>
 <blockquote>
 <p>/etc/init.d/portmap restart</p>
 </blockquote>
@@ -353,7 +353,7 @@
 <p>/etc/init.d/nfs-kernel-server restart</p>
 </blockquote>
 <p>至此，NFS服务器端搭建完成。</p>
-<h3 id="二、将板中的最小系统挂载到NFS"><a href="#二、将板中的最小系统挂载到NFS" class="headerlink" title="二、将板中的最小系统挂载到NFS"></a>二、将板中的最小系统挂载到NFS</h3><p>1.先把 linux 最小文件系统放到虚拟机 Ubuntu 的挂载目录下（此处我采用的是/home/minilinux/system） 目录下。（<strong>注意：此处的文件系统必须为板子里烧录的最小系统。</strong>）<br>2.实现 nfs 文件系统我们需要修改 linux 最小文件系统的 etc/init.d/ifconfig-eth0 文件，<br>vi命令打开并修改为如下图结果：<br><img src="http://ols4zt49w.bkt.clouddn.com/9%284D@WU3H%29D6VDL5FK~%5BJTP.png" alt=""><br>改完保存并退出！</p>
+<h3 id="二、将板中的最小系统挂载到NFS"><a href="#二、将板中的最小系统挂载到NFS" class="headerlink" title="二、将板中的最小系统挂载到NFS"></a>二、将板中的最小系统挂载到NFS</h3><p>1.先把 linux 最小文件系统放到虚拟机 Ubuntu 的挂载目录下（此处我采用的是/home/minilinux/system） 目录下。（<strong>注意：此处的文件系统必须为板子里烧录的最小系统。</strong>）<br>2.实现 nfs 文件系统我们需要修改 linux 最小文件系统的 etc/init.d/ifconfig-eth0 文件，<br>vi命令打开并修改为如下图结果：<br><img src="http://qiniu.shalian.site/9%284D@WU3H%29D6VDL5FK~%5BJTP.png" alt=""><br>改完保存并退出！</p>
 <h4 id="3-配置内核"><a href="#3-配置内核" class="headerlink" title="3.配置内核"></a>3.配置内核</h4><p>此处我们需要用到内核源码，打开内核源码，输入 cp config_for_linux .config 命令生成支持 linux 最小文件系统的内核配<br>置文件。（<strong>注意此处 .config前有一个空格</strong>）。然后输入 make menuconfig 命令进入 linux 配置界面。具体配置网上很多，此处只挑重点说：<br>在Boot options 配置界面里，我们需要在 Default kernel command 里面输入：</p>
 <blockquote>
 <p>root=/dev/nfs rw nfsroot=192.168.1.103:/home/minilinux/system<br>ip=192.168.1.230:192.168.1.103:192.168.1.1:255.255.255.0:iTOP:eth0:off<br>rootfstype=ext4 init=/linuxrc console=ttySAC2,115200</p>
