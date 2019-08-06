@@ -265,6 +265,129 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/22/利用QT发布应用程序/" itemprop="url">
+                  利用QT发布应用程序
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-22T22:15:05+08:00" content="2017-03-22">
+              2017-03-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/22/利用QT发布应用程序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/22/利用QT发布应用程序/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于项目的需要，最近一直在看qt应用程序设计，具体研究了QT自带的数据库SQLite,同时将它与登陆界面结合开发了一个小的应用程序，在此也算是一个小的阶段的收获。下面我具体谈谈我在开发过程中遇到的一些问题。</p>
+<h4 id="1-设置程序图标，"><a href="#1-设置程序图标，" class="headerlink" title="1.设置程序图标，"></a>1.设置程序图标，</h4><p> 一开始我是直接将文件名后缀改为.ico,但是发现这样不行，编译时会无法识别。在此我推荐两种方法：<br> （1）可以到网上直接下载.ico格式的图片。（2）下载.ico图标转换工具或者到一些在线转换网站上制作。</p>
+<h4 id="2-编译release版本"><a href="#2-编译release版本" class="headerlink" title="2.编译release版本"></a>2.编译release版本</h4><h4 id="3-发布时一般有两种方式，静态编译和动态编译。"><a href="#3-发布时一般有两种方式，静态编译和动态编译。" class="headerlink" title="3.发布时一般有两种方式，静态编译和动态编译。"></a>3.发布时一般有两种方式，静态编译和动态编译。</h4><p>  静态编译虽然没有附加很多的.dll文件，但是库文件很大，更新版本不方便，每次升级都要重新分发所有内容。<br>  动态编译需要添加许多文件，在这里我一开始按照书上的方法做了，但是后来发现到别人pc上还是会提醒无法建立数据库(如果自己去复制dll，很可能丢三落四，导致exe在别的电脑里无法正常运行)。因此在这里我重点介绍另外一种简单的发布方法。</p>
+<h4 id="推荐使用官方的windeployqt。"><a href="#推荐使用官方的windeployqt。" class="headerlink" title="推荐使用官方的windeployqt。"></a>推荐使用官方的windeployqt。</h4><p>  (1)编译完成后，进入项目生成的release文件夹里，将exe复制到一个单独的文件夹（比如桌面上新建的qt），用于发布。<br>  (2)进入qt文件夹，按住shift，右击鼠标，打开命令窗口，然后使用 windeployqt 工具命令：比如windeployqt qt.exe<br>  (3)然后可以在 桌面:\qt 文件夹里看到 windeployqt 工具自动复制的插件文件夹和 dll文件、qm文件。这时候得到的就完整的 exe 程序发布集合，依赖关系都解决好了。<br>  附上我的程序界面：<br>  1.数据库登陆界面<br>  <img src="http://qiniu.shalian.site/%60%7B%28U1J%29WWY%60%5D%5BJCT%7D@06~YF.png" alt=""><br>  2.数据库界面<br>  <img src="http://qiniu.shalian.site/%5BX@QE%60%7D1DX%7B%60W%5D~O7R73SKQ.png" alt=""><br>总结：桌面图形窗口应用设计可以有很多种方法，qt主要应用在嵌入式行业，它的一大优势是支持跨平台，不仅支持pc（windows），linux，android等，也支持mac os x等平台，相信qt的应用及发展还是不错的，有兴趣的人可以一起交流学习。<br>（在程序发布解决过程中参考了<a href="http://m.blog.csdn.net/article/details?id=56848407）" target="_blank" rel="external">http://m.blog.csdn.net/article/details?id=56848407）</a><br>最后，附上我编写并发布的软件下载地址，有兴趣的可以下载查看：(<a href="http://qiniu.shalian.site/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip" target="_blank" rel="external">http://qiniu.shalian.site/qt%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83%E7%A8%8B%E5%BA%8F.zip</a>)</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/21/数据结构注意点-指针与结构体/" itemprop="url">
                   数据结构注意点(指针与结构体)
                 </a>
@@ -1682,7 +1805,7 @@ exit(EXIT_SUCCESS);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">59</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
