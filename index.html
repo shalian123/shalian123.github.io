@@ -265,6 +265,252 @@
             
               
                 
+                <a class="post-title-link" href="/2019/09/28/在C中如何向数据库插入带有单引号（-）的字符串？/" itemprop="url">
+                  在C中如何向数据库插入带有单引号（'）的字符串？
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-09-28T22:58:57+08:00" content="2019-09-28">
+              2019-09-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/c-c/" itemprop="url" rel="index">
+                    <span itemprop="name">c/c++</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/09/28/在C中如何向数据库插入带有单引号（-）的字符串？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/28/在C中如何向数据库插入带有单引号（-）的字符串？/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="在C中如何向数据库插入带有单引号（’）的字符串？"><a href="#在C中如何向数据库插入带有单引号（’）的字符串？" class="headerlink" title="在C中如何向数据库插入带有单引号（’）的字符串？"></a>在C中如何向数据库插入带有单引号（’）的字符串？</h1><p>　　用SQL语句往数据库某字段（字符型）中插入字符串，但是当该字符串中带有单引号（’）时就会出错！因为插入的字符串被从单引号处截断，造成SQL语句的语法错误！<br>　　我们在编程当中，经常会遇到在操作数据库时，向表里插入带有单引号的字符串。如果不作处理程序会报错，我们可以在插入以前对每个字符串进行替换操作，那样就没有问题了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;regex&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="string">"C"</span></div><div class="line"><span class="comment">/**@brief	通过正则表达式匹配，可将将’ 替换成 "  </span></div><div class="line"> * @param[in]   cstrAfter:替换完成后的字符串</div><div class="line"> * @param[in] 	lenAfter:替换完成后的字符串的长度</div><div class="line"> * @param[in]   cstrBefore:原来的字符串</div><div class="line"> * @param[in] 	cstrSrc:原来字符串中想要被替换的字符</div><div class="line"> * @param[in] 	cstrSrc:原来字符串中想要替换成为的字符</div><div class="line"></div><div class="line"> * @param[out]   无</div><div class="line"> * @return	    &lt;DB_RET_OK&gt;成功</div><div class="line"> 				&lt;DB_RET_FAIL&gt;失败</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">cstring_replace</span><span class="params">(<span class="keyword">char</span> *cstrAfter, <span class="keyword">int</span> lenAfter,<span class="keyword">const</span> <span class="keyword">char</span> *cstrBefore, <span class="keyword">const</span> <span class="keyword">char</span> *cstrSrc, <span class="keyword">const</span> <span class="keyword">char</span> *cstrDst)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(cstrAfter == <span class="literal">NULL</span> || cstrBefore == <span class="literal">NULL</span> || cstrSrc == <span class="literal">NULL</span> || cstrDst == <span class="literal">NULL</span> || lenAfter &lt;= <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">regex <span class="title">pattern</span><span class="params">(cstrSrc)</span></span>;</div><div class="line">    <span class="built_in">string</span> strAfter = regex_replace(cstrBefore, pattern, cstrDst);</div><div class="line">    strlcpy(cstrAfter, strAfter.c_str(), lenAfter);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>eg：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cstring_replace(username, <span class="keyword">sizeof</span>(username), db_dev_config-&gt;videoIn.channelName, <span class="string">"'"</span>, <span class="string">"''"</span>);</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/09/28/Iperf工具交叉编译移植及网络性能分析/" itemprop="url">
+                  Iperf工具交叉编译移植及网络性能分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-09-28T22:21:56+08:00" content="2019-09-28">
+              2019-09-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/09/28/Iperf工具交叉编译移植及网络性能分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/28/Iperf工具交叉编译移植及网络性能分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一、案例简述"><a href="#一、案例简述" class="headerlink" title="一、案例简述"></a>一、案例简述</h1><p>　　在开发带有WiFi功能的产品时，往往需要对WiFi的性能要特别关注。最近在本组产品的集成测试中发现：当设备连接WiFi时，设备出现监视失败或呼叫室内机时，室内机没画面、web刷新或配置失败等问题的概率会大大增加，而且这个缺陷还是偶现的。为了排查是取流还是网络的问题，我们首先与ClentDemo监视时进行了对比，发现ClentDemo能够正常的监视和取流。因此我们<strong>需要进一步确认是否与网络问题有关</strong>。常用的ping IP的方式虽然可以查看出网络的延时，但是具体网络情况还是无法直观的得出。常见的一个测试方法是使用iperf工具。</p>
+<h1 id="二、案例分析和解决过程"><a href="#二、案例分析和解决过程" class="headerlink" title="二、案例分析和解决过程"></a>二、案例分析和解决过程</h1><h2 id="2-1、工具的介绍"><a href="#2-1、工具的介绍" class="headerlink" title="2.1、工具的介绍"></a>2.1、工具的介绍</h2><p>　　Iperf 是一个网络性能测试工具。可以测试 TCP 和 UDP 带宽质量，可以测量最大 TCP 带宽，具有多种参数和 UDP 特性，可以报告带宽，延迟抖动和数据包丢失。这里的网络不但可以是一般的以太网，也可以是无线网络。输出结果是网络传输速度，单位是bps。 Iperf 在 linux 和 windows 平台均有二进制版本供自由使用。在同一局域网没有网络透传的设备之间，iperf工具可以测试PC机，室内机，门铃机三者之间任意两者的网络速度。</p>
+<h2 id="2-2、iperf移植-交叉编译"><a href="#2-2、iperf移植-交叉编译" class="headerlink" title="2.2、iperf移植(交叉编译)"></a>2.2、iperf移植(交叉编译)</h2><p>（1）下载源码：<a href="https://iperf.fr/iperf-download.php#windows" target="_blank" rel="external">https://iperf.fr/iperf-download.php#windows</a><br><img src="http://qiniu.shalian.site/iperf1.png" alt=""><br>（2）解压tar zxvf iperf-2.0.5-source.tar.gz<br>（3）cd iperf-2.0.5目录下，执行 “./configure –host=arm-hisiv500-linux”，生成Makefile文件。<br>（4）在iperf-2.0.5目录下，运行“make”,将会在iperf-2.0.5/src/下生成iperf程序。（arm平台的）<br>（5）NFS挂载，将iperf程序拷贝到设备里，或直接打包进去。<br>　　<strong>注意：</strong><br>　　① arm-hisiv500-linux为H10平台的交叉编译器，具体设备具体对待。<br>　　② 当执行make时，会报错，如下图：<br><img src="http://qiniu.shalian.site/iperf2.png" alt=""><br>　　<strong>解决方法：</strong><br>　　将iperf-2.0.5目录下config.h中的“define malloc rpl_malloc”注释掉，重新编译。<br>　　③ window版的iperf生成方式有两种：一种是执行配置文件时不需要加交叉编译器，即直接运行 “./configure”;另一种是直接到官网下载<a href="https://iperf.fr/iperf-download.php#source，如下图：" target="_blank" rel="external">https://iperf.fr/iperf-download.php#source，如下图：</a><br>  <img src="http://qiniu.shalian.site/iperf3.png" alt=""><br>　　下载完成后，将解压出来的脚本及应用程序复制到<strong>%systemroot%</strong>目录即可。注意：这个 %systemroot% 目录，<strong>可以直接在cmd中，输入echo %systemroot%，即可得到目录</strong>，我这里是c盘下的Windows。如果下载的是iperf3，输入命令时也要是iperf3加参数。</p>
+<h2 id="2-3、iperf的使用"><a href="#2-3、iperf的使用" class="headerlink" title="2.3、iperf的使用"></a>2.3、iperf的使用</h2><p>　　iperf基于C/S模式，在服务器端运行“./iperf -s”；在客户端。运行“./iperf –c 服务端的IP –i 1 –t 10”,参数的意义如下：<br>　　（1）、-s 以服务器模式启动；<br>　　（2）、-c 以客户端模式启动，这时需要指定服务器所在的IP地址；<br>　　（3）、-t 指定测试时间；<br>　　（4）、-i 指定测试时间间隔，打印结果，例如上例就是以1秒间隔不断输出结果。<br>　　（5）、-d 双向传输测试；<br>　　<strong>注意：</strong><br>　　①、确认设备和你的电脑在同一个网段，然后ping通。<br>　　②、其他参数可以查看iperf自带的帮助文档（iperf -h）。<br>　　为了测试WiFi的性能，我分别设置了三组对比实验，PC与门口机之间有线和无线连接状态下的网络状况，室内机与门口机之间有线和无线连接状态下的网络状况，还有监视黑屏和监视正常状态下的网络情况。</p>
+<h1 id="三、案例总结"><a href="#三、案例总结" class="headerlink" title="三、案例总结"></a>三、案例总结</h1><p>　　相同时刻，设备分别连接无线和有线时，网络相差比较悬殊，同时我们连接无线网络时出现监视失败，呼叫黑屏及web刷新或配置失败等问题的概率会大大增加。因此有理由怀疑这些问题的出现和网络性能有关。而由<a href="https://www.cnblogs.com/x_wukong/p/5842138.html" target="_blank" rel="external">1080P、720P、4CIF、CIF所需要的理论带宽</a>和<a href="https://wenku.baidu.com/view/2bb8927c6c175f0e7cd137a7.html" target="_blank" rel="external">720p视频需要带宽的计算</a>所知，要想能够正常预览1080p的画面，需要满足4M带宽，而在对比试验中，连接WiFi时，带宽并没有达到4M，且波动较大。<br>　　同时，此缺陷的偶现现象可能与网络波动的影响有关。与室内机组沟通后了解到黑屏情况与有些关键帧没收到，或复合流（视频、音频）插入顺序紊乱有关。因此可以当此缺陷复现时，可录像分析，进一步研究是否因为网络原因导致关键帧丢失。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2019/08/12/paragm预处理/" itemprop="url">
                   #paragm预处理
                 </a>
@@ -1285,257 +1531,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/11/12/错误处理/" itemprop="url">
-                  错误处理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-11-12T22:12:52+08:00" content="2017-11-12">
-              2017-11-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/c-c/" itemprop="url" rel="index">
-                    <span itemprop="name">c/c++</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/11/12/错误处理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/12/错误处理/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>主流的编程语言（除了C语言）基本都使用 异常机制 处理错误，C语言中没有异常机制。<br>C程序员是用 返回值 代表是否出错。主要有以下4种情况<br>1、如果返回类型是int，并且返回值不可能是负数，数据会正常返回，返回 -1 代表出错。<br>2、如果返回类型是int ，并且返回值可能是负数，返回-1代表出错，0代表正确。数据用指针返回。<br>3、如果返回类型是指针，返回NULL代表出错，其他代表正常返回数据<br>4、如果函数不需要考虑出错问题，用 void 做返回值。</p>
-<p>注意：以上4种情况只是经验总结，不是绝对的<br>一个函数返回数据的方法有2种：<br>1、用return语句返回<br>2、参数中放入一个指针，也可以带回数据</p>
-<p>C语言用 外部的全局变量 errno 记录错误的信息，错误信息分为 错误编号（int）和具体信息（字符串），每个错误编号都对应一个具体信息。errno存的是错误编号。</p>
-<p>==     函数strerror()/perror()/printf()用于错误信息的显示和转换。<br>     strerror()传入一个编号，返回具体信息（转换函数） 不一定要出错，给个errno就行<br>     perror() 不用传入错误编号，直接打印errnod对应的信息（自动换行）<br>     printf(“%m”)直接打印errno对应的信息==<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;errno.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,strerror(errno));</div><div class="line">perror(<span class="string">"fopen"</span>);</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%m\n"</span>)</div></pre></td></tr></table></figure></p>
-<p>不是所有的函数都只用errno 处理错误，比如 线程的函数。<br>errno只有咋出错时才改变值，不出错不会回复值。因此errno只能说明出了什么错，而不能判断是否出错。判断是否出错使用函数的返回值，出错以后再使用errno。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/11/12/链式结构/" itemprop="url">
-                  链式结构
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-11-12T20:58:51+08:00" content="2017-11-12">
-              2017-11-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/11/12/链式结构/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/12/链式结构/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本篇文章是之前在Evernote上总结的一篇文章，此处将它移植到博客上，也算是一个备份<br><a href="http://qiniu.shalian.site/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%9501.html" target="_blank" rel="external">链式结构</a></p>
-<p><strong>下面是具体内容，截图上传，方便查阅，具体内容可点击上面的链接</strong></p>
-<p><img src="http://qiniu.shalian.site/1510492311%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492337%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492403%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492425%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492648%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492662%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492755%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492780%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492867%281%29.png" alt=""><br><img src="http://qiniu.shalian.site/1510492874%281%29.png" alt=""></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1576,7 +1576,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">62</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1593,7 +1593,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
